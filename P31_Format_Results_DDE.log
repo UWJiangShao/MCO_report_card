@@ -1,0 +1,2478 @@
+1                                         The SAS System         13:44 Wednesday, November 2, 2022
+
+NOTE: Copyright (c) 2016 by SAS Institute Inc., Cary, NC, USA. 
+NOTE: SAS (r) Proprietary Software 9.4 (TS1M6) 
+      Licensed to UNIVERSITY OF FLORIDA - SFA T&R, Site 70080452.
+NOTE: This session is executing on the X64_10PRO  platform.
+
+
+
+NOTE: Analytical products:
+      
+      SAS/STAT 15.1
+      SAS/ETS 15.1
+      SAS/OR 15.1
+      SAS/IML 15.1
+      SAS/QC 15.1
+
+WARNING: Your system is scheduled to expire on November 29, 2022, which is 27 days from now. The 
+         SAS System will no longer function on or after that date. Please contact your SAS 
+         Installation Representative to obtain your updated SAS Installation Data (SID) file, 
+         which includes SETINIT information.
+To locate the name of your SAS Installation Representative go to http://support.sas.com/repfinder 
+and provide your site number 70080452 and company name as UNIVERSITY OF FLORIDA - SFA T&R. On the 
+SAS REP list provided, locate the REP for operating system Windows.
+NOTE: Additional host information:
+
+ X64_10PRO WIN 10.0.19041  Workstation
+
+NOTE: SAS initialization used:
+      real time           1.44 seconds
+      cpu time            0.71 seconds
+      
+1          OPTIONS PS=MAX FORMCHAR="|----|+|---+=|-/\<>*" MLOGIC MPRINT SYMBOLGEN noxwait noxsync;
+2          
+3          * Formatting results;
+4          * Using DDE technique;
+5          
+6          %LET JOB = P31;
+7          
+8          
+9          *** ---- import plancode description
+9        ! ---------------------------------------------------------------------;
+10         proc import datafile="..\DATA\Raw_Data\plancode.xlsx"
+WARNING: The Base SAS Software product with which IMPORT is associated will be expiring soon, and 
+         is currently in warning mode to indicate this upcoming expiration. Please run PROC 
+         SETINIT to obtain more information on your warning period.
+11         	dbms=XLSX
+12         	out=plancode
+13         	;
+14         run;
+
+NOTE: One or more variables were converted because the data type is not supported by the V9 
+      engine. For more details, run with options MSGLEVEL=I.
+NOTE: The import data set has 198 observations and 10 variables.
+NOTE: WORK.PLANCODE data set was successfully created.
+NOTE: PROCEDURE IMPORT used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.04 seconds
+      
+
+15         
+16         *** --- import quoatas and weighting
+16       ! ---------------------------------------------------------------------;
+17         %macro import_population(excel_address, sheet_name, prog);
+18         	* import population;
+19         	proc import datafile = &excel_address.
+20         			out=&prog._population
+21         			dbms=excel
+22         			replace;
+23         		sheet = &sheet_name.;
+24         		getnames = Yes;
+25         	run;
+26         
+27         	data &prog._population;
+28         		set &prog._population;
+29         		* base_weight = eligible_members / sample_members;
+30         	run;
+31         
+32         	proc sort data=&prog._population;
+33         		by PHI_SA_Name PHI_Plan_Name;
+34         	run;
+35         
+36         	proc contents data=&prog._population varnum;
+37         	run;
+38         %mend import_population;
+39         
+40         %import_population("..\DATA\Raw_Data\CHIP_22_samp_cnts_2203.xlsx", "2022_Counts", CH);
+MLOGIC(IMPORT_POPULATION):  Beginning execution.
+MLOGIC(IMPORT_POPULATION):  Parameter EXCEL_ADDRESS has value 
+      "..\DATA\Raw_Data\CHIP_22_samp_cnts_2203.xlsx"
+MLOGIC(IMPORT_POPULATION):  Parameter SHEET_NAME has value "2022_Counts"
+MLOGIC(IMPORT_POPULATION):  Parameter PROG has value CH
+MPRINT(IMPORT_POPULATION):   * import population;
+SYMBOLGEN:  Macro variable EXCEL_ADDRESS resolves to 
+            "..\DATA\Raw_Data\CHIP_22_samp_cnts_2203.xlsx"
+SYMBOLGEN:  Macro variable PROG resolves to CH
+MPRINT(IMPORT_POPULATION):   proc import datafile = 
+"..\DATA\Raw_Data\CHIP_22_samp_cnts_2203.xlsx" out=CH_population dbms=excel replace;
+MPRINT(IMPORT_POPULATION):   AEXC;
+SYMBOLGEN:  Macro variable SHEET_NAME resolves to "2022_Counts"
+MPRINT(IMPORT_POPULATION):   sheet = "2022_Counts";
+MPRINT(IMPORT_POPULATION):   getnames = Yes;
+MPRINT(IMPORT_POPULATION):   run;
+
+1                                         The SAS System         13:44 Wednesday, November 2, 2022
+
+SYMBOLGEN:  Macro variable _IMEXSERROR_ resolves to SERROR
+NOTE: WORK.CH_POPULATION data set was successfully created.
+NOTE: The data set WORK.CH_POPULATION has 32 observations and 7 variables.
+NOTE: PROCEDURE IMPORT used (Total process time):
+      real time           1.50 seconds
+      cpu time            0.90 seconds
+      
+
+SYMBOLGEN:  Macro variable PROG resolves to CH
+MPRINT(IMPORT_POPULATION):   data CH_population;
+SYMBOLGEN:  Macro variable PROG resolves to CH
+MPRINT(IMPORT_POPULATION):   set CH_population;
+MPRINT(IMPORT_POPULATION):   * base_weight = eligible_members / sample_members;
+MPRINT(IMPORT_POPULATION):   run;
+
+NOTE: There were 32 observations read from the data set WORK.CH_POPULATION.
+NOTE: The data set WORK.CH_POPULATION has 32 observations and 7 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+      
+
+SYMBOLGEN:  Macro variable PROG resolves to CH
+MPRINT(IMPORT_POPULATION):   proc sort data=CH_population;
+MPRINT(IMPORT_POPULATION):   by PHI_SA_Name PHI_Plan_Name;
+MPRINT(IMPORT_POPULATION):   run;
+
+NOTE: There were 32 observations read from the data set WORK.CH_POPULATION.
+NOTE: The data set WORK.CH_POPULATION has 32 observations and 7 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.00 seconds
+      
+
+SYMBOLGEN:  Macro variable PROG resolves to CH
+MPRINT(IMPORT_POPULATION):   proc contents data=CH_population varnum;
+MPRINT(IMPORT_POPULATION):   run;
+
+NOTE: PROCEDURE CONTENTS used (Total process time):
+      real time           0.07 seconds
+      cpu time            0.07 seconds
+      
+NOTE: The PROCEDURE CONTENTS printed page 1.
+
+MLOGIC(IMPORT_POPULATION):  Ending execution.
+41         %import_population("..\DATA\Raw_Data\STAR_Child_22_samp_cnts_2203.xlsx",
+41       ! "STAR_Child_2022_Counts", SC);
+MLOGIC(IMPORT_POPULATION):  Beginning execution.
+MLOGIC(IMPORT_POPULATION):  Parameter EXCEL_ADDRESS has value 
+      "..\DATA\Raw_Data\STAR_Child_22_samp_cnts_2203.xlsx"
+MLOGIC(IMPORT_POPULATION):  Parameter SHEET_NAME has value "STAR_Child_2022_Counts"
+MLOGIC(IMPORT_POPULATION):  Parameter PROG has value SC
+MPRINT(IMPORT_POPULATION):   * import population;
+SYMBOLGEN:  Macro variable EXCEL_ADDRESS resolves to 
+            "..\DATA\Raw_Data\STAR_Child_22_samp_cnts_2203.xlsx"
+SYMBOLGEN:  Macro variable PROG resolves to SC
+MPRINT(IMPORT_POPULATION):   proc import datafile = 
+"..\DATA\Raw_Data\STAR_Child_22_samp_cnts_2203.xlsx" out=SC_population dbms=excel replace;
+MPRINT(IMPORT_POPULATION):   AEXC;
+SYMBOLGEN:  Macro variable SHEET_NAME resolves to "STAR_Child_2022_Counts"
+MPRINT(IMPORT_POPULATION):   sheet = "STAR_Child_2022_Counts";
+MPRINT(IMPORT_POPULATION):   getnames = Yes;
+MPRINT(IMPORT_POPULATION):   run;
+
+1                                         The SAS System         13:44 Wednesday, November 2, 2022
+
+SYMBOLGEN:  Macro variable _IMEXSERROR_ resolves to SERROR
+NOTE: WORK.SC_POPULATION data set was successfully created.
+NOTE: The data set WORK.SC_POPULATION has 44 observations and 7 variables.
+NOTE: PROCEDURE IMPORT used (Total process time):
+      real time           1.06 seconds
+      cpu time            0.56 seconds
+      
+
+SYMBOLGEN:  Macro variable PROG resolves to SC
+MPRINT(IMPORT_POPULATION):   data SC_population;
+SYMBOLGEN:  Macro variable PROG resolves to SC
+MPRINT(IMPORT_POPULATION):   set SC_population;
+MPRINT(IMPORT_POPULATION):   * base_weight = eligible_members / sample_members;
+MPRINT(IMPORT_POPULATION):   run;
+
+NOTE: There were 44 observations read from the data set WORK.SC_POPULATION.
+NOTE: The data set WORK.SC_POPULATION has 44 observations and 7 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+SYMBOLGEN:  Macro variable PROG resolves to SC
+MPRINT(IMPORT_POPULATION):   proc sort data=SC_population;
+MPRINT(IMPORT_POPULATION):   by PHI_SA_Name PHI_Plan_Name;
+MPRINT(IMPORT_POPULATION):   run;
+
+NOTE: There were 44 observations read from the data set WORK.SC_POPULATION.
+NOTE: The data set WORK.SC_POPULATION has 44 observations and 7 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+SYMBOLGEN:  Macro variable PROG resolves to SC
+MPRINT(IMPORT_POPULATION):   proc contents data=SC_population varnum;
+MPRINT(IMPORT_POPULATION):   run;
+
+NOTE: PROCEDURE CONTENTS used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+NOTE: The PROCEDURE CONTENTS printed page 2.
+
+MLOGIC(IMPORT_POPULATION):  Ending execution.
+42         %import_population("..\DATA\Raw_Data\STAR_Adult_22_samp_cnts_2203.xlsx",
+42       ! "STAR_Adult_2022_Counts", SA);
+MLOGIC(IMPORT_POPULATION):  Beginning execution.
+MLOGIC(IMPORT_POPULATION):  Parameter EXCEL_ADDRESS has value 
+      "..\DATA\Raw_Data\STAR_Adult_22_samp_cnts_2203.xlsx"
+MLOGIC(IMPORT_POPULATION):  Parameter SHEET_NAME has value "STAR_Adult_2022_Counts"
+MLOGIC(IMPORT_POPULATION):  Parameter PROG has value SA
+MPRINT(IMPORT_POPULATION):   * import population;
+SYMBOLGEN:  Macro variable EXCEL_ADDRESS resolves to 
+            "..\DATA\Raw_Data\STAR_Adult_22_samp_cnts_2203.xlsx"
+SYMBOLGEN:  Macro variable PROG resolves to SA
+MPRINT(IMPORT_POPULATION):   proc import datafile = 
+"..\DATA\Raw_Data\STAR_Adult_22_samp_cnts_2203.xlsx" out=SA_population dbms=excel replace;
+MPRINT(IMPORT_POPULATION):   AEXC;
+SYMBOLGEN:  Macro variable SHEET_NAME resolves to "STAR_Adult_2022_Counts"
+MPRINT(IMPORT_POPULATION):   sheet = "STAR_Adult_2022_Counts";
+MPRINT(IMPORT_POPULATION):   getnames = Yes;
+MPRINT(IMPORT_POPULATION):   run;
+
+1                                         The SAS System         13:44 Wednesday, November 2, 2022
+
+SYMBOLGEN:  Macro variable _IMEXSERROR_ resolves to SERROR
+NOTE: WORK.SA_POPULATION data set was successfully created.
+NOTE: The data set WORK.SA_POPULATION has 44 observations and 7 variables.
+NOTE: PROCEDURE IMPORT used (Total process time):
+      real time           1.16 seconds
+      cpu time            0.53 seconds
+      
+
+SYMBOLGEN:  Macro variable PROG resolves to SA
+MPRINT(IMPORT_POPULATION):   data SA_population;
+SYMBOLGEN:  Macro variable PROG resolves to SA
+MPRINT(IMPORT_POPULATION):   set SA_population;
+MPRINT(IMPORT_POPULATION):   * base_weight = eligible_members / sample_members;
+MPRINT(IMPORT_POPULATION):   run;
+
+NOTE: There were 44 observations read from the data set WORK.SA_POPULATION.
+NOTE: The data set WORK.SA_POPULATION has 44 observations and 7 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+SYMBOLGEN:  Macro variable PROG resolves to SA
+MPRINT(IMPORT_POPULATION):   proc sort data=SA_population;
+MPRINT(IMPORT_POPULATION):   by PHI_SA_Name PHI_Plan_Name;
+MPRINT(IMPORT_POPULATION):   run;
+
+NOTE: There were 44 observations read from the data set WORK.SA_POPULATION.
+NOTE: The data set WORK.SA_POPULATION has 44 observations and 7 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+      
+
+SYMBOLGEN:  Macro variable PROG resolves to SA
+MPRINT(IMPORT_POPULATION):   proc contents data=SA_population varnum;
+MPRINT(IMPORT_POPULATION):   run;
+
+NOTE: PROCEDURE CONTENTS used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+NOTE: The PROCEDURE CONTENTS printed page 3.
+
+MLOGIC(IMPORT_POPULATION):  Ending execution.
+43         %import_population("..\DATA\Raw_Data\STAR_PLUS_22_samp_cnts_2204.xlsx", "Non-BCS", SP);
+MLOGIC(IMPORT_POPULATION):  Beginning execution.
+MLOGIC(IMPORT_POPULATION):  Parameter EXCEL_ADDRESS has value 
+      "..\DATA\Raw_Data\STAR_PLUS_22_samp_cnts_2204.xlsx"
+MLOGIC(IMPORT_POPULATION):  Parameter SHEET_NAME has value "Non-BCS"
+MLOGIC(IMPORT_POPULATION):  Parameter PROG has value SP
+MPRINT(IMPORT_POPULATION):   * import population;
+SYMBOLGEN:  Macro variable EXCEL_ADDRESS resolves to 
+            "..\DATA\Raw_Data\STAR_PLUS_22_samp_cnts_2204.xlsx"
+SYMBOLGEN:  Macro variable PROG resolves to SP
+MPRINT(IMPORT_POPULATION):   proc import datafile = 
+"..\DATA\Raw_Data\STAR_PLUS_22_samp_cnts_2204.xlsx" out=SP_population dbms=excel replace;
+MPRINT(IMPORT_POPULATION):   AEXC;
+SYMBOLGEN:  Macro variable SHEET_NAME resolves to "Non-BCS"
+MPRINT(IMPORT_POPULATION):   sheet = "Non-BCS";
+MPRINT(IMPORT_POPULATION):   getnames = Yes;
+MPRINT(IMPORT_POPULATION):   run;
+
+1                                         The SAS System         13:44 Wednesday, November 2, 2022
+
+SYMBOLGEN:  Macro variable _IMEXSERROR_ resolves to SERROR
+NOTE: WORK.SP_POPULATION data set was successfully created.
+NOTE: The data set WORK.SP_POPULATION has 27 observations and 7 variables.
+NOTE: PROCEDURE IMPORT used (Total process time):
+      real time           1.25 seconds
+      cpu time            0.68 seconds
+      
+
+SYMBOLGEN:  Macro variable PROG resolves to SP
+MPRINT(IMPORT_POPULATION):   data SP_population;
+SYMBOLGEN:  Macro variable PROG resolves to SP
+MPRINT(IMPORT_POPULATION):   set SP_population;
+MPRINT(IMPORT_POPULATION):   * base_weight = eligible_members / sample_members;
+MPRINT(IMPORT_POPULATION):   run;
+
+NOTE: There were 27 observations read from the data set WORK.SP_POPULATION.
+NOTE: The data set WORK.SP_POPULATION has 27 observations and 7 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+      
+
+SYMBOLGEN:  Macro variable PROG resolves to SP
+MPRINT(IMPORT_POPULATION):   proc sort data=SP_population;
+MPRINT(IMPORT_POPULATION):   by PHI_SA_Name PHI_Plan_Name;
+MPRINT(IMPORT_POPULATION):   run;
+
+NOTE: There were 27 observations read from the data set WORK.SP_POPULATION.
+NOTE: The data set WORK.SP_POPULATION has 27 observations and 7 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.00 seconds
+      
+
+SYMBOLGEN:  Macro variable PROG resolves to SP
+MPRINT(IMPORT_POPULATION):   proc contents data=SP_population varnum;
+MPRINT(IMPORT_POPULATION):   run;
+
+NOTE: PROCEDURE CONTENTS used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+NOTE: The PROCEDURE CONTENTS printed page 4.
+
+MLOGIC(IMPORT_POPULATION):  Ending execution.
+44         %import_population("..\DATA\Raw_Data\STAR_Kids_22_samp_cnts_2203.xlsx",
+44       ! "2022_Non-waiver", SK);
+MLOGIC(IMPORT_POPULATION):  Beginning execution.
+MLOGIC(IMPORT_POPULATION):  Parameter EXCEL_ADDRESS has value 
+      "..\DATA\Raw_Data\STAR_Kids_22_samp_cnts_2203.xlsx"
+MLOGIC(IMPORT_POPULATION):  Parameter SHEET_NAME has value "2022_Non-waiver"
+MLOGIC(IMPORT_POPULATION):  Parameter PROG has value SK
+MPRINT(IMPORT_POPULATION):   * import population;
+SYMBOLGEN:  Macro variable EXCEL_ADDRESS resolves to 
+            "..\DATA\Raw_Data\STAR_Kids_22_samp_cnts_2203.xlsx"
+SYMBOLGEN:  Macro variable PROG resolves to SK
+MPRINT(IMPORT_POPULATION):   proc import datafile = 
+"..\DATA\Raw_Data\STAR_Kids_22_samp_cnts_2203.xlsx" out=SK_population dbms=excel replace;
+MPRINT(IMPORT_POPULATION):   AEXC;
+SYMBOLGEN:  Macro variable SHEET_NAME resolves to "2022_Non-waiver"
+MPRINT(IMPORT_POPULATION):   sheet = "2022_Non-waiver";
+MPRINT(IMPORT_POPULATION):   getnames = Yes;
+MPRINT(IMPORT_POPULATION):   run;
+
+1                                         The SAS System         13:44 Wednesday, November 2, 2022
+
+SYMBOLGEN:  Macro variable _IMEXSERROR_ resolves to SERROR
+NOTE: WORK.SK_POPULATION data set was successfully created.
+NOTE: The data set WORK.SK_POPULATION has 28 observations and 7 variables.
+NOTE: PROCEDURE IMPORT used (Total process time):
+      real time           1.25 seconds
+      cpu time            0.48 seconds
+      
+
+SYMBOLGEN:  Macro variable PROG resolves to SK
+MPRINT(IMPORT_POPULATION):   data SK_population;
+SYMBOLGEN:  Macro variable PROG resolves to SK
+MPRINT(IMPORT_POPULATION):   set SK_population;
+MPRINT(IMPORT_POPULATION):   * base_weight = eligible_members / sample_members;
+MPRINT(IMPORT_POPULATION):   run;
+
+NOTE: There were 28 observations read from the data set WORK.SK_POPULATION.
+NOTE: The data set WORK.SK_POPULATION has 28 observations and 7 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.03 seconds
+      
+
+SYMBOLGEN:  Macro variable PROG resolves to SK
+MPRINT(IMPORT_POPULATION):   proc sort data=SK_population;
+MPRINT(IMPORT_POPULATION):   by PHI_SA_Name PHI_Plan_Name;
+MPRINT(IMPORT_POPULATION):   run;
+
+NOTE: There were 28 observations read from the data set WORK.SK_POPULATION.
+NOTE: The data set WORK.SK_POPULATION has 28 observations and 7 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.00 seconds
+      
+
+SYMBOLGEN:  Macro variable PROG resolves to SK
+MPRINT(IMPORT_POPULATION):   proc contents data=SK_population varnum;
+MPRINT(IMPORT_POPULATION):   run;
+
+NOTE: PROCEDURE CONTENTS used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+NOTE: The PROCEDURE CONTENTS printed page 5.
+
+MLOGIC(IMPORT_POPULATION):  Ending execution.
+45         
+46         
+47         
+48         *** ---- CHIP prepare data
+48       ! ---------------------------------------------------------------------------------------
+48       ! ---------------;
+49         proc import datafile="..\DATA\Temp_Data\CH23_out.xlsx"
+50         	dbms=XLSX
+51         	out=CH23
+52         	;
+53         	sheet="CH23";
+54         run;
+
+NOTE: One or more variables were converted because the data type is not supported by the V9 
+      engine. For more details, run with options MSGLEVEL=I.
+NOTE: The import data set has 32 observations and 38 variables.
+NOTE: WORK.CH23 data set was successfully created.
+NOTE: PROCEDURE IMPORT used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.01 seconds
+      
+
+55         
+56         proc contents data=CH23 varnum;
+57         run;
+
+NOTE: PROCEDURE CONTENTS used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+NOTE: The PROCEDURE CONTENTS printed page 6.
+
+58         
+59         proc sql;
+60         	create table CHIP as
+61         	select *
+62         		,avg(GCQ) as mean_GCQ
+63         		,avg(HWDC) as mean_HWDC
+64         		,avg(PDRat) as mean_PDRat
+65         		,avg(HPRat) as mean_HPRat
+66         		from CH23
+67         		;
+NOTE: The query requires remerging summary statistics back with the original data.
+NOTE: Table WORK.CHIP created, with 32 rows and 42 columns.
+
+68         quit;
+NOTE: PROCEDURE SQL used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.00 seconds
+      
+
+69         
+70         data CHIP;
+71         	set CHIP;
+72         	rename PHI_Plan_Code = plancode;
+73         
+74         	dffm_GCQ = GCQ - mean_GCQ;
+75         	dffm_HWDC = HWDC - mean_HWDC;
+76         	dffm_PDRat = PDRat - mean_PDRat;
+77         	dffm_HPRat = HPRat - mean_HPRat;
+78         run;
+
+NOTE: Missing values were generated as a result of performing an operation on missing values.
+      Each place is given by: (Number of times) at (Line):(Column).
+      13 at 74:17   11 at 75:19   11 at 76:21   10 at 77:21   
+NOTE: There were 32 observations read from the data set WORK.CHIP.
+NOTE: The data set WORK.CHIP has 32 observations and 46 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+      
+
+79         
+80         proc freq data=CHIP;
+81         	table plancode;
+82         run;
+
+NOTE: There were 32 observations read from the data set WORK.CHIP.
+NOTE: The PROCEDURE FREQ printed page 7.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.07 seconds
+      cpu time            0.01 seconds
+      
+
+83         
+84         proc sort data=plancode; by plancode; run;
+
+NOTE: There were 198 observations read from the data set WORK.PLANCODE.
+NOTE: The data set WORK.PLANCODE has 198 observations and 10 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+      
+
+85         proc sort data=CHIP; by plancode; run;
+
+NOTE: There were 32 observations read from the data set WORK.CHIP.
+NOTE: The data set WORK.CHIP has 32 observations and 46 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+86         
+87         data CHIP;
+88         	merge CHIP(in=a) plancode(keep=MCONAME PLANCODE SERVICEAREA);
+89         	by plancode;
+90         	if a;
+91         run;
+
+NOTE: There were 32 observations read from the data set WORK.CHIP.
+NOTE: There were 198 observations read from the data set WORK.PLANCODE.
+NOTE: The data set WORK.CHIP has 32 observations and 48 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+      
+
+92         
+93         proc sort data=CHIP; by SERVICEAREA MCONAME; run;
+
+NOTE: There were 32 observations read from the data set WORK.CHIP.
+NOTE: The data set WORK.CHIP has 32 observations and 48 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+      
+
+94         
+95         
+96         *** ------ STAR Child prepare data
+96       ! ---------------------------------------------------------------------------------------
+96       ! -------------------;
+97         proc import datafile="..\DATA\Temp_Data\SC23_out.xlsx"
+98         	dbms=XLSX
+99         	out=SC23
+100        	;
+101        	sheet="SC23";
+102        run;
+
+NOTE: One or more variables were converted because the data type is not supported by the V9 
+      engine. For more details, run with options MSGLEVEL=I.
+NOTE: The import data set has 44 observations and 46 variables.
+NOTE: WORK.SC23 data set was successfully created.
+NOTE: PROCEDURE IMPORT used (Total process time):
+      real time           0.07 seconds
+      cpu time            0.03 seconds
+      
+
+103        
+104        proc contents data=SC23 varnum;
+105        run;
+
+NOTE: PROCEDURE CONTENTS used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+      
+NOTE: The PROCEDURE CONTENTS printed page 8.
+
+106        
+107        proc sql;
+108        	create table STAR_Child as
+109        	select *
+110        		,avg(GCQ) as mean_GCQ
+111        		,avg(HWDC) as mean_HWDC
+112        		,avg(PDRat) as mean_PDRat
+113        		,avg(HPRat) as mean_HPRat
+114        		from SC23
+115        		;
+NOTE: The query requires remerging summary statistics back with the original data.
+NOTE: Table WORK.STAR_CHILD created, with 44 rows and 50 columns.
+
+116        quit;
+NOTE: PROCEDURE SQL used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.01 seconds
+      
+
+117        
+118        data STAR_Child;
+119        	set STAR_Child;
+120        	rename PHI_Plan_Code = plancode;
+121        
+122        	dffm_GCQ = GCQ - mean_GCQ;
+123        	dffm_HWDC = HWDC - mean_HWDC;
+124        	dffm_PDRat = PDRat - mean_PDRat;
+125        	dffm_HPRat = HPRat - mean_HPRat;
+126        run;
+
+NOTE: There were 44 observations read from the data set WORK.STAR_CHILD.
+NOTE: The data set WORK.STAR_CHILD has 44 observations and 54 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.00 seconds
+      
+
+127        
+128        proc sort data=STAR_Child; by plancode; run;
+
+NOTE: There were 44 observations read from the data set WORK.STAR_CHILD.
+NOTE: The data set WORK.STAR_CHILD has 44 observations and 54 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+      
+
+129        
+130        data STAR_Child;
+131        	merge STAR_Child(in=a) plancode(keep=MCONAME PLANCODE SERVICEAREA);
+132        	by plancode;
+133        	if a;
+134        run;
+
+NOTE: There were 44 observations read from the data set WORK.STAR_CHILD.
+NOTE: There were 198 observations read from the data set WORK.PLANCODE.
+NOTE: The data set WORK.STAR_CHILD has 44 observations and 56 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+      
+
+135        
+136        proc sort data=STAR_Child; by SERVICEAREA MCONAME; run;
+
+NOTE: There were 44 observations read from the data set WORK.STAR_CHILD.
+NOTE: The data set WORK.STAR_CHILD has 44 observations and 56 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.00 seconds
+      
+
+137        
+138        proc print data=STAR_Child noobs;
+139        	var plancode GCQ mean_GCQ dffm_GCQ;
+140        run;
+
+NOTE: There were 44 observations read from the data set WORK.STAR_CHILD.
+NOTE: The PROCEDURE PRINT printed page 9.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+141        
+142        
+143        *** ------ STAR Adult prepare data
+143      ! ---------------------------------------------------------------------------------------
+143      ! -------------------;
+144        proc import datafile="..\DATA\Temp_Data\SA23_out.xlsx"
+145        	dbms=XLSX
+146        	out=SA23
+147        	;
+148        	sheet="SA23";
+149        run;
+
+NOTE: One or more variables were converted because the data type is not supported by the V9 
+      engine. For more details, run with options MSGLEVEL=I.
+NOTE: The import data set has 44 observations and 46 variables.
+NOTE: WORK.SA23 data set was successfully created.
+NOTE: PROCEDURE IMPORT used (Total process time):
+      real time           0.09 seconds
+      cpu time            0.03 seconds
+      
+
+150        
+151        proc contents data=SA23 varnum;
+152        run;
+
+NOTE: PROCEDURE CONTENTS used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+NOTE: The PROCEDURE CONTENTS printed page 10.
+
+153        
+154        proc sql;
+155        	create table STAR_Adult as
+156        	select *
+157        		,avg(AtC) as mean_AtC
+158        		,avg(HWDC) as mean_HWDC
+159        		,avg(PDRat) as mean_PDRat
+160        		,avg(HPRat) as mean_HPRat
+161        		from SA23
+162        		;
+NOTE: The query requires remerging summary statistics back with the original data.
+NOTE: Table WORK.STAR_ADULT created, with 44 rows and 50 columns.
+
+163        quit;
+NOTE: PROCEDURE SQL used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.01 seconds
+      
+
+164        
+165        data STAR_Adult;
+166        	set STAR_Adult;
+167        	rename PHI_Plan_Code = plancode;
+168        
+169        	dffm_AtC = AtC - mean_AtC;
+170        	dffm_HWDC = HWDC - mean_HWDC;
+171        	dffm_PDRat = PDRat - mean_PDRat;
+172        	dffm_HPRat = HPRat - mean_HPRat;
+173        run;
+
+NOTE: Missing values were generated as a result of performing an operation on missing values.
+      Each place is given by: (Number of times) at (Line):(Column).
+      1 at 170:19   
+NOTE: There were 44 observations read from the data set WORK.STAR_ADULT.
+NOTE: The data set WORK.STAR_ADULT has 44 observations and 54 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.00 seconds
+      
+
+174        
+175        proc sort data=STAR_Adult; by plancode; run;
+
+NOTE: There were 44 observations read from the data set WORK.STAR_ADULT.
+NOTE: The data set WORK.STAR_ADULT has 44 observations and 54 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.00 seconds
+      
+
+176        
+177        data STAR_Adult;
+178        	merge STAR_Adult(in=a) plancode(keep=MCONAME PLANCODE SERVICEAREA);
+179        	by plancode;
+180        	if a;
+181        run;
+
+NOTE: There were 44 observations read from the data set WORK.STAR_ADULT.
+NOTE: There were 198 observations read from the data set WORK.PLANCODE.
+NOTE: The data set WORK.STAR_ADULT has 44 observations and 56 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.00 seconds
+      
+
+182        
+183        proc sort data=STAR_Adult; by SERVICEAREA MCONAME; run;
+
+NOTE: There were 44 observations read from the data set WORK.STAR_ADULT.
+NOTE: The data set WORK.STAR_ADULT has 44 observations and 56 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+      
+
+184        
+185        
+186        *** ------ STAR + PLUS prepare data
+186      ! ---------------------------------------------------------------------------------------
+186      ! -------------------;
+187        proc import datafile="..\DATA\Temp_Data\SP23_out.xlsx"
+188        	dbms=XLSX
+189        	out=SP23
+190        	;
+191        	sheet="SP23";
+192        run;
+
+NOTE: One or more variables were converted because the data type is not supported by the V9 
+      engine. For more details, run with options MSGLEVEL=I.
+NOTE: The import data set has 27 observations and 46 variables.
+NOTE: WORK.SP23 data set was successfully created.
+NOTE: PROCEDURE IMPORT used (Total process time):
+      real time           0.07 seconds
+      cpu time            0.01 seconds
+      
+
+193        
+194        proc contents data=SP23 varnum;
+195        run;
+
+NOTE: PROCEDURE CONTENTS used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+NOTE: The PROCEDURE CONTENTS printed page 11.
+
+196        
+197        proc sql;
+198        	create table STARPLUS as
+199        	select *
+200        		,avg(AtC) as mean_AtC
+201        		,avg(HWDC) as mean_HWDC
+202        		,avg(PDRat) as mean_PDRat
+203        		,avg(HPRat) as mean_HPRat
+204        		from SP23
+205        		;
+NOTE: The query requires remerging summary statistics back with the original data.
+NOTE: Table WORK.STARPLUS created, with 27 rows and 50 columns.
+
+206        quit;
+NOTE: PROCEDURE SQL used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+      
+
+207        
+208        data STARPLUS;
+209        	set STARPLUS;
+210        	rename PHI_Plan_Code = plancode;
+211        
+212        	dffm_AtC = AtC - mean_AtC;
+213        	dffm_HWDC = HWDC - mean_HWDC;
+214        	dffm_PDRat = PDRat - mean_PDRat;
+215        	dffm_HPRat = HPRat - mean_HPRat;
+216        run;
+
+NOTE: There were 27 observations read from the data set WORK.STARPLUS.
+NOTE: The data set WORK.STARPLUS has 27 observations and 54 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.00 seconds
+      
+
+217        
+218        proc sort data=STARPLUS; by plancode; run;
+
+NOTE: There were 27 observations read from the data set WORK.STARPLUS.
+NOTE: The data set WORK.STARPLUS has 27 observations and 54 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.00 seconds
+      
+
+219        
+220        data STARPLUS;
+221        	merge STARPLUS(in=a) plancode(keep=MCONAME PLANCODE SERVICEAREA);
+222        	by plancode;
+223        	if a;
+224        run;
+
+NOTE: There were 27 observations read from the data set WORK.STARPLUS.
+NOTE: There were 198 observations read from the data set WORK.PLANCODE.
+NOTE: The data set WORK.STARPLUS has 27 observations and 56 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+      
+
+225        
+226        proc sort data=STARPLUS; by SERVICEAREA MCONAME; run;
+
+NOTE: There were 27 observations read from the data set WORK.STARPLUS.
+NOTE: The data set WORK.STARPLUS has 27 observations and 56 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.00 seconds
+      
+
+227        
+228        
+229        *** ------ STAR Kids prepare data
+229      ! ---------------------------------------------------------------------------------------
+229      ! -------------------;
+230        proc import datafile="..\DATA\Temp_Data\SK23_out.xlsx"
+231        	dbms=XLSX
+232        	out=SK23
+233        	;
+234        	sheet="SK23";
+235        run;
+
+NOTE: One or more variables were converted because the data type is not supported by the V9 
+      engine. For more details, run with options MSGLEVEL=I.
+NOTE: The import data set has 28 observations and 82 variables.
+NOTE: WORK.SK23 data set was successfully created.
+NOTE: PROCEDURE IMPORT used (Total process time):
+      real time           0.08 seconds
+      cpu time            0.04 seconds
+      
+
+236        
+237        proc contents data=SK23 varnum;
+238        run;
+
+NOTE: PROCEDURE CONTENTS used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+NOTE: The PROCEDURE CONTENTS printed page 12.
+
+239        
+240        proc sql;
+241        	create table STARKids as
+242        	select *
+243        		,avg(HPRat) as mean_HPRat
+244        		,avg(AtC) as mean_AtC
+245        		,avg(SpecTher) as mean_SpecTher
+246        		,avg(APM) as mean_APM
+247        		,avg(coord) as mean_coord
+248        		,avg(GNI) as mean_GNI
+249        		,avg(transit) as mean_transit
+250        		,avg(BHCoun) as mean_BHCoun
+251        		from SK23
+252        		;
+NOTE: The query requires remerging summary statistics back with the original data.
+NOTE: Table WORK.STARKIDS created, with 28 rows and 90 columns.
+
+253        quit;
+NOTE: PROCEDURE SQL used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.00 seconds
+      
+
+254        
+255        data STARKids;
+256        	set STARKids;
+257        	rename PHI_Plan_Code = plancode;
+258        
+259        	dffm_HPRat = HPRat - mean_HPRat;
+260        	dffm_AtC = AtC - mean_AtC;
+261        	dffm_SpecTher = SpecTher - mean_SpecTher;
+262        	dffm_APM = APM - mean_APM;
+263        	dffm_coord = coord - mean_coord;
+264        	dffm_GNI = GNI - mean_GNI;
+265        	dffm_transit = transit - mean_transit;
+266        	dffm_BHCoun = BHCoun - mean_BHCoun;
+267        run;
+
+NOTE: Missing values were generated as a result of performing an operation on missing values.
+      Each place is given by: (Number of times) at (Line):(Column).
+      2 at 261:27   2 at 263:21   3 at 265:25   2 at 266:23   
+NOTE: There were 28 observations read from the data set WORK.STARKIDS.
+NOTE: The data set WORK.STARKIDS has 28 observations and 98 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.00 seconds
+      
+
+268        
+269        proc sort data=STARKids; by plancode; run;
+
+NOTE: There were 28 observations read from the data set WORK.STARKIDS.
+NOTE: The data set WORK.STARKIDS has 28 observations and 98 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+      
+
+270        
+271        data STARKids;
+272        	merge STARKids(in=a) plancode(keep=MCONAME PLANCODE SERVICEAREA);
+273        	by plancode;
+274        	if a;
+275        run;
+
+NOTE: There were 28 observations read from the data set WORK.STARKIDS.
+NOTE: There were 198 observations read from the data set WORK.PLANCODE.
+NOTE: The data set WORK.STARKIDS has 28 observations and 100 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+      
+
+276        
+277        proc sort data=STARKids; by SERVICEAREA MCONAME; run;
+
+NOTE: There were 28 observations read from the data set WORK.STARKIDS.
+NOTE: The data set WORK.STARKIDS has 28 observations and 100 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+      
+
+278        
+279        
+280        ** ---- Create frequency table for the rating guide
+280      ! ---------------------------------------------;
+281        proc freq data=CHIP nlevels;
+282        	table HPRat_rat /list out=RG_CH_HPRat;
+283        	table GCQ_rat /list out=RG_CH_GCQ;
+284        	table HWDC_rat /list out=RG_CH_HWDC;
+285        	table PDRat_rat /list out=RG_CH_PDRat;
+286        run;
+
+NOTE: There were 32 observations read from the data set WORK.CHIP.
+NOTE: The data set WORK.RG_CH_HPRAT has 5 observations and 3 variables.
+NOTE: The data set WORK.RG_CH_GCQ has 6 observations and 3 variables.
+NOTE: The data set WORK.RG_CH_HWDC has 5 observations and 3 variables.
+NOTE: The data set WORK.RG_CH_PDRAT has 5 observations and 3 variables.
+NOTE: The PROCEDURE FREQ printed page 13.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.08 seconds
+      cpu time            0.04 seconds
+      
+
+287        
+288        proc freq data=STAR_Child nlevels;
+289        	table HPRat_rat /list out=RG_SC_HPRat;
+290        	table GCQ_rat /list out=RG_SC_GCQ;
+291        	table HWDC_rat /list out=RG_SC_HWDC;
+292        	table PDRat_rat /list out=RG_SC_PDRat;
+293        run;
+
+NOTE: There were 44 observations read from the data set WORK.STAR_CHILD.
+NOTE: The data set WORK.RG_SC_HPRAT has 5 observations and 3 variables.
+NOTE: The data set WORK.RG_SC_GCQ has 4 observations and 3 variables.
+NOTE: The data set WORK.RG_SC_HWDC has 5 observations and 3 variables.
+NOTE: The data set WORK.RG_SC_PDRAT has 5 observations and 3 variables.
+NOTE: The PROCEDURE FREQ printed page 14.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.07 seconds
+      cpu time            0.03 seconds
+      
+
+294        
+295        proc freq data=STAR_Adult nlevels;
+296        	table HPRat_rat /list out=RG_SA_HPRat;
+297        	table AtC_rat /list out=RG_SA_AtC;
+298        	table HWDC_rat /list out=RG_SA_HWDC;
+299        	table PDRat_rat /list out=RG_SA_PDRat;
+300        run;
+
+NOTE: There were 44 observations read from the data set WORK.STAR_ADULT.
+NOTE: The data set WORK.RG_SA_HPRAT has 5 observations and 3 variables.
+NOTE: The data set WORK.RG_SA_ATC has 5 observations and 3 variables.
+NOTE: The data set WORK.RG_SA_HWDC has 6 observations and 3 variables.
+NOTE: The data set WORK.RG_SA_PDRAT has 5 observations and 3 variables.
+NOTE: The PROCEDURE FREQ printed page 15.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.07 seconds
+      cpu time            0.03 seconds
+      
+
+301        
+302        proc freq data=STARPLUS nlevels;
+303        	table HPRat_rat /list out=RG_SP_HPRat;
+304        	table AtC_rat /list out=RG_SP_AtC;
+305        	table HWDC_rat /list out=RG_SP_HWDC;
+306        	table PDRat_rat /list out=RG_SP_PDRat;
+307        run;
+
+NOTE: There were 27 observations read from the data set WORK.STARPLUS.
+NOTE: The data set WORK.RG_SP_HPRAT has 5 observations and 3 variables.
+NOTE: The data set WORK.RG_SP_ATC has 4 observations and 3 variables.
+NOTE: The data set WORK.RG_SP_HWDC has 5 observations and 3 variables.
+NOTE: The data set WORK.RG_SP_PDRAT has 4 observations and 3 variables.
+NOTE: The PROCEDURE FREQ printed page 16.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.08 seconds
+      cpu time            0.04 seconds
+      
+
+308        
+309        proc freq data=STARKids nlevels;
+310        	table HPRat_rat /list out=RG_SK_HPRat;
+311        	table AtC_rat /list out=RG_SK_AtC;
+312        	table SpecTher_rat /list out=RG_SK_SpecTher;
+313        	table APM_rat /list out=RG_SK_APM;
+314        	table coord_rat /list out=RG_SK_coord;
+315        	table GNI_rat /list out=RG_SK_GNI;
+316        	table transit_rat /list out=RG_SK_transit;
+317        	table BHCoun_rat /list out=RG_SK_BHCoun;
+318        run;
+
+NOTE: There were 28 observations read from the data set WORK.STARKIDS.
+NOTE: The data set WORK.RG_SK_HPRAT has 5 observations and 3 variables.
+NOTE: The data set WORK.RG_SK_ATC has 5 observations and 3 variables.
+NOTE: The data set WORK.RG_SK_SPECTHER has 6 observations and 3 variables.
+NOTE: The data set WORK.RG_SK_APM has 4 observations and 3 variables.
+NOTE: The data set WORK.RG_SK_COORD has 6 observations and 3 variables.
+NOTE: The data set WORK.RG_SK_GNI has 5 observations and 3 variables.
+NOTE: The data set WORK.RG_SK_TRANSIT has 4 observations and 3 variables.
+NOTE: The data set WORK.RG_SK_BHCOUN has 6 observations and 3 variables.
+NOTE: The PROCEDURE FREQ printed page 17.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.16 seconds
+      cpu time            0.01 seconds
+      
+
+319        
+320        
+321        ** ---- Exporting using DDE
+321      ! --------------------------------------------------------------------;
+322        filename ddeopen DDE 'Excel|system';
+323        
+324        * template file;
+325        x '"C:\Users\liqian\Dropbox (UFL)\Project_QL\2022_MCO_Report_Cards\SFY2022-2023\3.
+325      ! Survey\DATA\Raw_Data\MCO Report Cards Survey Ratings Template.xlsx"';
+326        
+327        ** ---- fill quotas and weighting
+327      ! ----------------------------------------------------------------------------;
+328        filename CHpop dde "Excel|Quotas and Weighting!r4c10:r35c15" notab;
+329        data _null_;
+330        	set CH_population;
+331        	file CHpop;
+332        	put PHI_Plan_Name '09'x PHI_SA_Name '09'x PLAN_CD '09'x
+333        		sample_pool_members;
+334        run;
+
+NOTE: The file CHPOP is:
+      DDE Session,
+      SESSION=Excel|Quotas and Weighting!r4c10:r35c15,
+      RECFM=V,LRECL=32767
+
+NOTE: 32 records were written to the file CHPOP.
+      The minimum record length was 25.
+      The maximum record length was 61.
+NOTE: There were 32 observations read from the data set WORK.CH_POPULATION.
+NOTE: DATA statement used (Total process time):
+      real time           0.08 seconds
+      cpu time            0.03 seconds
+      
+
+335        
+336        filename SCpop dde "Excel|Quotas and Weighting!r4c18:r47c23" notab;
+337        data _null_;
+338        	set SC_population;
+339        	file SCpop;
+340        	put PHI_Plan_Name '09'x PHI_SA_Name '09'x PLAN_CD '09'x
+341        		sample_pool_members;
+342        run;
+
+NOTE: The file SCPOP is:
+      DDE Session,
+      SESSION=Excel|Quotas and Weighting!r4c18:r47c23,
+      RECFM=V,LRECL=32767
+
+NOTE: 44 records were written to the file SCPOP.
+      The minimum record length was 27.
+      The maximum record length was 65.
+NOTE: There were 44 observations read from the data set WORK.SC_POPULATION.
+NOTE: DATA statement used (Total process time):
+      real time           0.22 seconds
+      cpu time            0.03 seconds
+      
+
+343        
+344        filename SApop dde "Excel|Quotas and Weighting!r4c26:r47c31" notab;
+345        data _null_;
+346        	set SA_population;
+347        	file SApop;
+348        	put PHI_Plan_Name '09'x PHI_SA_Name '09'x PLAN_CD '09'x
+349        		sample_pool_members;
+350        run;
+
+NOTE: The file SAPOP is:
+      DDE Session,
+      SESSION=Excel|Quotas and Weighting!r4c26:r47c31,
+      RECFM=V,LRECL=32767
+
+NOTE: 44 records were written to the file SAPOP.
+      The minimum record length was 27.
+      The maximum record length was 65.
+NOTE: There were 44 observations read from the data set WORK.SA_POPULATION.
+NOTE: DATA statement used (Total process time):
+      real time           0.09 seconds
+      cpu time            0.01 seconds
+      
+
+351        
+352        filename SPpop dde "Excel|Quotas and Weighting!r4c34:r30c39" notab;
+353        data _null_;
+354        	set SP_population;
+355        	file SPpop;
+356        	put PHI_Plan_Name '09'x PHI_SA_Name '09'x PLAN_CD '09'x
+357        		sample_pool_members;
+358        run;
+
+NOTE: The file SPPOP is:
+      DDE Session,
+      SESSION=Excel|Quotas and Weighting!r4c34:r30c39,
+      RECFM=V,LRECL=32767
+
+NOTE: 27 records were written to the file SPPOP.
+      The minimum record length was 27.
+      The maximum record length was 57.
+NOTE: There were 27 observations read from the data set WORK.SP_POPULATION.
+NOTE: DATA statement used (Total process time):
+      real time           1.30 seconds
+      cpu time            0.01 seconds
+      
+
+359        
+360        filename SKpop dde "Excel|Quotas and Weighting!r4c42:r31c47" notab;
+361        data _null_;
+362        	set SK_population;
+363        	file SKpop;
+364        	put PHI_Plan_Name '09'x PHI_SA_Name '09'x PLAN_CD '09'x
+365        		sample_pool_members;
+366        run;
+
+NOTE: The file SKPOP is:
+      DDE Session,
+      SESSION=Excel|Quotas and Weighting!r4c42:r31c47,
+      RECFM=V,LRECL=32767
+
+NOTE: 28 records were written to the file SKPOP.
+      The minimum record length was 28.
+      The maximum record length was 57.
+NOTE: There were 28 observations read from the data set WORK.SK_POPULATION.
+NOTE: DATA statement used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.01 seconds
+      
+
+367        
+368        ** ---- fill ratings
+368      ! ----------------------------------------------------------------------------;
+369        filename CHGCQ dde "Excel|CHIP-Getting Care Quickly!r3c1:r34c11" notab;
+370        filename CHHWDC dde "Excel|CHIP-HWDC!r3c1:r34c11" notab;
+371        filename CHPDRat dde "Excel|CHIP-Rate Personal Doctor!r3c1:r34c11" notab;
+372        filename CHHPRat dde "Excel|CHIP-Rate Health Plan!r3c1:r34c11" notab;
+373        
+374        data _null_;
+375        	set CHIP;
+376        
+377        	file CHGCQ;
+378        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+379        		GCQ_den '09'x GCQ '09'x mean_GCQ '09'x dffm_GCQ '09'x
+380        		GCQ_stderr '09'x GCQ_relb '09'x GCQ_sig '09'x GCQ_rat
+381        		;
+382        
+383        	file CHHWDC;
+384        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+385        		HWDC_den '09'x HWDC '09'x mean_HWDC '09'x dffm_HWDC '09'x
+386        		HWDC_stderr '09'x HWDC_relb '09'x HWDC_sig '09'x HWDC_rat
+387        		;
+388        
+389        	file CHPDRat;
+390        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+391        		PDRat_den '09'x PDRat '09'x mean_PDRat '09'x dffm_PDRat '09'x
+392        		PDRat_stderr '09'x PDRat_relb '09'x PDRat_sig '09'x PDRat_rat
+393        		;
+394        
+395        	file CHHPRat;
+396        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+397        		HPRat_den '09'x HPRat '09'x mean_HPRat '09'x dffm_HPRat '09'x
+398        		HPRat_stderr '09'x HPRat_relb '09'x HPRat_sig '09'x HPRat_rat
+399        		;
+400        run;
+
+NOTE: The file CHGCQ is:
+      DDE Session,
+      SESSION=Excel|CHIP-Getting Care Quickly!r3c1:r34c11,
+      RECFM=V,LRECL=32767
+
+NOTE: The file CHHWDC is:
+      DDE Session,
+      SESSION=Excel|CHIP-HWDC!r3c1:r34c11,RECFM=V,
+      LRECL=32767
+
+NOTE: The file CHPDRAT is:
+      DDE Session,
+      SESSION=Excel|CHIP-Rate Personal Doctor!r3c1:r34c11,
+      RECFM=V,LRECL=32767
+
+NOTE: The file CHHPRAT is:
+      DDE Session,
+      SESSION=Excel|CHIP-Rate Health Plan!r3c1:r34c11,
+      RECFM=V,LRECL=32767
+
+NOTE: 32 records were written to the file CHGCQ.
+      The minimum record length was 52.
+      The maximum record length was 125.
+NOTE: 32 records were written to the file CHHWDC.
+      The minimum record length was 53.
+      The maximum record length was 124.
+NOTE: 32 records were written to the file CHPDRAT.
+      The minimum record length was 53.
+      The maximum record length was 126.
+NOTE: 32 records were written to the file CHHPRAT.
+      The minimum record length was 53.
+      The maximum record length was 126.
+NOTE: There were 32 observations read from the data set WORK.CHIP.
+NOTE: DATA statement used (Total process time):
+      real time           0.24 seconds
+      cpu time            0.06 seconds
+      
+
+401        
+402        
+403        filename SCHPRat dde "Excel|STAR Child-Rate Health Plan!r3c1:r46c11" notab;
+404        filename SCGCQ dde "Excel|STAR Child-Getting Care Quickly!r3c1:r46c11" notab;
+405        filename SCHWDC dde "Excel|STAR Child-HWDC!r3c1:r46c11" notab;
+406        filename SCPDRat dde "Excel|STAR Child-Rate Personal Doctor!r3c1:r46c11" notab;
+407        
+408        data _null_;
+409        	set STAR_Child;
+410        
+411        	file SCHPRat;
+412        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+413        		HPRat_den '09'x HPRat '09'x mean_HPRat '09'x dffm_HPRat '09'x
+414        		HPRat_stderr '09'x HPRat_relb '09'x HPRat_sig '09'x HPRat_rat
+415        		;
+416        
+417        	file SCGCQ;
+418        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+419        		GCQ_den '09'x GCQ '09'x mean_GCQ '09'x dffm_GCQ '09'x
+420        		GCQ_stderr '09'x GCQ_relb '09'x GCQ_sig '09'x GCQ_rat
+421        		;
+422        
+423        	file SCHWDC;
+424        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+425        		HWDC_den '09'x HWDC '09'x mean_HWDC '09'x dffm_HWDC '09'x
+426        		HWDC_stderr '09'x HWDC_relb '09'x HWDC_sig '09'x HWDC_rat
+427        		;
+428        
+429        	file SCPDRat;
+430        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+431        		PDRat_den '09'x PDRat '09'x mean_PDRat '09'x dffm_PDRat '09'x
+432        		PDRat_stderr '09'x PDRat_relb '09'x PDRat_sig '09'x PDRat_rat
+433        		;
+434        run;
+
+NOTE: The file SCHPRAT is:
+      DDE Session,
+      SESSION=Excel|STAR Child-Rate Health Plan!r3c1:r46c11,
+      RECFM=V,LRECL=32767
+
+NOTE: The file SCGCQ is:
+      DDE Session,
+      SESSION=Excel|STAR Child-Getting Care Quickly!r3c1:r46c11,
+      RECFM=V,LRECL=32767
+
+NOTE: The file SCHWDC is:
+      DDE Session,
+      SESSION=Excel|STAR Child-HWDC!r3c1:r46c11,
+      RECFM=V,LRECL=32767
+
+NOTE: The file SCPDRAT is:
+      DDE Session,
+      SESSION=Excel|STAR Child-Rate Personal Doctor!r3c1:r46c11,
+      RECFM=V,LRECL=32767
+
+NOTE: 44 records were written to the file SCHPRAT.
+      The minimum record length was 99.
+      The maximum record length was 125.
+NOTE: 44 records were written to the file SCGCQ.
+      The minimum record length was 100.
+      The maximum record length was 124.
+NOTE: 44 records were written to the file SCHWDC.
+      The minimum record length was 99.
+      The maximum record length was 124.
+NOTE: 44 records were written to the file SCPDRAT.
+      The minimum record length was 100.
+      The maximum record length was 125.
+NOTE: There were 44 observations read from the data set WORK.STAR_CHILD.
+NOTE: DATA statement used (Total process time):
+      real time           0.23 seconds
+      cpu time            0.04 seconds
+      
+
+435        
+436        filename SAHPRat dde "Excel|STAR Adult-Rate Health Plan!r3c1:r46c11" notab;
+437        filename SAAtC dde "Excel|STAR Adult-Getting Treat!r3c1:r46c13" notab;
+438        filename SAHWDC dde "Excel|STAR Adult-HWDC!r3c1:r46c11" notab;
+439        filename SAPDRat dde "Excel|STAR Adult-Rate Personal Doctor!r3c1:r46c11" notab;
+440        
+441        data _null_;
+442        	set STAR_Adult;
+443        
+444        	file SAHPRat;
+445        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+446        		HPRat_den '09'x HPRat '09'x mean_HPRat '09'x dffm_HPRat '09'x
+447        		HPRat_stderr '09'x HPRat_relb '09'x HPRat_sig '09'x HPRat_rat
+448        		;
+449        
+450        	file SAAtC;
+451        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+452        		GCQ '09'x GNC '09'x
+453        		AtC_den '09'x AtC '09'x mean_AtC '09'x dffm_AtC '09'x
+454        		AtC_stderr '09'x AtC_relb '09'x AtC_sig '09'x AtC_rat
+455        		;
+456        
+457        	file SAHWDC;
+458        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+459        		HWDC_den '09'x HWDC '09'x mean_HWDC '09'x dffm_HWDC '09'x
+460        		HWDC_stderr '09'x HWDC_relb '09'x HWDC_sig '09'x HWDC_rat
+461        		;
+462        
+463        	file SAPDRat;
+464        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+465        		PDRat_den '09'x PDRat '09'x mean_PDRat '09'x dffm_PDRat '09'x
+466        		PDRat_stderr '09'x PDRat_relb '09'x PDRat_sig '09'x PDRat_rat
+467        		;
+468        run;
+
+NOTE: The file SAHPRAT is:
+      DDE Session,
+      SESSION=Excel|STAR Adult-Rate Health Plan!r3c1:r46c11,
+      RECFM=V,LRECL=32767
+
+NOTE: The file SAATC is:
+      DDE Session,
+      SESSION=Excel|STAR Adult-Getting Treat!r3c1:r46c13,
+      RECFM=V,LRECL=32767
+
+NOTE: The file SAHWDC is:
+      DDE Session,
+      SESSION=Excel|STAR Adult-HWDC!r3c1:r46c11,
+      RECFM=V,LRECL=32767
+
+NOTE: The file SAPDRAT is:
+      DDE Session,
+      SESSION=Excel|STAR Adult-Rate Personal Doctor!r3c1:r46c11,
+      RECFM=V,LRECL=32767
+
+NOTE: 44 records were written to the file SAHPRAT.
+      The minimum record length was 98.
+      The maximum record length was 127.
+NOTE: 44 records were written to the file SAATC.
+      The minimum record length was 127.
+      The maximum record length was 152.
+NOTE: 44 records were written to the file SAHWDC.
+      The minimum record length was 81.
+      The maximum record length was 124.
+NOTE: 44 records were written to the file SAPDRAT.
+      The minimum record length was 99.
+      The maximum record length was 123.
+NOTE: There were 44 observations read from the data set WORK.STAR_ADULT.
+NOTE: DATA statement used (Total process time):
+      real time           0.31 seconds
+      cpu time            0.03 seconds
+      
+
+469        
+470        
+471        filename SPHPRat dde "Excel|STAR+PLUS-Rate Health Plan!r3c1:r29c11" notab;
+472        filename SPAtC dde "Excel|STAR+PLUS-Getting Treat!r3c1:r29c13" notab;
+473        filename SPHWDC dde "Excel|STAR+PLUS-HWDC!r3c1:r29c11" notab;
+474        filename SPPDRat dde "Excel|STAR+PLUS-Rate Personal Doctor!r3c1:r29c11" notab;
+475        
+476        data _null_;
+477        	set STARPLUS;
+478        
+479        	file SPHPRat;
+480        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+481        		HPRat_den '09'x HPRat '09'x mean_HPRat '09'x dffm_HPRat '09'x
+482        		HPRat_stderr '09'x HPRat_relb '09'x HPRat_sig '09'x HPRat_rat
+483        		;
+484        
+485        	file SPAtC;
+486        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+487        		GCQ '09'x GNC '09'x
+488        		AtC_den '09'x AtC '09'x mean_AtC '09'x dffm_AtC '09'x
+489        		AtC_stderr '09'x AtC_relb '09'x AtC_sig '09'x AtC_rat
+490        		;
+491        
+492        	file SPHWDC;
+493        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+494        		HWDC_den '09'x HWDC '09'x mean_HWDC '09'x dffm_HWDC '09'x
+495        		HWDC_stderr '09'x HWDC_relb '09'x HWDC_sig '09'x HWDC_rat
+496        		;
+497        
+498        	file SPPDRat;
+499        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+500        		PDRat_den '09'x PDRat '09'x mean_PDRat '09'x dffm_PDRat '09'x
+501        		PDRat_stderr '09'x PDRat_relb '09'x PDRat_sig '09'x PDRat_rat
+502        		;
+503        run;
+
+NOTE: The file SPHPRAT is:
+      DDE Session,
+      SESSION=Excel|STAR+PLUS-Rate Health Plan!r3c1:r29c11,
+      RECFM=V,LRECL=32767
+
+NOTE: The file SPATC is:
+      DDE Session,
+      SESSION=Excel|STAR+PLUS-Getting Treat!r3c1:r29c13,
+      RECFM=V,LRECL=32767
+
+NOTE: The file SPHWDC is:
+      DDE Session,
+      SESSION=Excel|STAR+PLUS-HWDC!r3c1:r29c11,
+      RECFM=V,LRECL=32767
+
+NOTE: The file SPPDRAT is:
+      DDE Session,
+      SESSION=Excel|STAR+PLUS-Rate Personal Doctor!r3c1:r29c11,
+      RECFM=V,LRECL=32767
+
+NOTE: 27 records were written to the file SPHPRAT.
+      The minimum record length was 98.
+      The maximum record length was 121.
+NOTE: 27 records were written to the file SPATC.
+      The minimum record length was 125.
+      The maximum record length was 144.
+NOTE: 27 records were written to the file SPHWDC.
+      The minimum record length was 97.
+      The maximum record length was 117.
+NOTE: 27 records were written to the file SPPDRAT.
+      The minimum record length was 97.
+      The maximum record length was 118.
+NOTE: There were 27 observations read from the data set WORK.STARPLUS.
+NOTE: DATA statement used (Total process time):
+      real time           0.26 seconds
+      cpu time            0.06 seconds
+      
+
+504        
+505        filename SKHPRat dde "Excel|STAR Kids-Rate Health Plan!r3c1:r30c11" notab;
+506        filename SKAtC dde "Excel|STAR Kids-Getting Treat!r3c1:r30c13" notab;
+507        filename SKSpec dde "Excel|STAR Kids-Special Therapy!r3c1:r30c11" notab;
+508        filename SKAPM dde "Excel|STAR Kids-Prescriptions!r3c1:r30c11" notab;
+509        filename SKcoord dde "Excel|STAR Kids-Care Coordination!r3c1:r30c11" notab;
+510        filename SKGNI dde "Excel|STAR Kids-Getting Information!r3c1:r30c11" notab;
+511        filename SKtrans dde "Excel|STAR Kids-Transition!r3c1:r30c11" notab;
+512        filename SKBHCoun dde "Excel|STAR Kids-Counseling!r3c1:r30c11" notab;
+513        
+514        data _null_;
+515        	set STARKids;
+516        
+517        	file SKHPRat;
+518        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+519        		HPRat_den '09'x HPRat '09'x mean_HPRat '09'x dffm_HPRat '09'x
+520        		HPRat_stderr '09'x HPRat_relb '09'x HPRat_sig '09'x HPRat_rat
+521        		;
+522        
+523        	file SKAtC;
+524        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+525        		GCQ '09'x GNC '09'x
+526        		AtC_den '09'x AtC '09'x mean_AtC '09'x dffm_AtC '09'x
+527        		AtC_stderr '09'x AtC_relb '09'x AtC_sig '09'x AtC_rat
+528        		;
+529        
+530        	file SKSpec;
+531        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+532        		SpecTher_den '09'x SpecTher '09'x mean_SpecTher '09'x dffm_SpecTher '09'x
+533        		SpecTher_stderr '09'x SpecTher_relb '09'x SpecTher_sig '09'x SpecTher_rat
+534        		;
+535        
+536        	file SKAPM;
+537        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+538        		APM_den '09'x APM '09'x mean_APM '09'x dffm_APM '09'x
+539        		APM_stderr '09'x APM_relb '09'x APM_sig '09'x APM_rat
+540        		;
+541        
+542        	file SKcoord;
+543        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+544        		coord_den '09'x coord '09'x mean_coord '09'x dffm_coord '09'x
+545        		coord_stderr '09'x coord_relb '09'x coord_sig '09'x coord_rat
+546        		;
+547        
+548        	file SKGNI;
+549        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+550        		GNI_den '09'x GNI '09'x mean_GNI '09'x dffm_GNI '09'x
+551        		GNI_stderr '09'x GNI_relb '09'x GNI_sig '09'x GNI_rat
+552        		;
+553        
+554        	file SKtrans;
+555        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+556        		transit_den '09'x transit '09'x mean_transit '09'x dffm_transit '09'x
+557        		transit_stderr '09'x transit_relb '09'x transit_sig '09'x transit_rat
+558        		;
+559        
+560        	file SKBHCoun;
+561        	put MCONAME '09'x SERVICEAREA '09'x plancode '09'x
+562        		BHCoun_den '09'x BHCoun '09'x mean_BHCoun '09'x dffm_BHCoun '09'x
+563        		BHCoun_stderr '09'x BHCoun_relb '09'x BHCoun_sig '09'x BHCoun_rat
+564        		;
+565        run;
+
+NOTE: The file SKHPRAT is:
+      DDE Session,
+      SESSION=Excel|STAR Kids-Rate Health Plan!r3c1:r30c11,
+      RECFM=V,LRECL=32767
+
+NOTE: The file SKATC is:
+      DDE Session,
+      SESSION=Excel|STAR Kids-Getting Treat!r3c1:r30c13,
+      RECFM=V,LRECL=32767
+
+NOTE: The file SKSPEC is:
+      DDE Session,
+      SESSION=Excel|STAR Kids-Special Therapy!r3c1:r30c11,
+      RECFM=V,LRECL=32767
+
+NOTE: The file SKAPM is:
+      DDE Session,
+      SESSION=Excel|STAR Kids-Prescriptions!r3c1:r30c11,
+      RECFM=V,LRECL=32767
+
+NOTE: The file SKCOORD is:
+      DDE Session,
+      SESSION=Excel|STAR Kids-Care Coordination!r3c1:r30c11,
+      RECFM=V,LRECL=32767
+
+NOTE: The file SKGNI is:
+      DDE Session,
+      SESSION=Excel|STAR Kids-Getting Information!r3c1:r30c11,
+      RECFM=V,LRECL=32767
+
+NOTE: The file SKTRANS is:
+      DDE Session,
+      SESSION=Excel|STAR Kids-Transition!r3c1:r30c11,
+      RECFM=V,LRECL=32767
+
+NOTE: The file SKBHCOUN is:
+      DDE Session,
+      SESSION=Excel|STAR Kids-Counseling!r3c1:r30c11,
+      RECFM=V,LRECL=32767
+
+NOTE: 28 records were written to the file SKHPRAT.
+      The minimum record length was 101.
+      The maximum record length was 130.
+NOTE: 28 records were written to the file SKATC.
+      The minimum record length was 128.
+      The maximum record length was 156.
+NOTE: 28 records were written to the file SKSPEC.
+      The minimum record length was 56.
+      The maximum record length was 129.
+NOTE: 28 records were written to the file SKAPM.
+      The minimum record length was 101.
+      The maximum record length was 129.
+NOTE: 28 records were written to the file SKCOORD.
+      The minimum record length was 56.
+      The maximum record length was 133.
+NOTE: 28 records were written to the file SKGNI.
+      The minimum record length was 100.
+      The maximum record length was 129.
+NOTE: 28 records were written to the file SKTRANS.
+      The minimum record length was 56.
+      The maximum record length was 127.
+NOTE: 28 records were written to the file SKBHCOUN.
+      The minimum record length was 56.
+      The maximum record length was 129.
+NOTE: There were 28 observations read from the data set WORK.STARKIDS.
+NOTE: DATA statement used (Total process time):
+      real time           0.49 seconds
+      cpu time            0.10 seconds
+      
+
+566        
+567        
+568        ** ---- fill rating guide
+568      ! ----------------------------------------------------------------------------;
+569        
+570        %macro fill_rating_guide(freqdata, ratevar, address);
+571        	filename RateGu dde "Excel|&address." notab;
+572        	data _null_;
+573        		set &freqdata.(where=(&ratevar. ne .));
+574        		file RateGu;
+575        		put &ratevar. '09'x count
+576        			;
+577        	run;
+578        %mend fill_rating_guide;
+579        
+580        %fill_rating_guide(RG_CH_HPRat, HPRat_rat, CHIP-Rate Health Plan!r4c15:r8C16);
+MLOGIC(FILL_RATING_GUIDE):  Beginning execution.
+MLOGIC(FILL_RATING_GUIDE):  Parameter FREQDATA has value RG_CH_HPRat
+MLOGIC(FILL_RATING_GUIDE):  Parameter RATEVAR has value HPRat_rat
+MLOGIC(FILL_RATING_GUIDE):  Parameter ADDRESS has value CHIP-Rate Health Plan!r4c15:r8C16
+SYMBOLGEN:  Macro variable ADDRESS resolves to CHIP-Rate Health Plan!r4c15:r8C16
+MPRINT(FILL_RATING_GUIDE):   filename RateGu dde "Excel|CHIP-Rate Health Plan!r4c15:r8C16" notab;
+MPRINT(FILL_RATING_GUIDE):   data _null_;
+SYMBOLGEN:  Macro variable FREQDATA resolves to RG_CH_HPRat
+SYMBOLGEN:  Macro variable RATEVAR resolves to HPRat_rat
+MPRINT(FILL_RATING_GUIDE):   set RG_CH_HPRat(where=(HPRat_rat ne .));
+MPRINT(FILL_RATING_GUIDE):   file RateGu;
+SYMBOLGEN:  Macro variable RATEVAR resolves to HPRat_rat
+MPRINT(FILL_RATING_GUIDE):   put HPRat_rat '09'x count ;
+MPRINT(FILL_RATING_GUIDE):   run;
+
+NOTE: The file RATEGU is:
+      DDE Session,
+      SESSION=Excel|CHIP-Rate Health Plan!r4c15:r8C16,
+      RECFM=V,LRECL=32767
+
+NOTE: 4 records were written to the file RATEGU.
+      The minimum record length was 4.
+      The maximum record length was 5.
+NOTE: There were 4 observations read from the data set WORK.RG_CH_HPRAT.
+      WHERE HPRat_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.07 seconds
+      cpu time            0.01 seconds
+      
+
+MLOGIC(FILL_RATING_GUIDE):  Ending execution.
+581        %fill_rating_guide(RG_CH_GCQ, GCQ_rat, CHIP-Getting Care Quickly!r4c15:r8C16);
+MLOGIC(FILL_RATING_GUIDE):  Beginning execution.
+MLOGIC(FILL_RATING_GUIDE):  Parameter FREQDATA has value RG_CH_GCQ
+MLOGIC(FILL_RATING_GUIDE):  Parameter RATEVAR has value GCQ_rat
+MLOGIC(FILL_RATING_GUIDE):  Parameter ADDRESS has value CHIP-Getting Care Quickly!r4c15:r8C16
+SYMBOLGEN:  Macro variable ADDRESS resolves to CHIP-Getting Care Quickly!r4c15:r8C16
+MPRINT(FILL_RATING_GUIDE):   filename RateGu dde "Excel|CHIP-Getting Care Quickly!r4c15:r8C16" 
+notab;
+MPRINT(FILL_RATING_GUIDE):   data _null_;
+SYMBOLGEN:  Macro variable FREQDATA resolves to RG_CH_GCQ
+SYMBOLGEN:  Macro variable RATEVAR resolves to GCQ_rat
+MPRINT(FILL_RATING_GUIDE):   set RG_CH_GCQ(where=(GCQ_rat ne .));
+MPRINT(FILL_RATING_GUIDE):   file RateGu;
+SYMBOLGEN:  Macro variable RATEVAR resolves to GCQ_rat
+MPRINT(FILL_RATING_GUIDE):   put GCQ_rat '09'x count ;
+MPRINT(FILL_RATING_GUIDE):   run;
+
+NOTE: The file RATEGU is:
+      DDE Session,
+      SESSION=Excel|CHIP-Getting Care Quickly!r4c15:r8C16,
+      RECFM=V,LRECL=32767
+
+NOTE: 5 records were written to the file RATEGU.
+      The minimum record length was 4.
+      The maximum record length was 4.
+NOTE: There were 5 observations read from the data set WORK.RG_CH_GCQ.
+      WHERE GCQ_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.01 seconds
+      
+
+MLOGIC(FILL_RATING_GUIDE):  Ending execution.
+582        %fill_rating_guide(RG_CH_HWDC, HWDC_rat, CHIP-HWDC!r4c15:r8C16);
+MLOGIC(FILL_RATING_GUIDE):  Beginning execution.
+MLOGIC(FILL_RATING_GUIDE):  Parameter FREQDATA has value RG_CH_HWDC
+MLOGIC(FILL_RATING_GUIDE):  Parameter RATEVAR has value HWDC_rat
+MLOGIC(FILL_RATING_GUIDE):  Parameter ADDRESS has value CHIP-HWDC!r4c15:r8C16
+SYMBOLGEN:  Macro variable ADDRESS resolves to CHIP-HWDC!r4c15:r8C16
+MPRINT(FILL_RATING_GUIDE):   filename RateGu dde "Excel|CHIP-HWDC!r4c15:r8C16" notab;
+MPRINT(FILL_RATING_GUIDE):   data _null_;
+SYMBOLGEN:  Macro variable FREQDATA resolves to RG_CH_HWDC
+SYMBOLGEN:  Macro variable RATEVAR resolves to HWDC_rat
+MPRINT(FILL_RATING_GUIDE):   set RG_CH_HWDC(where=(HWDC_rat ne .));
+MPRINT(FILL_RATING_GUIDE):   file RateGu;
+SYMBOLGEN:  Macro variable RATEVAR resolves to HWDC_rat
+MPRINT(FILL_RATING_GUIDE):   put HWDC_rat '09'x count ;
+MPRINT(FILL_RATING_GUIDE):   run;
+
+NOTE: The file RATEGU is:
+      DDE Session,
+      SESSION=Excel|CHIP-HWDC!r4c15:r8C16,RECFM=V,
+      LRECL=32767
+
+NOTE: 4 records were written to the file RATEGU.
+      The minimum record length was 4.
+      The maximum record length was 4.
+NOTE: There were 4 observations read from the data set WORK.RG_CH_HWDC.
+      WHERE HWDC_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.00 seconds
+      
+
+MLOGIC(FILL_RATING_GUIDE):  Ending execution.
+583        %fill_rating_guide(RG_CH_PDRat, PDRat_rat, CHIP-Rate Personal Doctor!r4c15:r8C16);
+MLOGIC(FILL_RATING_GUIDE):  Beginning execution.
+MLOGIC(FILL_RATING_GUIDE):  Parameter FREQDATA has value RG_CH_PDRat
+MLOGIC(FILL_RATING_GUIDE):  Parameter RATEVAR has value PDRat_rat
+MLOGIC(FILL_RATING_GUIDE):  Parameter ADDRESS has value CHIP-Rate Personal Doctor!r4c15:r8C16
+SYMBOLGEN:  Macro variable ADDRESS resolves to CHIP-Rate Personal Doctor!r4c15:r8C16
+MPRINT(FILL_RATING_GUIDE):   filename RateGu dde "Excel|CHIP-Rate Personal Doctor!r4c15:r8C16" 
+notab;
+MPRINT(FILL_RATING_GUIDE):   data _null_;
+SYMBOLGEN:  Macro variable FREQDATA resolves to RG_CH_PDRat
+SYMBOLGEN:  Macro variable RATEVAR resolves to PDRat_rat
+MPRINT(FILL_RATING_GUIDE):   set RG_CH_PDRat(where=(PDRat_rat ne .));
+MPRINT(FILL_RATING_GUIDE):   file RateGu;
+SYMBOLGEN:  Macro variable RATEVAR resolves to PDRat_rat
+MPRINT(FILL_RATING_GUIDE):   put PDRat_rat '09'x count ;
+MPRINT(FILL_RATING_GUIDE):   run;
+
+NOTE: The file RATEGU is:
+      DDE Session,
+      SESSION=Excel|CHIP-Rate Personal Doctor!r4c15:r8C16,
+      RECFM=V,LRECL=32767
+
+NOTE: 4 records were written to the file RATEGU.
+      The minimum record length was 4.
+      The maximum record length was 4.
+NOTE: There were 4 observations read from the data set WORK.RG_CH_PDRAT.
+      WHERE PDRat_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.09 seconds
+      cpu time            0.03 seconds
+      
+
+MLOGIC(FILL_RATING_GUIDE):  Ending execution.
+584        
+585        %fill_rating_guide(RG_SC_HPRat, HPRat_rat, STAR Child-Rate Health Plan!r4c15:r8C16);
+MLOGIC(FILL_RATING_GUIDE):  Beginning execution.
+MLOGIC(FILL_RATING_GUIDE):  Parameter FREQDATA has value RG_SC_HPRat
+MLOGIC(FILL_RATING_GUIDE):  Parameter RATEVAR has value HPRat_rat
+MLOGIC(FILL_RATING_GUIDE):  Parameter ADDRESS has value STAR Child-Rate Health Plan!r4c15:r8C16
+SYMBOLGEN:  Macro variable ADDRESS resolves to STAR Child-Rate Health Plan!r4c15:r8C16
+MPRINT(FILL_RATING_GUIDE):   filename RateGu dde "Excel|STAR Child-Rate Health Plan!r4c15:r8C16" 
+notab;
+MPRINT(FILL_RATING_GUIDE):   data _null_;
+SYMBOLGEN:  Macro variable FREQDATA resolves to RG_SC_HPRat
+SYMBOLGEN:  Macro variable RATEVAR resolves to HPRat_rat
+MPRINT(FILL_RATING_GUIDE):   set RG_SC_HPRat(where=(HPRat_rat ne .));
+MPRINT(FILL_RATING_GUIDE):   file RateGu;
+SYMBOLGEN:  Macro variable RATEVAR resolves to HPRat_rat
+MPRINT(FILL_RATING_GUIDE):   put HPRat_rat '09'x count ;
+MPRINT(FILL_RATING_GUIDE):   run;
+
+NOTE: The file RATEGU is:
+      DDE Session,
+      SESSION=Excel|STAR Child-Rate Health Plan!r4c15:r8C16,
+      RECFM=V,LRECL=32767
+
+NOTE: 5 records were written to the file RATEGU.
+      The minimum record length was 4.
+      The maximum record length was 5.
+NOTE: There were 5 observations read from the data set WORK.RG_SC_HPRAT.
+      WHERE HPRat_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.08 seconds
+      cpu time            0.03 seconds
+      
+
+MLOGIC(FILL_RATING_GUIDE):  Ending execution.
+586        %fill_rating_guide(RG_SC_GCQ, GCQ_rat, STAR Child-Getting Care Quickly!r4c15:r8C16);
+MLOGIC(FILL_RATING_GUIDE):  Beginning execution.
+MLOGIC(FILL_RATING_GUIDE):  Parameter FREQDATA has value RG_SC_GCQ
+MLOGIC(FILL_RATING_GUIDE):  Parameter RATEVAR has value GCQ_rat
+MLOGIC(FILL_RATING_GUIDE):  Parameter ADDRESS has value STAR Child-Getting Care 
+      Quickly!r4c15:r8C16
+SYMBOLGEN:  Macro variable ADDRESS resolves to STAR Child-Getting Care Quickly!r4c15:r8C16
+MPRINT(FILL_RATING_GUIDE):   filename RateGu dde "Excel|STAR Child-Getting Care 
+Quickly!r4c15:r8C16" notab;
+MPRINT(FILL_RATING_GUIDE):   data _null_;
+SYMBOLGEN:  Macro variable FREQDATA resolves to RG_SC_GCQ
+SYMBOLGEN:  Macro variable RATEVAR resolves to GCQ_rat
+MPRINT(FILL_RATING_GUIDE):   set RG_SC_GCQ(where=(GCQ_rat ne .));
+MPRINT(FILL_RATING_GUIDE):   file RateGu;
+SYMBOLGEN:  Macro variable RATEVAR resolves to GCQ_rat
+MPRINT(FILL_RATING_GUIDE):   put GCQ_rat '09'x count ;
+MPRINT(FILL_RATING_GUIDE):   run;
+
+NOTE: The file RATEGU is:
+      DDE Session,
+      SESSION=Excel|STAR Child-Getting Care Quickly!r4c15:r8C16,
+      RECFM=V,LRECL=32767
+
+NOTE: 4 records were written to the file RATEGU.
+      The minimum record length was 4.
+      The maximum record length was 5.
+NOTE: There were 4 observations read from the data set WORK.RG_SC_GCQ.
+      WHERE GCQ_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.03 seconds
+      
+
+MLOGIC(FILL_RATING_GUIDE):  Ending execution.
+587        %fill_rating_guide(RG_SC_HWDC, HWDC_rat, STAR Child-HWDC!r4c15:r8C16);
+MLOGIC(FILL_RATING_GUIDE):  Beginning execution.
+MLOGIC(FILL_RATING_GUIDE):  Parameter FREQDATA has value RG_SC_HWDC
+MLOGIC(FILL_RATING_GUIDE):  Parameter RATEVAR has value HWDC_rat
+MLOGIC(FILL_RATING_GUIDE):  Parameter ADDRESS has value STAR Child-HWDC!r4c15:r8C16
+SYMBOLGEN:  Macro variable ADDRESS resolves to STAR Child-HWDC!r4c15:r8C16
+MPRINT(FILL_RATING_GUIDE):   filename RateGu dde "Excel|STAR Child-HWDC!r4c15:r8C16" notab;
+MPRINT(FILL_RATING_GUIDE):   data _null_;
+SYMBOLGEN:  Macro variable FREQDATA resolves to RG_SC_HWDC
+SYMBOLGEN:  Macro variable RATEVAR resolves to HWDC_rat
+MPRINT(FILL_RATING_GUIDE):   set RG_SC_HWDC(where=(HWDC_rat ne .));
+MPRINT(FILL_RATING_GUIDE):   file RateGu;
+SYMBOLGEN:  Macro variable RATEVAR resolves to HWDC_rat
+MPRINT(FILL_RATING_GUIDE):   put HWDC_rat '09'x count ;
+MPRINT(FILL_RATING_GUIDE):   run;
+
+NOTE: The file RATEGU is:
+      DDE Session,
+      SESSION=Excel|STAR Child-HWDC!r4c15:r8C16,
+      RECFM=V,LRECL=32767
+
+NOTE: 5 records were written to the file RATEGU.
+      The minimum record length was 4.
+      The maximum record length was 5.
+NOTE: There were 5 observations read from the data set WORK.RG_SC_HWDC.
+      WHERE HWDC_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.00 seconds
+      
+
+MLOGIC(FILL_RATING_GUIDE):  Ending execution.
+588        %fill_rating_guide(RG_SC_PDRat, PDRat_rat, STAR Child-Rate Personal Doctor!r4c15:r8C16)
+588      ! ;
+MLOGIC(FILL_RATING_GUIDE):  Beginning execution.
+MLOGIC(FILL_RATING_GUIDE):  Parameter FREQDATA has value RG_SC_PDRat
+MLOGIC(FILL_RATING_GUIDE):  Parameter RATEVAR has value PDRat_rat
+MLOGIC(FILL_RATING_GUIDE):  Parameter ADDRESS has value STAR Child-Rate Personal 
+      Doctor!r4c15:r8C16
+SYMBOLGEN:  Macro variable ADDRESS resolves to STAR Child-Rate Personal Doctor!r4c15:r8C16
+MPRINT(FILL_RATING_GUIDE):   filename RateGu dde "Excel|STAR Child-Rate Personal 
+Doctor!r4c15:r8C16" notab;
+MPRINT(FILL_RATING_GUIDE):   data _null_;
+SYMBOLGEN:  Macro variable FREQDATA resolves to RG_SC_PDRat
+SYMBOLGEN:  Macro variable RATEVAR resolves to PDRat_rat
+MPRINT(FILL_RATING_GUIDE):   set RG_SC_PDRat(where=(PDRat_rat ne .));
+MPRINT(FILL_RATING_GUIDE):   file RateGu;
+SYMBOLGEN:  Macro variable RATEVAR resolves to PDRat_rat
+MPRINT(FILL_RATING_GUIDE):   put PDRat_rat '09'x count ;
+MPRINT(FILL_RATING_GUIDE):   run;
+
+NOTE: The file RATEGU is:
+      DDE Session,
+      SESSION=Excel|STAR Child-Rate Personal Doctor!r4c15:r8C16,
+      RECFM=V,LRECL=32767
+
+NOTE: 5 records were written to the file RATEGU.
+      The minimum record length was 4.
+      The maximum record length was 5.
+NOTE: There were 5 observations read from the data set WORK.RG_SC_PDRAT.
+      WHERE PDRat_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.13 seconds
+      cpu time            0.01 seconds
+      
+
+MLOGIC(FILL_RATING_GUIDE):  Ending execution.
+589        
+590        %fill_rating_guide(RG_SA_HPRat, HPRat_rat, STAR Adult-Rate Health Plan!r4c15:r8C16);
+MLOGIC(FILL_RATING_GUIDE):  Beginning execution.
+MLOGIC(FILL_RATING_GUIDE):  Parameter FREQDATA has value RG_SA_HPRat
+MLOGIC(FILL_RATING_GUIDE):  Parameter RATEVAR has value HPRat_rat
+MLOGIC(FILL_RATING_GUIDE):  Parameter ADDRESS has value STAR Adult-Rate Health Plan!r4c15:r8C16
+SYMBOLGEN:  Macro variable ADDRESS resolves to STAR Adult-Rate Health Plan!r4c15:r8C16
+MPRINT(FILL_RATING_GUIDE):   filename RateGu dde "Excel|STAR Adult-Rate Health Plan!r4c15:r8C16" 
+notab;
+MPRINT(FILL_RATING_GUIDE):   data _null_;
+SYMBOLGEN:  Macro variable FREQDATA resolves to RG_SA_HPRat
+SYMBOLGEN:  Macro variable RATEVAR resolves to HPRat_rat
+MPRINT(FILL_RATING_GUIDE):   set RG_SA_HPRat(where=(HPRat_rat ne .));
+MPRINT(FILL_RATING_GUIDE):   file RateGu;
+SYMBOLGEN:  Macro variable RATEVAR resolves to HPRat_rat
+MPRINT(FILL_RATING_GUIDE):   put HPRat_rat '09'x count ;
+MPRINT(FILL_RATING_GUIDE):   run;
+
+NOTE: The file RATEGU is:
+      DDE Session,
+      SESSION=Excel|STAR Adult-Rate Health Plan!r4c15:r8C16,
+      RECFM=V,LRECL=32767
+
+NOTE: 5 records were written to the file RATEGU.
+      The minimum record length was 4.
+      The maximum record length was 5.
+NOTE: There were 5 observations read from the data set WORK.RG_SA_HPRAT.
+      WHERE HPRat_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.08 seconds
+      cpu time            0.03 seconds
+      
+
+MLOGIC(FILL_RATING_GUIDE):  Ending execution.
+591        %fill_rating_guide(RG_SA_AtC, AtC_rat, STAR Adult-Getting Treat!r4c17:r8C18);
+MLOGIC(FILL_RATING_GUIDE):  Beginning execution.
+MLOGIC(FILL_RATING_GUIDE):  Parameter FREQDATA has value RG_SA_AtC
+MLOGIC(FILL_RATING_GUIDE):  Parameter RATEVAR has value AtC_rat
+MLOGIC(FILL_RATING_GUIDE):  Parameter ADDRESS has value STAR Adult-Getting Treat!r4c17:r8C18
+SYMBOLGEN:  Macro variable ADDRESS resolves to STAR Adult-Getting Treat!r4c17:r8C18
+MPRINT(FILL_RATING_GUIDE):   filename RateGu dde "Excel|STAR Adult-Getting Treat!r4c17:r8C18" 
+notab;
+MPRINT(FILL_RATING_GUIDE):   data _null_;
+SYMBOLGEN:  Macro variable FREQDATA resolves to RG_SA_AtC
+SYMBOLGEN:  Macro variable RATEVAR resolves to AtC_rat
+MPRINT(FILL_RATING_GUIDE):   set RG_SA_AtC(where=(AtC_rat ne .));
+MPRINT(FILL_RATING_GUIDE):   file RateGu;
+SYMBOLGEN:  Macro variable RATEVAR resolves to AtC_rat
+MPRINT(FILL_RATING_GUIDE):   put AtC_rat '09'x count ;
+MPRINT(FILL_RATING_GUIDE):   run;
+
+NOTE: The file RATEGU is:
+      DDE Session,
+      SESSION=Excel|STAR Adult-Getting Treat!r4c17:r8C18,
+      RECFM=V,LRECL=32767
+
+NOTE: 5 records were written to the file RATEGU.
+      The minimum record length was 4.
+      The maximum record length was 5.
+NOTE: There were 5 observations read from the data set WORK.RG_SA_ATC.
+      WHERE AtC_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.11 seconds
+      cpu time            0.01 seconds
+      
+
+MLOGIC(FILL_RATING_GUIDE):  Ending execution.
+592        %fill_rating_guide(RG_SA_HWDC, HWDC_rat, STAR Adult-HWDC!r4c15:r8C16);
+MLOGIC(FILL_RATING_GUIDE):  Beginning execution.
+MLOGIC(FILL_RATING_GUIDE):  Parameter FREQDATA has value RG_SA_HWDC
+MLOGIC(FILL_RATING_GUIDE):  Parameter RATEVAR has value HWDC_rat
+MLOGIC(FILL_RATING_GUIDE):  Parameter ADDRESS has value STAR Adult-HWDC!r4c15:r8C16
+SYMBOLGEN:  Macro variable ADDRESS resolves to STAR Adult-HWDC!r4c15:r8C16
+MPRINT(FILL_RATING_GUIDE):   filename RateGu dde "Excel|STAR Adult-HWDC!r4c15:r8C16" notab;
+MPRINT(FILL_RATING_GUIDE):   data _null_;
+SYMBOLGEN:  Macro variable FREQDATA resolves to RG_SA_HWDC
+SYMBOLGEN:  Macro variable RATEVAR resolves to HWDC_rat
+MPRINT(FILL_RATING_GUIDE):   set RG_SA_HWDC(where=(HWDC_rat ne .));
+MPRINT(FILL_RATING_GUIDE):   file RateGu;
+SYMBOLGEN:  Macro variable RATEVAR resolves to HWDC_rat
+MPRINT(FILL_RATING_GUIDE):   put HWDC_rat '09'x count ;
+MPRINT(FILL_RATING_GUIDE):   run;
+
+NOTE: The file RATEGU is:
+      DDE Session,
+      SESSION=Excel|STAR Adult-HWDC!r4c15:r8C16,
+      RECFM=V,LRECL=32767
+
+NOTE: 5 records were written to the file RATEGU.
+      The minimum record length was 4.
+      The maximum record length was 5.
+NOTE: There were 5 observations read from the data set WORK.RG_SA_HWDC.
+      WHERE HWDC_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.08 seconds
+      cpu time            0.01 seconds
+      
+
+MLOGIC(FILL_RATING_GUIDE):  Ending execution.
+593        %fill_rating_guide(RG_SA_PDRat, PDRat_rat, STAR Adult-Rate Personal Doctor!r4c15:r8C16)
+593      ! ;
+MLOGIC(FILL_RATING_GUIDE):  Beginning execution.
+MLOGIC(FILL_RATING_GUIDE):  Parameter FREQDATA has value RG_SA_PDRat
+MLOGIC(FILL_RATING_GUIDE):  Parameter RATEVAR has value PDRat_rat
+MLOGIC(FILL_RATING_GUIDE):  Parameter ADDRESS has value STAR Adult-Rate Personal 
+      Doctor!r4c15:r8C16
+SYMBOLGEN:  Macro variable ADDRESS resolves to STAR Adult-Rate Personal Doctor!r4c15:r8C16
+MPRINT(FILL_RATING_GUIDE):   filename RateGu dde "Excel|STAR Adult-Rate Personal 
+Doctor!r4c15:r8C16" notab;
+MPRINT(FILL_RATING_GUIDE):   data _null_;
+SYMBOLGEN:  Macro variable FREQDATA resolves to RG_SA_PDRat
+SYMBOLGEN:  Macro variable RATEVAR resolves to PDRat_rat
+MPRINT(FILL_RATING_GUIDE):   set RG_SA_PDRat(where=(PDRat_rat ne .));
+MPRINT(FILL_RATING_GUIDE):   file RateGu;
+SYMBOLGEN:  Macro variable RATEVAR resolves to PDRat_rat
+MPRINT(FILL_RATING_GUIDE):   put PDRat_rat '09'x count ;
+MPRINT(FILL_RATING_GUIDE):   run;
+
+NOTE: The file RATEGU is:
+      DDE Session,
+      SESSION=Excel|STAR Adult-Rate Personal Doctor!r4c15:r8C16,
+      RECFM=V,LRECL=32767
+
+NOTE: 5 records were written to the file RATEGU.
+      The minimum record length was 4.
+      The maximum record length was 5.
+NOTE: There were 5 observations read from the data set WORK.RG_SA_PDRAT.
+      WHERE PDRat_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.08 seconds
+      cpu time            0.01 seconds
+      
+
+MLOGIC(FILL_RATING_GUIDE):  Ending execution.
+594        
+595        %fill_rating_guide(RG_SP_HPRat, HPRat_rat, STAR+PLUS-Rate Health Plan!r4c15:r8C16);
+MLOGIC(FILL_RATING_GUIDE):  Beginning execution.
+MLOGIC(FILL_RATING_GUIDE):  Parameter FREQDATA has value RG_SP_HPRat
+MLOGIC(FILL_RATING_GUIDE):  Parameter RATEVAR has value HPRat_rat
+MLOGIC(FILL_RATING_GUIDE):  Parameter ADDRESS has value STAR+PLUS-Rate Health Plan!r4c15:r8C16
+SYMBOLGEN:  Macro variable ADDRESS resolves to STAR+PLUS-Rate Health Plan!r4c15:r8C16
+MPRINT(FILL_RATING_GUIDE):   filename RateGu dde "Excel|STAR+PLUS-Rate Health Plan!r4c15:r8C16" 
+notab;
+MPRINT(FILL_RATING_GUIDE):   data _null_;
+SYMBOLGEN:  Macro variable FREQDATA resolves to RG_SP_HPRat
+SYMBOLGEN:  Macro variable RATEVAR resolves to HPRat_rat
+MPRINT(FILL_RATING_GUIDE):   set RG_SP_HPRat(where=(HPRat_rat ne .));
+MPRINT(FILL_RATING_GUIDE):   file RateGu;
+SYMBOLGEN:  Macro variable RATEVAR resolves to HPRat_rat
+MPRINT(FILL_RATING_GUIDE):   put HPRat_rat '09'x count ;
+MPRINT(FILL_RATING_GUIDE):   run;
+
+NOTE: The file RATEGU is:
+      DDE Session,
+      SESSION=Excel|STAR+PLUS-Rate Health Plan!r4c15:r8C16,
+      RECFM=V,LRECL=32767
+
+NOTE: 5 records were written to the file RATEGU.
+      The minimum record length was 4.
+      The maximum record length was 4.
+NOTE: There were 5 observations read from the data set WORK.RG_SP_HPRAT.
+      WHERE HPRat_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.08 seconds
+      cpu time            0.01 seconds
+      
+
+MLOGIC(FILL_RATING_GUIDE):  Ending execution.
+596        %fill_rating_guide(RG_SP_AtC, AtC_rat, STAR+PLUS-Getting Treat!r4c17:r8C18);
+MLOGIC(FILL_RATING_GUIDE):  Beginning execution.
+MLOGIC(FILL_RATING_GUIDE):  Parameter FREQDATA has value RG_SP_AtC
+MLOGIC(FILL_RATING_GUIDE):  Parameter RATEVAR has value AtC_rat
+MLOGIC(FILL_RATING_GUIDE):  Parameter ADDRESS has value STAR+PLUS-Getting Treat!r4c17:r8C18
+SYMBOLGEN:  Macro variable ADDRESS resolves to STAR+PLUS-Getting Treat!r4c17:r8C18
+MPRINT(FILL_RATING_GUIDE):   filename RateGu dde "Excel|STAR+PLUS-Getting Treat!r4c17:r8C18" 
+notab;
+MPRINT(FILL_RATING_GUIDE):   data _null_;
+SYMBOLGEN:  Macro variable FREQDATA resolves to RG_SP_AtC
+SYMBOLGEN:  Macro variable RATEVAR resolves to AtC_rat
+MPRINT(FILL_RATING_GUIDE):   set RG_SP_AtC(where=(AtC_rat ne .));
+MPRINT(FILL_RATING_GUIDE):   file RateGu;
+SYMBOLGEN:  Macro variable RATEVAR resolves to AtC_rat
+MPRINT(FILL_RATING_GUIDE):   put AtC_rat '09'x count ;
+MPRINT(FILL_RATING_GUIDE):   run;
+
+NOTE: The file RATEGU is:
+      DDE Session,
+      SESSION=Excel|STAR+PLUS-Getting Treat!r4c17:r8C18,
+      RECFM=V,LRECL=32767
+
+NOTE: 4 records were written to the file RATEGU.
+      The minimum record length was 4.
+      The maximum record length was 4.
+NOTE: There were 4 observations read from the data set WORK.RG_SP_ATC.
+      WHERE AtC_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.08 seconds
+      cpu time            0.01 seconds
+      
+
+MLOGIC(FILL_RATING_GUIDE):  Ending execution.
+597        %fill_rating_guide(RG_SP_HWDC, HWDC_rat, STAR+PLUS-HWDC!r4c15:r8C16);
+MLOGIC(FILL_RATING_GUIDE):  Beginning execution.
+MLOGIC(FILL_RATING_GUIDE):  Parameter FREQDATA has value RG_SP_HWDC
+MLOGIC(FILL_RATING_GUIDE):  Parameter RATEVAR has value HWDC_rat
+MLOGIC(FILL_RATING_GUIDE):  Parameter ADDRESS has value STAR+PLUS-HWDC!r4c15:r8C16
+SYMBOLGEN:  Macro variable ADDRESS resolves to STAR+PLUS-HWDC!r4c15:r8C16
+MPRINT(FILL_RATING_GUIDE):   filename RateGu dde "Excel|STAR+PLUS-HWDC!r4c15:r8C16" notab;
+MPRINT(FILL_RATING_GUIDE):   data _null_;
+SYMBOLGEN:  Macro variable FREQDATA resolves to RG_SP_HWDC
+SYMBOLGEN:  Macro variable RATEVAR resolves to HWDC_rat
+MPRINT(FILL_RATING_GUIDE):   set RG_SP_HWDC(where=(HWDC_rat ne .));
+MPRINT(FILL_RATING_GUIDE):   file RateGu;
+SYMBOLGEN:  Macro variable RATEVAR resolves to HWDC_rat
+MPRINT(FILL_RATING_GUIDE):   put HWDC_rat '09'x count ;
+MPRINT(FILL_RATING_GUIDE):   run;
+
+NOTE: The file RATEGU is:
+      DDE Session,
+      SESSION=Excel|STAR+PLUS-HWDC!r4c15:r8C16,
+      RECFM=V,LRECL=32767
+
+NOTE: 5 records were written to the file RATEGU.
+      The minimum record length was 4.
+      The maximum record length was 4.
+NOTE: There were 5 observations read from the data set WORK.RG_SP_HWDC.
+      WHERE HWDC_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.11 seconds
+      cpu time            0.01 seconds
+      
+
+MLOGIC(FILL_RATING_GUIDE):  Ending execution.
+598        %fill_rating_guide(RG_SP_PDRat, PDRat_rat, STAR+PLUS-Rate Personal Doctor!r4c15:r8C16);
+MLOGIC(FILL_RATING_GUIDE):  Beginning execution.
+MLOGIC(FILL_RATING_GUIDE):  Parameter FREQDATA has value RG_SP_PDRat
+MLOGIC(FILL_RATING_GUIDE):  Parameter RATEVAR has value PDRat_rat
+MLOGIC(FILL_RATING_GUIDE):  Parameter ADDRESS has value STAR+PLUS-Rate Personal Doctor!r4c15:r8C16
+SYMBOLGEN:  Macro variable ADDRESS resolves to STAR+PLUS-Rate Personal Doctor!r4c15:r8C16
+MPRINT(FILL_RATING_GUIDE):   filename RateGu dde "Excel|STAR+PLUS-Rate Personal 
+Doctor!r4c15:r8C16" notab;
+MPRINT(FILL_RATING_GUIDE):   data _null_;
+SYMBOLGEN:  Macro variable FREQDATA resolves to RG_SP_PDRat
+SYMBOLGEN:  Macro variable RATEVAR resolves to PDRat_rat
+MPRINT(FILL_RATING_GUIDE):   set RG_SP_PDRat(where=(PDRat_rat ne .));
+MPRINT(FILL_RATING_GUIDE):   file RateGu;
+SYMBOLGEN:  Macro variable RATEVAR resolves to PDRat_rat
+MPRINT(FILL_RATING_GUIDE):   put PDRat_rat '09'x count ;
+MPRINT(FILL_RATING_GUIDE):   run;
+
+NOTE: The file RATEGU is:
+      DDE Session,
+      SESSION=Excel|STAR+PLUS-Rate Personal Doctor!r4c15:r8C16,
+      RECFM=V,LRECL=32767
+
+NOTE: 4 records were written to the file RATEGU.
+      The minimum record length was 4.
+      The maximum record length was 4.
+NOTE: There were 4 observations read from the data set WORK.RG_SP_PDRAT.
+      WHERE PDRat_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.08 seconds
+      cpu time            0.04 seconds
+      
+
+MLOGIC(FILL_RATING_GUIDE):  Ending execution.
+599        
+600        %fill_rating_guide(RG_SK_HPRat, HPRat_rat, STAR Kids-Rate Health Plan!r4c15:r8C16);
+MLOGIC(FILL_RATING_GUIDE):  Beginning execution.
+MLOGIC(FILL_RATING_GUIDE):  Parameter FREQDATA has value RG_SK_HPRat
+MLOGIC(FILL_RATING_GUIDE):  Parameter RATEVAR has value HPRat_rat
+MLOGIC(FILL_RATING_GUIDE):  Parameter ADDRESS has value STAR Kids-Rate Health Plan!r4c15:r8C16
+SYMBOLGEN:  Macro variable ADDRESS resolves to STAR Kids-Rate Health Plan!r4c15:r8C16
+MPRINT(FILL_RATING_GUIDE):   filename RateGu dde "Excel|STAR Kids-Rate Health Plan!r4c15:r8C16" 
+notab;
+MPRINT(FILL_RATING_GUIDE):   data _null_;
+SYMBOLGEN:  Macro variable FREQDATA resolves to RG_SK_HPRat
+SYMBOLGEN:  Macro variable RATEVAR resolves to HPRat_rat
+MPRINT(FILL_RATING_GUIDE):   set RG_SK_HPRat(where=(HPRat_rat ne .));
+MPRINT(FILL_RATING_GUIDE):   file RateGu;
+SYMBOLGEN:  Macro variable RATEVAR resolves to HPRat_rat
+MPRINT(FILL_RATING_GUIDE):   put HPRat_rat '09'x count ;
+MPRINT(FILL_RATING_GUIDE):   run;
+
+NOTE: The file RATEGU is:
+      DDE Session,
+      SESSION=Excel|STAR Kids-Rate Health Plan!r4c15:r8C16,
+      RECFM=V,LRECL=32767
+
+NOTE: 5 records were written to the file RATEGU.
+      The minimum record length was 4.
+      The maximum record length was 4.
+NOTE: There were 5 observations read from the data set WORK.RG_SK_HPRAT.
+      WHERE HPRat_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.01 seconds
+      
+
+MLOGIC(FILL_RATING_GUIDE):  Ending execution.
+601        %fill_rating_guide(RG_SK_AtC, AtC_rat, STAR Kids-Getting Treat!r4c17:r8C18);
+MLOGIC(FILL_RATING_GUIDE):  Beginning execution.
+MLOGIC(FILL_RATING_GUIDE):  Parameter FREQDATA has value RG_SK_AtC
+MLOGIC(FILL_RATING_GUIDE):  Parameter RATEVAR has value AtC_rat
+MLOGIC(FILL_RATING_GUIDE):  Parameter ADDRESS has value STAR Kids-Getting Treat!r4c17:r8C18
+SYMBOLGEN:  Macro variable ADDRESS resolves to STAR Kids-Getting Treat!r4c17:r8C18
+MPRINT(FILL_RATING_GUIDE):   filename RateGu dde "Excel|STAR Kids-Getting Treat!r4c17:r8C18" 
+notab;
+MPRINT(FILL_RATING_GUIDE):   data _null_;
+SYMBOLGEN:  Macro variable FREQDATA resolves to RG_SK_AtC
+SYMBOLGEN:  Macro variable RATEVAR resolves to AtC_rat
+MPRINT(FILL_RATING_GUIDE):   set RG_SK_AtC(where=(AtC_rat ne .));
+MPRINT(FILL_RATING_GUIDE):   file RateGu;
+SYMBOLGEN:  Macro variable RATEVAR resolves to AtC_rat
+MPRINT(FILL_RATING_GUIDE):   put AtC_rat '09'x count ;
+MPRINT(FILL_RATING_GUIDE):   run;
+
+NOTE: The file RATEGU is:
+      DDE Session,
+      SESSION=Excel|STAR Kids-Getting Treat!r4c17:r8C18,
+      RECFM=V,LRECL=32767
+
+NOTE: 5 records were written to the file RATEGU.
+      The minimum record length was 4.
+      The maximum record length was 5.
+NOTE: There were 5 observations read from the data set WORK.RG_SK_ATC.
+      WHERE AtC_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.00 seconds
+      
+
+MLOGIC(FILL_RATING_GUIDE):  Ending execution.
+602        %fill_rating_guide(RG_SK_SpecTher, SpecTher_rat, STAR Kids-Special Therapy!r4c15:r8C16)
+602      ! ;
+MLOGIC(FILL_RATING_GUIDE):  Beginning execution.
+MLOGIC(FILL_RATING_GUIDE):  Parameter FREQDATA has value RG_SK_SpecTher
+MLOGIC(FILL_RATING_GUIDE):  Parameter RATEVAR has value SpecTher_rat
+MLOGIC(FILL_RATING_GUIDE):  Parameter ADDRESS has value STAR Kids-Special Therapy!r4c15:r8C16
+SYMBOLGEN:  Macro variable ADDRESS resolves to STAR Kids-Special Therapy!r4c15:r8C16
+MPRINT(FILL_RATING_GUIDE):   filename RateGu dde "Excel|STAR Kids-Special Therapy!r4c15:r8C16" 
+notab;
+MPRINT(FILL_RATING_GUIDE):   data _null_;
+SYMBOLGEN:  Macro variable FREQDATA resolves to RG_SK_SpecTher
+SYMBOLGEN:  Macro variable RATEVAR resolves to SpecTher_rat
+MPRINT(FILL_RATING_GUIDE):   set RG_SK_SpecTher(where=(SpecTher_rat ne .));
+MPRINT(FILL_RATING_GUIDE):   file RateGu;
+SYMBOLGEN:  Macro variable RATEVAR resolves to SpecTher_rat
+MPRINT(FILL_RATING_GUIDE):   put SpecTher_rat '09'x count ;
+MPRINT(FILL_RATING_GUIDE):   run;
+
+NOTE: The file RATEGU is:
+      DDE Session,
+      SESSION=Excel|STAR Kids-Special Therapy!r4c15:r8C16,
+      RECFM=V,LRECL=32767
+
+NOTE: 5 records were written to the file RATEGU.
+      The minimum record length was 4.
+      The maximum record length was 4.
+NOTE: There were 5 observations read from the data set WORK.RG_SK_SPECTHER.
+      WHERE SpecTher_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.01 seconds
+      
+
+MLOGIC(FILL_RATING_GUIDE):  Ending execution.
+603        %fill_rating_guide(RG_SK_APM, APM_rat, STAR Kids-Prescriptions!r4c15:r8C16);
+MLOGIC(FILL_RATING_GUIDE):  Beginning execution.
+MLOGIC(FILL_RATING_GUIDE):  Parameter FREQDATA has value RG_SK_APM
+MLOGIC(FILL_RATING_GUIDE):  Parameter RATEVAR has value APM_rat
+MLOGIC(FILL_RATING_GUIDE):  Parameter ADDRESS has value STAR Kids-Prescriptions!r4c15:r8C16
+SYMBOLGEN:  Macro variable ADDRESS resolves to STAR Kids-Prescriptions!r4c15:r8C16
+MPRINT(FILL_RATING_GUIDE):   filename RateGu dde "Excel|STAR Kids-Prescriptions!r4c15:r8C16" 
+notab;
+MPRINT(FILL_RATING_GUIDE):   data _null_;
+SYMBOLGEN:  Macro variable FREQDATA resolves to RG_SK_APM
+SYMBOLGEN:  Macro variable RATEVAR resolves to APM_rat
+MPRINT(FILL_RATING_GUIDE):   set RG_SK_APM(where=(APM_rat ne .));
+MPRINT(FILL_RATING_GUIDE):   file RateGu;
+SYMBOLGEN:  Macro variable RATEVAR resolves to APM_rat
+MPRINT(FILL_RATING_GUIDE):   put APM_rat '09'x count ;
+MPRINT(FILL_RATING_GUIDE):   run;
+
+NOTE: The file RATEGU is:
+      DDE Session,
+      SESSION=Excel|STAR Kids-Prescriptions!r4c15:r8C16,
+      RECFM=V,LRECL=32767
+
+NOTE: 4 records were written to the file RATEGU.
+      The minimum record length was 4.
+      The maximum record length was 5.
+NOTE: There were 4 observations read from the data set WORK.RG_SK_APM.
+      WHERE APM_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.07 seconds
+      cpu time            0.01 seconds
+      
+
+MLOGIC(FILL_RATING_GUIDE):  Ending execution.
+604        %fill_rating_guide(RG_SK_coord, coord_rat, STAR Kids-Care Coordination!r4c15:r8C16);
+MLOGIC(FILL_RATING_GUIDE):  Beginning execution.
+MLOGIC(FILL_RATING_GUIDE):  Parameter FREQDATA has value RG_SK_coord
+MLOGIC(FILL_RATING_GUIDE):  Parameter RATEVAR has value coord_rat
+MLOGIC(FILL_RATING_GUIDE):  Parameter ADDRESS has value STAR Kids-Care Coordination!r4c15:r8C16
+SYMBOLGEN:  Macro variable ADDRESS resolves to STAR Kids-Care Coordination!r4c15:r8C16
+MPRINT(FILL_RATING_GUIDE):   filename RateGu dde "Excel|STAR Kids-Care Coordination!r4c15:r8C16" 
+notab;
+MPRINT(FILL_RATING_GUIDE):   data _null_;
+SYMBOLGEN:  Macro variable FREQDATA resolves to RG_SK_coord
+SYMBOLGEN:  Macro variable RATEVAR resolves to coord_rat
+MPRINT(FILL_RATING_GUIDE):   set RG_SK_coord(where=(coord_rat ne .));
+MPRINT(FILL_RATING_GUIDE):   file RateGu;
+SYMBOLGEN:  Macro variable RATEVAR resolves to coord_rat
+MPRINT(FILL_RATING_GUIDE):   put coord_rat '09'x count ;
+MPRINT(FILL_RATING_GUIDE):   run;
+
+NOTE: The file RATEGU is:
+      DDE Session,
+      SESSION=Excel|STAR Kids-Care Coordination!r4c15:r8C16,
+      RECFM=V,LRECL=32767
+
+NOTE: 5 records were written to the file RATEGU.
+      The minimum record length was 4.
+      The maximum record length was 4.
+NOTE: There were 5 observations read from the data set WORK.RG_SK_COORD.
+      WHERE coord_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.07 seconds
+      cpu time            0.03 seconds
+      
+
+MLOGIC(FILL_RATING_GUIDE):  Ending execution.
+605        %fill_rating_guide(RG_SK_GNI, GNI_rat, STAR Kids-Getting Information!r4c15:r8C16);
+MLOGIC(FILL_RATING_GUIDE):  Beginning execution.
+MLOGIC(FILL_RATING_GUIDE):  Parameter FREQDATA has value RG_SK_GNI
+MLOGIC(FILL_RATING_GUIDE):  Parameter RATEVAR has value GNI_rat
+MLOGIC(FILL_RATING_GUIDE):  Parameter ADDRESS has value STAR Kids-Getting Information!r4c15:r8C16
+SYMBOLGEN:  Macro variable ADDRESS resolves to STAR Kids-Getting Information!r4c15:r8C16
+MPRINT(FILL_RATING_GUIDE):   filename RateGu dde "Excel|STAR Kids-Getting 
+Information!r4c15:r8C16" notab;
+MPRINT(FILL_RATING_GUIDE):   data _null_;
+SYMBOLGEN:  Macro variable FREQDATA resolves to RG_SK_GNI
+SYMBOLGEN:  Macro variable RATEVAR resolves to GNI_rat
+MPRINT(FILL_RATING_GUIDE):   set RG_SK_GNI(where=(GNI_rat ne .));
+MPRINT(FILL_RATING_GUIDE):   file RateGu;
+SYMBOLGEN:  Macro variable RATEVAR resolves to GNI_rat
+MPRINT(FILL_RATING_GUIDE):   put GNI_rat '09'x count ;
+MPRINT(FILL_RATING_GUIDE):   run;
+
+NOTE: The file RATEGU is:
+      DDE Session,
+      SESSION=Excel|STAR Kids-Getting Information!r4c15:r8C16,
+      RECFM=V,LRECL=32767
+
+NOTE: 5 records were written to the file RATEGU.
+      The minimum record length was 4.
+      The maximum record length was 5.
+NOTE: There were 5 observations read from the data set WORK.RG_SK_GNI.
+      WHERE GNI_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.01 seconds
+      
+
+MLOGIC(FILL_RATING_GUIDE):  Ending execution.
+606        %fill_rating_guide(RG_SK_transit, transit_rat, STAR Kids-Transition!r4c15:r8C16);
+MLOGIC(FILL_RATING_GUIDE):  Beginning execution.
+MLOGIC(FILL_RATING_GUIDE):  Parameter FREQDATA has value RG_SK_transit
+MLOGIC(FILL_RATING_GUIDE):  Parameter RATEVAR has value transit_rat
+MLOGIC(FILL_RATING_GUIDE):  Parameter ADDRESS has value STAR Kids-Transition!r4c15:r8C16
+SYMBOLGEN:  Macro variable ADDRESS resolves to STAR Kids-Transition!r4c15:r8C16
+MPRINT(FILL_RATING_GUIDE):   filename RateGu dde "Excel|STAR Kids-Transition!r4c15:r8C16" notab;
+MPRINT(FILL_RATING_GUIDE):   data _null_;
+SYMBOLGEN:  Macro variable FREQDATA resolves to RG_SK_transit
+SYMBOLGEN:  Macro variable RATEVAR resolves to transit_rat
+MPRINT(FILL_RATING_GUIDE):   set RG_SK_transit(where=(transit_rat ne .));
+MPRINT(FILL_RATING_GUIDE):   file RateGu;
+SYMBOLGEN:  Macro variable RATEVAR resolves to transit_rat
+MPRINT(FILL_RATING_GUIDE):   put transit_rat '09'x count ;
+MPRINT(FILL_RATING_GUIDE):   run;
+
+NOTE: The file RATEGU is:
+      DDE Session,
+      SESSION=Excel|STAR Kids-Transition!r4c15:r8C16,
+      RECFM=V,LRECL=32767
+
+NOTE: 3 records were written to the file RATEGU.
+      The minimum record length was 4.
+      The maximum record length was 5.
+NOTE: There were 3 observations read from the data set WORK.RG_SK_TRANSIT.
+      WHERE transit_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.01 seconds
+      
+
+MLOGIC(FILL_RATING_GUIDE):  Ending execution.
+607        %fill_rating_guide(RG_SK_BHCoun, BHCoun_rat, STAR Kids-Counseling!r4c15:r8C16);
+MLOGIC(FILL_RATING_GUIDE):  Beginning execution.
+MLOGIC(FILL_RATING_GUIDE):  Parameter FREQDATA has value RG_SK_BHCoun
+MLOGIC(FILL_RATING_GUIDE):  Parameter RATEVAR has value BHCoun_rat
+MLOGIC(FILL_RATING_GUIDE):  Parameter ADDRESS has value STAR Kids-Counseling!r4c15:r8C16
+SYMBOLGEN:  Macro variable ADDRESS resolves to STAR Kids-Counseling!r4c15:r8C16
+MPRINT(FILL_RATING_GUIDE):   filename RateGu dde "Excel|STAR Kids-Counseling!r4c15:r8C16" notab;
+MPRINT(FILL_RATING_GUIDE):   data _null_;
+SYMBOLGEN:  Macro variable FREQDATA resolves to RG_SK_BHCoun
+SYMBOLGEN:  Macro variable RATEVAR resolves to BHCoun_rat
+MPRINT(FILL_RATING_GUIDE):   set RG_SK_BHCoun(where=(BHCoun_rat ne .));
+MPRINT(FILL_RATING_GUIDE):   file RateGu;
+SYMBOLGEN:  Macro variable RATEVAR resolves to BHCoun_rat
+MPRINT(FILL_RATING_GUIDE):   put BHCoun_rat '09'x count ;
+MPRINT(FILL_RATING_GUIDE):   run;
+
+NOTE: The file RATEGU is:
+      DDE Session,
+      SESSION=Excel|STAR Kids-Counseling!r4c15:r8C16,
+      RECFM=V,LRECL=32767
+
+NOTE: 5 records were written to the file RATEGU.
+      The minimum record length was 4.
+      The maximum record length was 5.
+NOTE: There were 5 observations read from the data set WORK.RG_SK_BHCOUN.
+      WHERE BHCoun_rat not = .;
+NOTE: DATA statement used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.01 seconds
+      
+
+MLOGIC(FILL_RATING_GUIDE):  Ending execution.
+608        
+609        ** ---- save and close excel file
+609      ! ----------------------------------------------------------------------------;
+610        data _null_;
+611        	file ddeopen;
+612        	put '[error(false)]';
+613        	put '[save.as("C:\Users\liqian\Dropbox
+613      ! (UFL)\Project_QL\2022_MCO_Report_Cards\SFY2022-2023\3.
+613      ! Survey\Output\MCO_Report_Cards_Survey_Ratings_Draft_1025.xlsx")]';
+614        	* put '[file.close(false)]';
+615        run;
+
+NOTE: The file DDEOPEN is:
+      DDE Session,
+      SESSION=Excel|system,RECFM=V,LRECL=32767
+
+NOTE: 2 records were written to the file DDEOPEN.
+      The minimum record length was 14.
+      The maximum record length was 153.
+NOTE: DATA statement used (Total process time):
+      real time           0.82 seconds
+      cpu time            0.01 seconds
+      
+
+NOTE: SAS Institute Inc., SAS Campus Drive, Cary, NC USA 27513-2414
+NOTE: The SAS System used:
+      real time           16.42 seconds
+      cpu time            6.04 seconds
+      

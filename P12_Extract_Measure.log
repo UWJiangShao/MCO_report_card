@@ -1,0 +1,706 @@
+1                                         The SAS System         12:04 Wednesday, November 2, 2022
+
+NOTE: Copyright (c) 2016 by SAS Institute Inc., Cary, NC, USA. 
+NOTE: SAS (r) Proprietary Software 9.4 (TS1M6) 
+      Licensed to UNIVERSITY OF FLORIDA - SFA T&R, Site 70080452.
+NOTE: This session is executing on the X64_10PRO  platform.
+
+
+
+NOTE: Analytical products:
+      
+      SAS/STAT 15.1
+      SAS/ETS 15.1
+      SAS/OR 15.1
+      SAS/IML 15.1
+      SAS/QC 15.1
+
+WARNING: Your system is scheduled to expire on November 29, 2022, which is 27 days from now. The 
+         SAS System will no longer function on or after that date. Please contact your SAS 
+         Installation Representative to obtain your updated SAS Installation Data (SID) file, 
+         which includes SETINIT information.
+To locate the name of your SAS Installation Representative go to http://support.sas.com/repfinder 
+and provide your site number 70080452 and company name as UNIVERSITY OF FLORIDA - SFA T&R. On the 
+SAS REP list provided, locate the REP for operating system Windows.
+NOTE: Additional host information:
+
+ X64_10PRO WIN 10.0.19041  Workstation
+
+NOTE: SAS initialization used:
+      real time           2.83 seconds
+      cpu time            0.78 seconds
+      
+1          OPTIONS PS=MAX FORMCHAR="|----|+|---+=|-/\<>*" MLOGIC MPRINT SYMBOLGEN;
+2          
+3          * Prepare the dataframe for survey rating;
+4          
+5          %LET JOB = P12;
+6          
+7          LIBNAME OUT "..\DATA\Temp_Data\";
+NOTE: Libref OUT was successfully assigned as follows: 
+      Engine:        V9 
+      Physical Name: C:\Users\liqian\Dropbox 
+      (UFL)\Project_QL\2022_MCO_Report_Cards\SFY2022-2023\3. Survey\DATA\Temp_Data
+8          
+9          * macro to import all sheets from one Excel file;
+10         %macro import_excel(excel_address, prog);
+11         
+12         	libname ELIB excel &excel_address. mixed=yes;
+13         
+14         	proc sql;
+15         		create table excel_sheet as
+16         		select *
+17         		from dictionary.tables
+18         		where libname = "ELIB"
+19         		;
+20         
+21         		select memname
+22         		into :sheet_list separated by '*'
+23         		from excel_sheet
+24         		;
+25         
+26         		select count(memname)
+27         		into :sheet_n
+28         		from excel_sheet
+29         		;
+30         	quit;
+31         
+32         	%put &sheet_list.;
+33         	%put &sheet_n.;
+34         
+35         	%macro import_sheet;
+36         		%do i = 1 %to &sheet_n.;
+37         			%let var = %scan(&sheet_list., &i., *);
+38         			%if %sysfunc(find(&var., $)) = 0 %then %do;
+39         				%let sf = %substr(&var, 1, %length(&var.));
+40         				data &prog._&sf.;
+41         					set ELIB."&var."n;
+42         					where PHI_Plan_Code ne ' ';
+43         				run;
+44         
+45         				proc contents data=&prog._&sf. varnum;
+46         				run;
+47         
+48         				proc sort data=&prog._&sf.;
+49         					by PHI_Plan_Code;
+50         				run;
+51         			%end;
+52         		%end;
+53         	%mend import_sheet;
+54         
+55         	%import_sheet;
+56         
+57         %mend import_excel;
+58         
+59         
+60         %macro import_single_sheet(excel_address, sheet_name, prog);
+61         	* import population;
+62         	proc import datafile = &excel_address.
+63         			out=&prog._population
+64         			dbms=excel
+65         			replace;
+66         		sheet = &sheet_name.;
+67         		getnames = Yes;
+68         	run;
+69         
+70         	data &prog._population;
+71         		set &prog._population;
+72         		rename
+73         			PLAN_CD = PHI_Plan_Code
+74         			sample_pool_members = Population
+75         			;
+76         	run;
+77         
+78         	proc sort data=&prog._population;
+79         		by PHI_Plan_Code;
+80         	run;
+81         
+82         	proc contents data=&prog._population varnum;
+83         	run;
+84         %mend import_single_sheet;
+85         
+86         ** For CHIP
+86       ! ---------------------------------------------------------------------------------------
+86       ! -------;
+87         
+88         %import_excel("..\DATA\Raw_Data\CHIP_2022_completes_out_plancode.xlsx", CH);
+MLOGIC(IMPORT_EXCEL):  Beginning execution.
+MLOGIC(IMPORT_EXCEL):  Parameter EXCEL_ADDRESS has value 
+      "..\DATA\Raw_Data\CHIP_2022_completes_out_plancode.xlsx"
+MLOGIC(IMPORT_EXCEL):  Parameter PROG has value CH
+SYMBOLGEN:  Macro variable EXCEL_ADDRESS resolves to 
+            "..\DATA\Raw_Data\CHIP_2022_completes_out_plancode.xlsx"
+MPRINT(IMPORT_EXCEL):   libname ELIB excel 
+"..\DATA\Raw_Data\CHIP_2022_completes_out_plancode.xlsx" mixed=yes;
+NOTE: Data source is connected in READ ONLY mode.
+NOTE: The product with which the engine EXCEL is associated will be expiring soon, and is 
+      currently in warning mode to indicate this upcoming expiration.  Please run PROC SETINIT to 
+      obtain more information on your warning period.
+NOTE: Libref ELIB was successfully assigned as follows: 
+      Engine:        EXCEL 
+      Physical Name: ..\DATA\Raw_Data\CHIP_2022_completes_out_plancode.xlsx
+WARNING: The Base SAS Software product with which SQL is associated will be expiring soon, and is 
+         currently in warning mode to indicate this upcoming expiration. Please run PROC SETINIT 
+         to obtain more information on your warning period.
+MPRINT(IMPORT_EXCEL):   proc sql;
+MPRINT(IMPORT_EXCEL):   create table excel_sheet as select * from dictionary.tables where libname 
+= "ELIB" ;
+NOTE: Data source is connected in READ ONLY mode.
+NOTE: Table WORK.EXCEL_SHEET created, with 10 rows and 41 columns.
+
+MPRINT(IMPORT_EXCEL):   select memname into :sheet_list separated by '*' from excel_sheet ;
+MPRINT(IMPORT_EXCEL):   select count(memname) into :sheet_n from excel_sheet ;
+MPRINT(IMPORT_EXCEL):   quit;
+NOTE: The PROCEDURE SQL printed pages 1-2.
+NOTE: PROCEDURE SQL used (Total process time):
+      real time           0.52 seconds
+      cpu time            0.12 seconds
+      
+
+MLOGIC(IMPORT_EXCEL):  %PUT &sheet_list.
+SYMBOLGEN:  Macro variable SHEET_LIST resolves to 
+            GCQ*GCQ$*GNC*GNC$*HPRAT*HPRAT$*HWDC*HWDC$*PDRAT*PDRAT$
+GCQ*GCQ$*GNC*GNC$*HPRAT*HPRAT$*HWDC*HWDC$*PDRAT*PDRAT$
+MLOGIC(IMPORT_EXCEL):  %PUT &sheet_n.
+SYMBOLGEN:  Macro variable SHEET_N resolves to       10
+10
+MLOGIC(IMPORT_SHEET):  Beginning execution.
+SYMBOLGEN:  Macro variable SHEET_N resolves to       10
+MLOGIC(IMPORT_SHEET):  %DO loop beginning; index variable I; start value is 1; stop value is 10; 
+      by value is 1.  
+MLOGIC(IMPORT_SHEET):  %LET (variable name is VAR)
+SYMBOLGEN:  Macro variable SHEET_LIST resolves to 
+            GCQ*GCQ$*GNC*GNC$*HPRAT*HPRAT$*HWDC*HWDC$*PDRAT*PDRAT$
+SYMBOLGEN:  Macro variable I resolves to 1
+SYMBOLGEN:  Macro variable VAR resolves to GCQ
+MLOGIC(IMPORT_SHEET):  %IF condition %sysfunc(find(&var., $)) = 0 is TRUE
+MLOGIC(IMPORT_SHEET):  %LET (variable name is SF)
+SYMBOLGEN:  Macro variable VAR resolves to GCQ
+SYMBOLGEN:  Macro variable VAR resolves to GCQ
+SYMBOLGEN:  Macro variable PROG resolves to CH
+SYMBOLGEN:  Macro variable SF resolves to GCQ
+MPRINT(IMPORT_SHEET):   data CH_GCQ;
+SYMBOLGEN:  Macro variable VAR resolves to GCQ
+MPRINT(IMPORT_SHEET):   set ELIB."GCQ"n;
+MPRINT(IMPORT_SHEET):   where PHI_Plan_Code ne ' ';
+MPRINT(IMPORT_SHEET):   run;
+
+NOTE: There were 33 observations read from the data set ELIB.GCQ.
+      WHERE PHI_Plan_Code not = ' ';
+NOTE: The data set WORK.CH_GCQ has 33 observations and 5 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.10 seconds
+      cpu time            0.00 seconds
+      
+
+SYMBOLGEN:  Macro variable PROG resolves to CH
+SYMBOLGEN:  Macro variable SF resolves to GCQ
+MPRINT(IMPORT_SHEET):   proc contents data=CH_GCQ varnum;
+MPRINT(IMPORT_SHEET):   run;
+
+NOTE: PROCEDURE CONTENTS used (Total process time):
+      real time           0.18 seconds
+      cpu time            0.03 seconds
+      
+NOTE: The PROCEDURE CONTENTS printed page 3.
+
+SYMBOLGEN:  Macro variable PROG resolves to CH
+SYMBOLGEN:  Macro variable SF resolves to GCQ
+MPRINT(IMPORT_SHEET):   proc sort data=CH_GCQ;
+MPRINT(IMPORT_SHEET):   by PHI_Plan_Code;
+MPRINT(IMPORT_SHEET):   run;
+
+NOTE: There were 33 observations read from the data set WORK.CH_GCQ.
+NOTE: The data set WORK.CH_GCQ has 33 observations and 5 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.05 seconds
+      cpu time            0.01 seconds
+      
+
+MLOGIC(IMPORT_SHEET):  %DO loop index variable I is now 2; loop will iterate again.
+MLOGIC(IMPORT_SHEET):  %LET (variable name is VAR)
+SYMBOLGEN:  Macro variable SHEET_LIST resolves to 
+            GCQ*GCQ$*GNC*GNC$*HPRAT*HPRAT$*HWDC*HWDC$*PDRAT*PDRAT$
+SYMBOLGEN:  Macro variable I resolves to 2
+SYMBOLGEN:  Macro variable VAR resolves to GCQ$
+MLOGIC(IMPORT_SHEET):  %IF condition %sysfunc(find(&var., $)) = 0 is FALSE
+MLOGIC(IMPORT_SHEET):  %DO loop index variable I is now 3; loop will iterate again.
+MLOGIC(IMPORT_SHEET):  %LET (variable name is VAR)
+SYMBOLGEN:  Macro variable SHEET_LIST resolves to 
+            GCQ*GCQ$*GNC*GNC$*HPRAT*HPRAT$*HWDC*HWDC$*PDRAT*PDRAT$
+SYMBOLGEN:  Macro variable I resolves to 3
+SYMBOLGEN:  Macro variable VAR resolves to GNC
+MLOGIC(IMPORT_SHEET):  %IF condition %sysfunc(find(&var., $)) = 0 is TRUE
+MLOGIC(IMPORT_SHEET):  %LET (variable name is SF)
+SYMBOLGEN:  Macro variable VAR resolves to GNC
+SYMBOLGEN:  Macro variable VAR resolves to GNC
+SYMBOLGEN:  Macro variable PROG resolves to CH
+SYMBOLGEN:  Macro variable SF resolves to GNC
+MPRINT(IMPORT_SHEET):   data CH_GNC;
+SYMBOLGEN:  Macro variable VAR resolves to GNC
+MPRINT(IMPORT_SHEET):   set ELIB."GNC"n;
+MPRINT(IMPORT_SHEET):   where PHI_Plan_Code ne ' ';
+MPRINT(IMPORT_SHEET):   run;
+
+NOTE: There were 1 observations read from the data set ELIB.GNC.
+      WHERE PHI_Plan_Code not = ' ';
+NOTE: The data set WORK.CH_GNC has 1 observations and 5 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+SYMBOLGEN:  Macro variable PROG resolves to CH
+SYMBOLGEN:  Macro variable SF resolves to GNC
+MPRINT(IMPORT_SHEET):   proc contents data=CH_GNC varnum;
+MPRINT(IMPORT_SHEET):   run;
+
+NOTE: PROCEDURE CONTENTS used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+NOTE: The PROCEDURE CONTENTS printed page 4.
+
+SYMBOLGEN:  Macro variable PROG resolves to CH
+SYMBOLGEN:  Macro variable SF resolves to GNC
+MPRINT(IMPORT_SHEET):   proc sort data=CH_GNC;
+MPRINT(IMPORT_SHEET):   by PHI_Plan_Code;
+MPRINT(IMPORT_SHEET):   run;
+
+NOTE: There were 1 observations read from the data set WORK.CH_GNC.
+NOTE: The data set WORK.CH_GNC has 1 observations and 5 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.00 seconds
+      
+
+MLOGIC(IMPORT_SHEET):  %DO loop index variable I is now 4; loop will iterate again.
+MLOGIC(IMPORT_SHEET):  %LET (variable name is VAR)
+SYMBOLGEN:  Macro variable SHEET_LIST resolves to 
+            GCQ*GCQ$*GNC*GNC$*HPRAT*HPRAT$*HWDC*HWDC$*PDRAT*PDRAT$
+SYMBOLGEN:  Macro variable I resolves to 4
+SYMBOLGEN:  Macro variable VAR resolves to GNC$
+MLOGIC(IMPORT_SHEET):  %IF condition %sysfunc(find(&var., $)) = 0 is FALSE
+MLOGIC(IMPORT_SHEET):  %DO loop index variable I is now 5; loop will iterate again.
+MLOGIC(IMPORT_SHEET):  %LET (variable name is VAR)
+SYMBOLGEN:  Macro variable SHEET_LIST resolves to 
+            GCQ*GCQ$*GNC*GNC$*HPRAT*HPRAT$*HWDC*HWDC$*PDRAT*PDRAT$
+SYMBOLGEN:  Macro variable I resolves to 5
+SYMBOLGEN:  Macro variable VAR resolves to HPRAT
+MLOGIC(IMPORT_SHEET):  %IF condition %sysfunc(find(&var., $)) = 0 is TRUE
+MLOGIC(IMPORT_SHEET):  %LET (variable name is SF)
+SYMBOLGEN:  Macro variable VAR resolves to HPRAT
+SYMBOLGEN:  Macro variable VAR resolves to HPRAT
+SYMBOLGEN:  Macro variable PROG resolves to CH
+SYMBOLGEN:  Macro variable SF resolves to HPRAT
+MPRINT(IMPORT_SHEET):   data CH_HPRAT;
+SYMBOLGEN:  Macro variable VAR resolves to HPRAT
+MPRINT(IMPORT_SHEET):   set ELIB."HPRAT"n;
+MPRINT(IMPORT_SHEET):   where PHI_Plan_Code ne ' ';
+MPRINT(IMPORT_SHEET):   run;
+
+NOTE: There were 33 observations read from the data set ELIB.HPRAT.
+      WHERE PHI_Plan_Code not = ' ';
+NOTE: The data set WORK.CH_HPRAT has 33 observations and 5 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+SYMBOLGEN:  Macro variable PROG resolves to CH
+SYMBOLGEN:  Macro variable SF resolves to HPRAT
+MPRINT(IMPORT_SHEET):   proc contents data=CH_HPRAT varnum;
+MPRINT(IMPORT_SHEET):   run;
+
+NOTE: PROCEDURE CONTENTS used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+NOTE: The PROCEDURE CONTENTS printed page 5.
+
+SYMBOLGEN:  Macro variable PROG resolves to CH
+SYMBOLGEN:  Macro variable SF resolves to HPRAT
+MPRINT(IMPORT_SHEET):   proc sort data=CH_HPRAT;
+MPRINT(IMPORT_SHEET):   by PHI_Plan_Code;
+MPRINT(IMPORT_SHEET):   run;
+
+NOTE: There were 33 observations read from the data set WORK.CH_HPRAT.
+NOTE: The data set WORK.CH_HPRAT has 33 observations and 5 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.00 seconds
+      
+
+MLOGIC(IMPORT_SHEET):  %DO loop index variable I is now 6; loop will iterate again.
+MLOGIC(IMPORT_SHEET):  %LET (variable name is VAR)
+SYMBOLGEN:  Macro variable SHEET_LIST resolves to 
+            GCQ*GCQ$*GNC*GNC$*HPRAT*HPRAT$*HWDC*HWDC$*PDRAT*PDRAT$
+SYMBOLGEN:  Macro variable I resolves to 6
+SYMBOLGEN:  Macro variable VAR resolves to HPRAT$
+MLOGIC(IMPORT_SHEET):  %IF condition %sysfunc(find(&var., $)) = 0 is FALSE
+MLOGIC(IMPORT_SHEET):  %DO loop index variable I is now 7; loop will iterate again.
+MLOGIC(IMPORT_SHEET):  %LET (variable name is VAR)
+SYMBOLGEN:  Macro variable SHEET_LIST resolves to 
+            GCQ*GCQ$*GNC*GNC$*HPRAT*HPRAT$*HWDC*HWDC$*PDRAT*PDRAT$
+SYMBOLGEN:  Macro variable I resolves to 7
+SYMBOLGEN:  Macro variable VAR resolves to HWDC
+MLOGIC(IMPORT_SHEET):  %IF condition %sysfunc(find(&var., $)) = 0 is TRUE
+MLOGIC(IMPORT_SHEET):  %LET (variable name is SF)
+SYMBOLGEN:  Macro variable VAR resolves to HWDC
+SYMBOLGEN:  Macro variable VAR resolves to HWDC
+SYMBOLGEN:  Macro variable PROG resolves to CH
+SYMBOLGEN:  Macro variable SF resolves to HWDC
+MPRINT(IMPORT_SHEET):   data CH_HWDC;
+SYMBOLGEN:  Macro variable VAR resolves to HWDC
+MPRINT(IMPORT_SHEET):   set ELIB."HWDC"n;
+MPRINT(IMPORT_SHEET):   where PHI_Plan_Code ne ' ';
+MPRINT(IMPORT_SHEET):   run;
+
+NOTE: There were 33 observations read from the data set ELIB.HWDC.
+      WHERE PHI_Plan_Code not = ' ';
+NOTE: The data set WORK.CH_HWDC has 33 observations and 5 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+      
+
+SYMBOLGEN:  Macro variable PROG resolves to CH
+SYMBOLGEN:  Macro variable SF resolves to HWDC
+MPRINT(IMPORT_SHEET):   proc contents data=CH_HWDC varnum;
+MPRINT(IMPORT_SHEET):   run;
+
+NOTE: PROCEDURE CONTENTS used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+NOTE: The PROCEDURE CONTENTS printed page 6.
+
+SYMBOLGEN:  Macro variable PROG resolves to CH
+SYMBOLGEN:  Macro variable SF resolves to HWDC
+MPRINT(IMPORT_SHEET):   proc sort data=CH_HWDC;
+MPRINT(IMPORT_SHEET):   by PHI_Plan_Code;
+MPRINT(IMPORT_SHEET):   run;
+
+NOTE: There were 33 observations read from the data set WORK.CH_HWDC.
+NOTE: The data set WORK.CH_HWDC has 33 observations and 5 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+      
+
+MLOGIC(IMPORT_SHEET):  %DO loop index variable I is now 8; loop will iterate again.
+MLOGIC(IMPORT_SHEET):  %LET (variable name is VAR)
+SYMBOLGEN:  Macro variable SHEET_LIST resolves to 
+            GCQ*GCQ$*GNC*GNC$*HPRAT*HPRAT$*HWDC*HWDC$*PDRAT*PDRAT$
+SYMBOLGEN:  Macro variable I resolves to 8
+SYMBOLGEN:  Macro variable VAR resolves to HWDC$
+MLOGIC(IMPORT_SHEET):  %IF condition %sysfunc(find(&var., $)) = 0 is FALSE
+MLOGIC(IMPORT_SHEET):  %DO loop index variable I is now 9; loop will iterate again.
+MLOGIC(IMPORT_SHEET):  %LET (variable name is VAR)
+SYMBOLGEN:  Macro variable SHEET_LIST resolves to 
+            GCQ*GCQ$*GNC*GNC$*HPRAT*HPRAT$*HWDC*HWDC$*PDRAT*PDRAT$
+SYMBOLGEN:  Macro variable I resolves to 9
+SYMBOLGEN:  Macro variable VAR resolves to PDRAT
+MLOGIC(IMPORT_SHEET):  %IF condition %sysfunc(find(&var., $)) = 0 is TRUE
+MLOGIC(IMPORT_SHEET):  %LET (variable name is SF)
+SYMBOLGEN:  Macro variable VAR resolves to PDRAT
+SYMBOLGEN:  Macro variable VAR resolves to PDRAT
+SYMBOLGEN:  Macro variable PROG resolves to CH
+SYMBOLGEN:  Macro variable SF resolves to PDRAT
+MPRINT(IMPORT_SHEET):   data CH_PDRAT;
+SYMBOLGEN:  Macro variable VAR resolves to PDRAT
+MPRINT(IMPORT_SHEET):   set ELIB."PDRAT"n;
+MPRINT(IMPORT_SHEET):   where PHI_Plan_Code ne ' ';
+MPRINT(IMPORT_SHEET):   run;
+
+NOTE: There were 33 observations read from the data set ELIB.PDRAT.
+      WHERE PHI_Plan_Code not = ' ';
+NOTE: The data set WORK.CH_PDRAT has 33 observations and 5 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+      
+
+SYMBOLGEN:  Macro variable PROG resolves to CH
+SYMBOLGEN:  Macro variable SF resolves to PDRAT
+MPRINT(IMPORT_SHEET):   proc contents data=CH_PDRAT varnum;
+MPRINT(IMPORT_SHEET):   run;
+
+NOTE: PROCEDURE CONTENTS used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+NOTE: The PROCEDURE CONTENTS printed page 7.
+
+SYMBOLGEN:  Macro variable PROG resolves to CH
+SYMBOLGEN:  Macro variable SF resolves to PDRAT
+MPRINT(IMPORT_SHEET):   proc sort data=CH_PDRAT;
+MPRINT(IMPORT_SHEET):   by PHI_Plan_Code;
+MPRINT(IMPORT_SHEET):   run;
+
+NOTE: There were 33 observations read from the data set WORK.CH_PDRAT.
+NOTE: The data set WORK.CH_PDRAT has 33 observations and 5 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.00 seconds
+      
+
+MLOGIC(IMPORT_SHEET):  %DO loop index variable I is now 10; loop will iterate again.
+MLOGIC(IMPORT_SHEET):  %LET (variable name is VAR)
+SYMBOLGEN:  Macro variable SHEET_LIST resolves to 
+            GCQ*GCQ$*GNC*GNC$*HPRAT*HPRAT$*HWDC*HWDC$*PDRAT*PDRAT$
+SYMBOLGEN:  Macro variable I resolves to 10
+SYMBOLGEN:  Macro variable VAR resolves to PDRAT$
+MLOGIC(IMPORT_SHEET):  %IF condition %sysfunc(find(&var., $)) = 0 is FALSE
+MLOGIC(IMPORT_SHEET):  %DO loop index variable I is now 11; loop will not iterate again.
+MLOGIC(IMPORT_SHEET):  Ending execution.
+MPRINT(IMPORT_EXCEL):  ;
+MLOGIC(IMPORT_EXCEL):  Ending execution.
+89         %import_single_sheet("..\DATA\Raw_Data\CHIP_22_samp_cnts_2203.xlsx", "2022_Counts", CH)
+89       ! ;
+MLOGIC(IMPORT_SINGLE_SHEET):  Beginning execution.
+MLOGIC(IMPORT_SINGLE_SHEET):  Parameter EXCEL_ADDRESS has value 
+      "..\DATA\Raw_Data\CHIP_22_samp_cnts_2203.xlsx"
+MLOGIC(IMPORT_SINGLE_SHEET):  Parameter SHEET_NAME has value "2022_Counts"
+MLOGIC(IMPORT_SINGLE_SHEET):  Parameter PROG has value CH
+MPRINT(IMPORT_SINGLE_SHEET):   * import population;
+SYMBOLGEN:  Macro variable EXCEL_ADDRESS resolves to 
+            "..\DATA\Raw_Data\CHIP_22_samp_cnts_2203.xlsx"
+SYMBOLGEN:  Macro variable PROG resolves to CH
+MPRINT(IMPORT_SINGLE_SHEET):   proc import datafile = 
+"..\DATA\Raw_Data\CHIP_22_samp_cnts_2203.xlsx" out=CH_population dbms=excel replace;
+MPRINT(IMPORT_SINGLE_SHEET):   AEXC;
+SYMBOLGEN:  Macro variable SHEET_NAME resolves to "2022_Counts"
+MPRINT(IMPORT_SINGLE_SHEET):   sheet = "2022_Counts";
+MPRINT(IMPORT_SINGLE_SHEET):   getnames = Yes;
+MPRINT(IMPORT_SINGLE_SHEET):   run;
+
+1                                         The SAS System         12:04 Wednesday, November 2, 2022
+
+SYMBOLGEN:  Macro variable _IMEXSERROR_ resolves to SERROR
+NOTE: WORK.CH_POPULATION data set was successfully created.
+NOTE: The data set WORK.CH_POPULATION has 32 observations and 7 variables.
+NOTE: PROCEDURE IMPORT used (Total process time):
+      real time           0.96 seconds
+      cpu time            0.46 seconds
+      
+
+SYMBOLGEN:  Macro variable PROG resolves to CH
+MPRINT(IMPORT_SINGLE_SHEET):   data CH_population;
+SYMBOLGEN:  Macro variable PROG resolves to CH
+MPRINT(IMPORT_SINGLE_SHEET):   set CH_population;
+MPRINT(IMPORT_SINGLE_SHEET):   rename PLAN_CD = PHI_Plan_Code sample_pool_members = Population ;
+MPRINT(IMPORT_SINGLE_SHEET):   run;
+
+NOTE: There were 32 observations read from the data set WORK.CH_POPULATION.
+NOTE: The data set WORK.CH_POPULATION has 32 observations and 7 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.00 seconds
+      
+
+SYMBOLGEN:  Macro variable PROG resolves to CH
+MPRINT(IMPORT_SINGLE_SHEET):   proc sort data=CH_population;
+MPRINT(IMPORT_SINGLE_SHEET):   by PHI_Plan_Code;
+MPRINT(IMPORT_SINGLE_SHEET):   run;
+
+NOTE: There were 32 observations read from the data set WORK.CH_POPULATION.
+NOTE: The data set WORK.CH_POPULATION has 32 observations and 7 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.00 seconds
+      
+
+SYMBOLGEN:  Macro variable PROG resolves to CH
+MPRINT(IMPORT_SINGLE_SHEET):   proc contents data=CH_population varnum;
+MPRINT(IMPORT_SINGLE_SHEET):   run;
+
+NOTE: PROCEDURE CONTENTS used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+NOTE: The PROCEDURE CONTENTS printed page 8.
+
+MLOGIC(IMPORT_SINGLE_SHEET):  Ending execution.
+90         
+91         
+92         data CHIP_for_analysis;
+93         	merge
+94         		CH_GCQ
+95         		CH_HPRAT
+96         		CH_HWDC
+97         		CH_PDRAT
+98         		CH_population(keep=PHI_Plan_Code Population)
+99         		;
+100        	by PHI_Plan_Code;
+101        run;
+
+NOTE: There were 33 observations read from the data set WORK.CH_GCQ.
+NOTE: There were 33 observations read from the data set WORK.CH_HPRAT.
+NOTE: There were 33 observations read from the data set WORK.CH_HWDC.
+NOTE: There were 33 observations read from the data set WORK.CH_PDRAT.
+NOTE: There were 32 observations read from the data set WORK.CH_POPULATION.
+NOTE: The data set WORK.CHIP_FOR_ANALYSIS has 33 observations and 18 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.05 seconds
+      cpu time            0.01 seconds
+      
+
+102        
+103        proc export data=CHIP_for_analysis
+104        	outfile="..\DATA\Temp_Data\CH23_out.xlsx"
+105        	dbms=xlsx
+106        	replace
+107        	;
+108        run;
+
+NOTE: The export data set has 33 observations and 18 variables.
+NOTE: "C:\Users\liqian\Dropbox (UFL)\Project_QL\2022_MCO_Report_Cards\SFY2022-2023\3. 
+      Survey\DATA\Temp_Data\CH23_out.xlsx" file was successfully created.
+NOTE: PROCEDURE EXPORT used (Total process time):
+      real time           0.11 seconds
+      cpu time            0.01 seconds
+      
+
+109        
+110        
+111        * * For STAR Child
+111      ! ---------------------------------------------------------------------------------------
+111      ! -;
+112        * %import_excel("..\DATA\Raw_Data\STAR_Child_22_completes_out_ARC plancode.xlsx", SC);
+113        * %import_single_sheet("..\DATA\Raw_Data\STAR_Child_22_samp_cnts_2203.xlsx",
+113      ! "STAR_Child_2022_Counts", SC);
+114        
+115        * data STAR_Child_for_analysis;
+116        * 	merge
+117        * 		SC_GCQ
+118        * 		SC_HPRAT
+119        * 		SC_HWDC
+120        * 		SC_PDRAT
+121        * 		SC_ROUTC
+122        * 		SC_URGC
+123        * 		SC_population(keep=PHI_Plan_Code Population)
+124        * 		;
+125        * 	by PHI_Plan_Code;
+126        * run;
+127        
+128        * proc export data=STAR_Child_for_analysis
+129        * 	outfile="..\DATA\Temp_Data\SC23_out.xlsx"
+130        * 	dbms=xlsx
+131        * 	replace
+132        * 	;
+133        * run;
+134        
+135        
+136        * * For STAR Adults
+136      ! ---------------------------------------------------------------------------------------
+136      ! ;
+137        * %import_excel("..\DATA\Raw_Data\STAR_Adult_2022_completes_out_ARC_plancode_v1.xlsx",
+137      ! SA);
+138        * %import_single_sheet("..\DATA\Raw_Data\STAR_Adult_22_samp_cnts_2203.xlsx",
+138      ! "STAR_Adult_2022_Counts", SA);
+139        
+140        * data STAR_Adult_for_analysis;
+141        * 	merge
+142        * 		SA_ATC
+143        * 		SA_GCQ
+144        * 		SA_GNC
+145        * 		SA_HPRAT
+146        * 		SA_HWDC
+147        * 		SA_PDRAT
+148        * 		SA_population(keep=PHI_Plan_Code Population)
+149        * 		;
+150        * 	by PHI_Plan_Code;
+151        * run;
+152        
+153        * proc export data=STAR_Adult_for_analysis
+154        * 	outfile="..\DATA\Temp_Data\SA23_out.xlsx"
+155        * 	dbms=xlsx
+156        * 	replace
+157        * 	;
+158        * run;
+159        
+160        
+161        * * For STAR PLUS
+161      ! ---------------------------------------------------------------------------------------
+161      ! --;
+162        * %import_excel("..\DATA\Raw_Data\STAR_PLUS_2022_Completes_out_ARC.xlsx", SP);
+163        * %import_single_sheet("..\DATA\Raw_Data\STAR_PLUS_22_samp_cnts_2204.xlsx", "Non-BCS",
+163      ! SP);
+164        
+165        
+166        * DATA STARPLUS_for_analysis;
+167        * 	merge
+168        * 		SP_ATC
+169        * 		SP_GCQ
+170        * 		SP_GNC
+171        * 		SP_HPRAT
+172        * 		SP_HWDC
+173        * 		SP_PDRAT
+174        * 		SP_population(keep=PHI_Plan_Code Population)
+175        * 		;
+176        * 	by PHI_Plan_Code;
+177        * run;
+178        
+179        * proc export data=STARPLUS_for_analysis
+180        * 	outfile="..\DATA\Temp_Data\SP23_out.xlsx"
+181        * 	dbms=xlsx
+182        * 	replace
+183        * 	;
+184        * run;
+185        
+186        
+187        * * For STAR Kids
+187      ! ---------------------------------------------------------------------------------------
+187      ! --;
+188        * %import_excel("..\DATA\Raw_Data\STAR_Kids_2022_merged_out_ARC.xlsx", SK);
+189        * %import_single_sheet("..\DATA\Raw_Data\STAR_Kids_22_samp_cnts_2203.xlsx",
+189      ! "2022_Non-waiver", SK);
+190        
+191        * DATA STARKIDS_for_analysis;
+192        * 	MERGE
+193        * 		SK_ATC
+194        * 		SK_GCQ
+195        * 		SK_GNC
+196        * 		SK_HPRAT
+197        * 		SK_SPECTHER
+198        * 		SK_COORD
+199        * 		SK_BHCOUN
+200        * 		SK_CCCGNI
+201        * 		SK_CCCMEDS
+202        * 		SK_TRTADULT
+203        * 		SK_population(keep=PHI_Plan_Code Population)
+204        * 		;
+205        * 	by PHI_Plan_Code;
+206        * run;
+207        
+208        * data STARKIDS_for_analysis;
+209        * 	set STARKIDS_for_analysis;
+210        * 	rename
+211        * 		CCCGNI = GNI
+212        * 		CCCGNI_den = GNI_den
+213        * 		CCCGNI_stderr = GNI_stderr
+214        * 		CCCGNI_sig = GNI_sig
+215        * 		CCCMeds = APM
+216        * 		CCCMeds_den = APM_den
+217        * 		CCCMeds_stderr = APM_stderr
+218        * 		CCCMeds_sig = APM_sig
+219        * 		trtadult = transit
+220        * 		trtadult_den = transit_den
+221        * 		trtadult_stderr = transit_stderr
+222        * 		trtadult_sig = transit_sig
+223        * 		;
+224        * run;
+225        
+226        * proc export data=STARKIDS_for_analysis
+227        * 	outfile="..\DATA\Temp_Data\SK23_out.xlsx"
+228        * 	dbms=xlsx
+229        * 	replace
+230        * 	;
+231        * run;
+
+NOTE: SAS Institute Inc., SAS Campus Drive, Cary, NC USA 27513-2414
+NOTE: The SAS System used:
+      real time           6.23 seconds
+      cpu time            2.07 seconds
+      

@@ -1,0 +1,286 @@
+                                          The SAS System     12:04 Wednesday, November 2, 2022   1
+
+                                 Member Name
+                                 --------------------------------
+                                 GCQ                             
+                                 GCQ$                            
+                                 GNC                             
+                                 GNC$                            
+                                 HPRAT                           
+                                 HPRAT$                          
+                                 HWDC                            
+                                 HWDC$                           
+                                 PDRAT                           
+                                 PDRAT$                          
+                                          The SAS System     12:04 Wednesday, November 2, 2022   2
+
+                                                     
+                                             --------
+                                                   10
+                                          The SAS System     12:04 Wednesday, November 2, 2022   3
+
+                                      The CONTENTS Procedure
+
+           Data Set Name        WORK.CH_GCQ                   Observations          33
+           Member Type          DATA                          Variables             5 
+           Engine               V9                            Indexes               0 
+           Created              11/02/2022 12:04:35           Observation Length    32
+           Last Modified        11/02/2022 12:04:35           Deleted Observations  0 
+           Protection                                         Compressed            NO
+           Data Set Type                                      Sorted                NO
+           Label                                                                      
+           Data Representation  WINDOWS_64                                            
+           Encoding             wlatin1  Western (Windows)                            
+
+
+                                Engine/Host Dependent Information
+
+Data Set Page Size          65536                                                                 
+Number of Data Set Pages    1                                                                     
+First Data Page             1                                                                     
+Max Obs per Page            2039                                                                  
+Obs in First Data Page      33                                                                    
+Number of Data Set Repairs  0                                                                     
+ExtendObsCounter            YES                                                                   
+Filename                    C:\Users\liqian\AppData\Local\Temp\SAS Temporary                      
+                            Files\_TD32320_FCTR-2253-M30_\ch_gcq.sas7bdat                         
+Release Created             9.0401M6                                                              
+Host Created                X64_10PRO                                                             
+Owner Name                  UFAD\liqian                                                           
+File Size                   128KB                                                                 
+File Size (bytes)           131072                                                                
+
+
+                                    Variables in Creation Order
+ 
+             #    Variable         Type    Len    Format    Informat    Label
+
+             1    PHi_Plan_Code    Char      2    $2.       $2.         PHi_Plan_Code
+             2    GCQ              Num       8                          GCQ          
+             3    GCQ_den          Num       8                          GCQ_den      
+             4    GCQ_stderr       Num       8                          GCQ_stderr   
+             5    GCQ_sig          Char      6    $6.       $6.         GCQ_sig      
+                                          The SAS System     12:04 Wednesday, November 2, 2022   4
+
+                                      The CONTENTS Procedure
+
+           Data Set Name        WORK.CH_GNC                   Observations          1 
+           Member Type          DATA                          Variables             5 
+           Engine               V9                            Indexes               0 
+           Created              11/02/2022 12:04:36           Observation Length    6 
+           Last Modified        11/02/2022 12:04:36           Deleted Observations  0 
+           Protection                                         Compressed            NO
+           Data Set Type                                      Sorted                NO
+           Label                                                                      
+           Data Representation  WINDOWS_64                                            
+           Encoding             wlatin1  Western (Windows)                            
+
+
+                                Engine/Host Dependent Information
+
+Data Set Page Size          65536                                                                 
+Number of Data Set Pages    1                                                                     
+First Data Page             1                                                                     
+Max Obs per Page            10695                                                                 
+Obs in First Data Page      1                                                                     
+Number of Data Set Repairs  0                                                                     
+ExtendObsCounter            YES                                                                   
+Filename                    C:\Users\liqian\AppData\Local\Temp\SAS Temporary                      
+                            Files\_TD32320_FCTR-2253-M30_\ch_gnc.sas7bdat                         
+Release Created             9.0401M6                                                              
+Host Created                X64_10PRO                                                             
+Owner Name                  UFAD\liqian                                                           
+File Size                   128KB                                                                 
+File Size (bytes)           131072                                                                
+
+
+                                    Variables in Creation Order
+ 
+             #    Variable         Type    Len    Format    Informat    Label
+
+             1    PHi_Plan_Code    Char      2    $2.       $2.         PHi_Plan_Code
+             2    GNC              Char      1    $1.       $1.         GNC          
+             3    GNC_den          Char      1    $1.       $1.         GNC_den      
+             4    GNC_stderr       Char      1    $1.       $1.         GNC_stderr   
+             5    GNC_sig          Char      1    $1.       $1.         GNC_sig      
+                                          The SAS System     12:04 Wednesday, November 2, 2022   5
+
+                                      The CONTENTS Procedure
+
+           Data Set Name        WORK.CH_HPRAT                 Observations          33
+           Member Type          DATA                          Variables             5 
+           Engine               V9                            Indexes               0 
+           Created              11/02/2022 12:04:36           Observation Length    32
+           Last Modified        11/02/2022 12:04:36           Deleted Observations  0 
+           Protection                                         Compressed            NO
+           Data Set Type                                      Sorted                NO
+           Label                                                                      
+           Data Representation  WINDOWS_64                                            
+           Encoding             wlatin1  Western (Windows)                            
+
+
+                                Engine/Host Dependent Information
+
+Data Set Page Size          65536                                                                 
+Number of Data Set Pages    1                                                                     
+First Data Page             1                                                                     
+Max Obs per Page            2039                                                                  
+Obs in First Data Page      33                                                                    
+Number of Data Set Repairs  0                                                                     
+ExtendObsCounter            YES                                                                   
+Filename                    C:\Users\liqian\AppData\Local\Temp\SAS Temporary                      
+                            Files\_TD32320_FCTR-2253-M30_\ch_hprat.sas7bdat                       
+Release Created             9.0401M6                                                              
+Host Created                X64_10PRO                                                             
+Owner Name                  UFAD\liqian                                                           
+File Size                   128KB                                                                 
+File Size (bytes)           131072                                                                
+
+
+                                    Variables in Creation Order
+ 
+             #    Variable         Type    Len    Format    Informat    Label
+
+             1    PHi_Plan_Code    Char      2    $2.       $2.         PHi_Plan_Code
+             2    HPRat            Num       8                          HPRat        
+             3    HPRat_den        Num       8                          HPRat_den    
+             4    HPRat_stderr     Num       8                          HPRat_stderr 
+             5    HPRat_sig        Char      6    $6.       $6.         HPRat_sig    
+                                          The SAS System     12:04 Wednesday, November 2, 2022   6
+
+                                      The CONTENTS Procedure
+
+           Data Set Name        WORK.CH_HWDC                  Observations          33
+           Member Type          DATA                          Variables             5 
+           Engine               V9                            Indexes               0 
+           Created              11/02/2022 12:04:36           Observation Length    32
+           Last Modified        11/02/2022 12:04:36           Deleted Observations  0 
+           Protection                                         Compressed            NO
+           Data Set Type                                      Sorted                NO
+           Label                                                                      
+           Data Representation  WINDOWS_64                                            
+           Encoding             wlatin1  Western (Windows)                            
+
+
+                                Engine/Host Dependent Information
+
+Data Set Page Size          65536                                                                 
+Number of Data Set Pages    1                                                                     
+First Data Page             1                                                                     
+Max Obs per Page            2039                                                                  
+Obs in First Data Page      33                                                                    
+Number of Data Set Repairs  0                                                                     
+ExtendObsCounter            YES                                                                   
+Filename                    C:\Users\liqian\AppData\Local\Temp\SAS Temporary                      
+                            Files\_TD32320_FCTR-2253-M30_\ch_hwdc.sas7bdat                        
+Release Created             9.0401M6                                                              
+Host Created                X64_10PRO                                                             
+Owner Name                  UFAD\liqian                                                           
+File Size                   128KB                                                                 
+File Size (bytes)           131072                                                                
+
+
+                                    Variables in Creation Order
+ 
+             #    Variable         Type    Len    Format    Informat    Label
+
+             1    PHi_Plan_Code    Char      2    $2.       $2.         PHi_Plan_Code
+             2    HWDC             Num       8                          HWDC         
+             3    HWDC_den         Num       8                          HWDC_den     
+             4    HWDC_stderr      Num       8                          HWDC_stderr  
+             5    HWDC_sig         Char      6    $6.       $6.         HWDC_sig     
+                                          The SAS System     12:04 Wednesday, November 2, 2022   7
+
+                                      The CONTENTS Procedure
+
+           Data Set Name        WORK.CH_PDRAT                 Observations          33
+           Member Type          DATA                          Variables             5 
+           Engine               V9                            Indexes               0 
+           Created              11/02/2022 12:04:36           Observation Length    32
+           Last Modified        11/02/2022 12:04:36           Deleted Observations  0 
+           Protection                                         Compressed            NO
+           Data Set Type                                      Sorted                NO
+           Label                                                                      
+           Data Representation  WINDOWS_64                                            
+           Encoding             wlatin1  Western (Windows)                            
+
+
+                                Engine/Host Dependent Information
+
+Data Set Page Size          65536                                                                 
+Number of Data Set Pages    1                                                                     
+First Data Page             1                                                                     
+Max Obs per Page            2039                                                                  
+Obs in First Data Page      33                                                                    
+Number of Data Set Repairs  0                                                                     
+ExtendObsCounter            YES                                                                   
+Filename                    C:\Users\liqian\AppData\Local\Temp\SAS Temporary                      
+                            Files\_TD32320_FCTR-2253-M30_\ch_pdrat.sas7bdat                       
+Release Created             9.0401M6                                                              
+Host Created                X64_10PRO                                                             
+Owner Name                  UFAD\liqian                                                           
+File Size                   128KB                                                                 
+File Size (bytes)           131072                                                                
+
+
+                                    Variables in Creation Order
+ 
+             #    Variable         Type    Len    Format    Informat    Label
+
+             1    PHi_Plan_Code    Char      2    $2.       $2.         PHi_Plan_Code
+             2    PDRat            Num       8                          PDRat        
+             3    PDRat_den        Num       8                          PDRat_den    
+             4    PDRat_stderr     Num       8                          PDRat_stderr 
+             5    PDRat_sig        Char      6    $6.       $6.         PDRat_sig    
+                                          The SAS System     12:04 Wednesday, November 2, 2022   8
+
+                                      The CONTENTS Procedure
+
+           Data Set Name        WORK.CH_POPULATION            Observations          32 
+           Member Type          DATA                          Variables             7  
+           Engine               V9                            Indexes               0  
+           Created              11/02/2022 12:04:37           Observation Length    88 
+           Last Modified        11/02/2022 12:04:37           Deleted Observations  0  
+           Protection                                         Compressed            NO 
+           Data Set Type                                      Sorted                YES
+           Label                                                                       
+           Data Representation  WINDOWS_64                                             
+           Encoding             wlatin1  Western (Windows)                             
+
+
+                                Engine/Host Dependent Information
+
+Data Set Page Size          65536                                                                 
+Number of Data Set Pages    1                                                                     
+First Data Page             1                                                                     
+Max Obs per Page            743                                                                   
+Obs in First Data Page      32                                                                    
+Number of Data Set Repairs  0                                                                     
+ExtendObsCounter            YES                                                                   
+Filename                    C:\Users\liqian\AppData\Local\Temp\SAS Temporary                      
+                            Files\_TD32320_FCTR-2253-M30_\ch_population.sas7bdat                  
+Release Created             9.0401M6                                                              
+Host Created                X64_10PRO                                                             
+Owner Name                  UFAD\liqian                                                           
+File Size                   128KB                                                                 
+File Size (bytes)           131072                                                                
+
+
+                                    Variables in Creation Order
+ 
+#  Variable                          Type  Len  Format  Informat  Label
+
+1  PHI_Plan_Name                     Char   44  $44.    $44.      PHI_Plan_Name                   
+2  PHI_SA_Name                       Char    9  $9.     $9.       PHI_SA_Name                     
+3  PHI_Plan_Code                     Char    2  $2.     $2.       PLAN_CD                         
+4  eligible_members                  Num     8                    eligible_members                
+5  eligible_members_after_exclusion  Num     8                    eligible_members_after_exclusion
+6  Population                        Num     8                    sample_pool_members             
+7  sample_members                    Num     8                    sample_members                  
+
+
+                                         Sort Information
+
+                                   Sortedby       PHI_Plan_Code
+                                   Validated      YES          
+                                   Character Set  ANSI         

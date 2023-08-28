@@ -1,0 +1,1161 @@
+                                          The SAS System     13:44 Wednesday, November 2, 2022   1
+
+                                      The CONTENTS Procedure
+
+           Data Set Name        WORK.CH_POPULATION            Observations          32 
+           Member Type          DATA                          Variables             7  
+           Engine               V9                            Indexes               0  
+           Created              11/02/2022 13:44:07           Observation Length    88 
+           Last Modified        11/02/2022 13:44:07           Deleted Observations  0  
+           Protection                                         Compressed            NO 
+           Data Set Type                                      Sorted                YES
+           Label                                                                       
+           Data Representation  WINDOWS_64                                             
+           Encoding             wlatin1  Western (Windows)                             
+
+
+                                Engine/Host Dependent Information
+
+Data Set Page Size          65536                                                                 
+Number of Data Set Pages    1                                                                     
+First Data Page             1                                                                     
+Max Obs per Page            743                                                                   
+Obs in First Data Page      32                                                                    
+Number of Data Set Repairs  0                                                                     
+ExtendObsCounter            YES                                                                   
+Filename                    C:\Users\liqian\AppData\Local\Temp\SAS Temporary                      
+                            Files\_TD27568_FCTR-2253-M30_\ch_population.sas7bdat                  
+Release Created             9.0401M6                                                              
+Host Created                X64_10PRO                                                             
+Owner Name                  UFAD\liqian                                                           
+File Size                   128KB                                                                 
+File Size (bytes)           131072                                                                
+
+
+                                    Variables in Creation Order
+ 
+#  Variable                          Type  Len  Format  Informat  Label
+
+1  PHI_Plan_Name                     Char   44  $44.    $44.      PHI_Plan_Name                   
+2  PHI_SA_Name                       Char    9  $9.     $9.       PHI_SA_Name                     
+3  PLAN_CD                           Char    2  $2.     $2.       PLAN_CD                         
+4  eligible_members                  Num     8                    eligible_members                
+5  eligible_members_after_exclusion  Num     8                    eligible_members_after_exclusion
+6  sample_pool_members               Num     8                    sample_pool_members             
+7  sample_members                    Num     8                    sample_members                  
+
+
+                                         Sort Information
+
+                             Sortedby       PHI_SA_Name PHI_Plan_Name
+                             Validated      YES                      
+                             Character Set  ANSI                     
+                                          The SAS System     13:44 Wednesday, November 2, 2022   2
+
+                                      The CONTENTS Procedure
+
+           Data Set Name        WORK.SC_POPULATION            Observations          44 
+           Member Type          DATA                          Variables             7  
+           Engine               V9                            Indexes               0  
+           Created              11/02/2022 13:44:08           Observation Length    96 
+           Last Modified        11/02/2022 13:44:08           Deleted Observations  0  
+           Protection                                         Compressed            NO 
+           Data Set Type                                      Sorted                YES
+           Label                                                                       
+           Data Representation  WINDOWS_64                                             
+           Encoding             wlatin1  Western (Windows)                             
+
+
+                                Engine/Host Dependent Information
+
+Data Set Page Size          65536                                                                 
+Number of Data Set Pages    1                                                                     
+First Data Page             1                                                                     
+Max Obs per Page            681                                                                   
+Obs in First Data Page      44                                                                    
+Number of Data Set Repairs  0                                                                     
+ExtendObsCounter            YES                                                                   
+Filename                    C:\Users\liqian\AppData\Local\Temp\SAS Temporary                      
+                            Files\_TD27568_FCTR-2253-M30_\sc_population.sas7bdat                  
+Release Created             9.0401M6                                                              
+Host Created                X64_10PRO                                                             
+Owner Name                  UFAD\liqian                                                           
+File Size                   128KB                                                                 
+File Size (bytes)           131072                                                                
+
+
+                                    Variables in Creation Order
+ 
+#  Variable                          Type  Len  Format  Informat  Label
+
+1  PHI_Plan_Name                     Char   44  $44.    $44.      PHI_Plan_Name                   
+2  PHI_SA_Name                       Char   14  $14.    $14.      PHI_SA_Name                     
+3  PLAN_CD                           Char    2  $2.     $2.       PLAN_CD                         
+4  eligible_members                  Num     8                    eligible_members                
+5  eligible_members_after_exclusion  Num     8                    eligible_members_after_exclusion
+6  sample_pool_members               Num     8                    sample_pool_members             
+7  sample_members                    Num     8                    sample_members                  
+
+
+                                         Sort Information
+
+                             Sortedby       PHI_SA_Name PHI_Plan_Name
+                             Validated      YES                      
+                             Character Set  ANSI                     
+                                          The SAS System     13:44 Wednesday, November 2, 2022   3
+
+                                      The CONTENTS Procedure
+
+           Data Set Name        WORK.SA_POPULATION            Observations          44 
+           Member Type          DATA                          Variables             7  
+           Engine               V9                            Indexes               0  
+           Created              11/02/2022 13:44:09           Observation Length    96 
+           Last Modified        11/02/2022 13:44:09           Deleted Observations  0  
+           Protection                                         Compressed            NO 
+           Data Set Type                                      Sorted                YES
+           Label                                                                       
+           Data Representation  WINDOWS_64                                             
+           Encoding             wlatin1  Western (Windows)                             
+
+
+                                Engine/Host Dependent Information
+
+Data Set Page Size          65536                                                                 
+Number of Data Set Pages    1                                                                     
+First Data Page             1                                                                     
+Max Obs per Page            681                                                                   
+Obs in First Data Page      44                                                                    
+Number of Data Set Repairs  0                                                                     
+ExtendObsCounter            YES                                                                   
+Filename                    C:\Users\liqian\AppData\Local\Temp\SAS Temporary                      
+                            Files\_TD27568_FCTR-2253-M30_\sa_population.sas7bdat                  
+Release Created             9.0401M6                                                              
+Host Created                X64_10PRO                                                             
+Owner Name                  UFAD\liqian                                                           
+File Size                   128KB                                                                 
+File Size (bytes)           131072                                                                
+
+
+                                    Variables in Creation Order
+ 
+#  Variable                          Type  Len  Format  Informat  Label
+
+1  PHI_Plan_Name                     Char   44  $44.    $44.      PHI_Plan_Name                   
+2  PHI_SA_Name                       Char   14  $14.    $14.      PHI_SA_Name                     
+3  PLAN_CD                           Char    2  $2.     $2.       PLAN_CD                         
+4  eligible_members                  Num     8                    eligible_members                
+5  eligible_members_after_exclusion  Num     8                    eligible_members_after_exclusion
+6  sample_pool_members               Num     8                    sample_pool_members             
+7  sample_members                    Num     8                    sample_members                  
+
+
+                                         Sort Information
+
+                             Sortedby       PHI_SA_Name PHI_Plan_Name
+                             Validated      YES                      
+                             Character Set  ANSI                     
+                                          The SAS System     13:44 Wednesday, November 2, 2022   4
+
+                                      The CONTENTS Procedure
+
+           Data Set Name        WORK.SP_POPULATION            Observations          27 
+           Member Type          DATA                          Variables             7  
+           Engine               V9                            Indexes               0  
+           Created              11/02/2022 13:44:11           Observation Length    80 
+           Last Modified        11/02/2022 13:44:11           Deleted Observations  0  
+           Protection                                         Compressed            NO 
+           Data Set Type                                      Sorted                YES
+           Label                                                                       
+           Data Representation  WINDOWS_64                                             
+           Encoding             wlatin1  Western (Windows)                             
+
+
+                                Engine/Host Dependent Information
+
+Data Set Page Size          65536                                                                 
+Number of Data Set Pages    1                                                                     
+First Data Page             1                                                                     
+Max Obs per Page            817                                                                   
+Obs in First Data Page      27                                                                    
+Number of Data Set Repairs  0                                                                     
+ExtendObsCounter            YES                                                                   
+Filename                    C:\Users\liqian\AppData\Local\Temp\SAS Temporary                      
+                            Files\_TD27568_FCTR-2253-M30_\sp_population.sas7bdat                  
+Release Created             9.0401M6                                                              
+Host Created                X64_10PRO                                                             
+Owner Name                  UFAD\liqian                                                           
+File Size                   128KB                                                                 
+File Size (bytes)           131072                                                                
+
+
+                                    Variables in Creation Order
+ 
+#  Variable                          Type  Len  Format  Informat  Label
+
+1  PHI_Plan_Name                     Char   31  $31.    $31.      PHI_Plan_Name                   
+2  PHI_SA_Name                       Char   14  $14.    $14.      PHI_SA_Name                     
+3  PLAN_CD                           Char    2  $2.     $2.       PLAN_CD                         
+4  eligible_members                  Num     8                    eligible_members                
+5  eligible_members_after_exclusion  Num     8                    eligible_members_after_exclusion
+6  sample_pool_members               Num     8                    sample_pool_members             
+7  sample_members                    Num     8                    sample_members                  
+
+
+                                         Sort Information
+
+                             Sortedby       PHI_SA_Name PHI_Plan_Name
+                             Validated      YES                      
+                             Character Set  ANSI                     
+                                          The SAS System     13:44 Wednesday, November 2, 2022   5
+
+                                      The CONTENTS Procedure
+
+           Data Set Name        WORK.SK_POPULATION            Observations          28 
+           Member Type          DATA                          Variables             7  
+           Engine               V9                            Indexes               0  
+           Created              11/02/2022 13:44:12           Observation Length    80 
+           Last Modified        11/02/2022 13:44:12           Deleted Observations  0  
+           Protection                                         Compressed            NO 
+           Data Set Type                                      Sorted                YES
+           Label                                                                       
+           Data Representation  WINDOWS_64                                             
+           Encoding             wlatin1  Western (Windows)                             
+
+
+                                Engine/Host Dependent Information
+
+Data Set Page Size          65536                                                                 
+Number of Data Set Pages    1                                                                     
+First Data Page             1                                                                     
+Max Obs per Page            817                                                                   
+Obs in First Data Page      28                                                                    
+Number of Data Set Repairs  0                                                                     
+ExtendObsCounter            YES                                                                   
+Filename                    C:\Users\liqian\AppData\Local\Temp\SAS Temporary                      
+                            Files\_TD27568_FCTR-2253-M30_\sk_population.sas7bdat                  
+Release Created             9.0401M6                                                              
+Host Created                X64_10PRO                                                             
+Owner Name                  UFAD\liqian                                                           
+File Size                   128KB                                                                 
+File Size (bytes)           131072                                                                
+
+
+                                    Variables in Creation Order
+ 
+#  Variable                          Type  Len  Format  Informat  Label
+
+1  PHI_Plan_Name                     Char   31  $31.    $31.      PHI_Plan_Name                   
+2  PHI_SA_Name                       Char   14  $14.    $14.      PHI_SA_Name                     
+3  PLAN_CD                           Char    2  $2.     $2.       PLAN_CD                         
+4  eligible_members                  Num     8                    eligible_members                
+5  eligible_members_after_exclusion  Num     8                    eligible_members_after_exclusion
+6  sample_pool_members               Num     8                    sample_pool_members             
+7  sample_members                    Num     8                    sample_members                  
+
+
+                                         Sort Information
+
+                             Sortedby       PHI_SA_Name PHI_Plan_Name
+                             Validated      YES                      
+                             Character Set  ANSI                     
+                                          The SAS System     13:44 Wednesday, November 2, 2022   6
+
+                                      The CONTENTS Procedure
+
+           Data Set Name        WORK.CH23                     Observations          32 
+           Member Type          DATA                          Variables             38 
+           Engine               V9                            Indexes               0  
+           Created              11/02/2022 13:44:12           Observation Length    296
+           Last Modified        11/02/2022 13:44:12           Deleted Observations  0  
+           Protection                                         Compressed            NO 
+           Data Set Type                                      Sorted                NO 
+           Label                                                                       
+           Data Representation  WINDOWS_64                                             
+           Encoding             wlatin1  Western (Windows)                             
+
+
+                                Engine/Host Dependent Information
+
+Data Set Page Size          65536                                                                 
+Number of Data Set Pages    1                                                                     
+First Data Page             1                                                                     
+Max Obs per Page            221                                                                   
+Obs in First Data Page      32                                                                    
+Number of Data Set Repairs  0                                                                     
+ExtendObsCounter            YES                                                                   
+Filename                    C:\Users\liqian\AppData\Local\Temp\SAS Temporary                      
+                            Files\_TD27568_FCTR-2253-M30_\ch23.sas7bdat                           
+Release Created             9.0401M6                                                              
+Host Created                X64_10PRO                                                             
+Owner Name                  UFAD\liqian                                                           
+File Size                   128KB                                                                 
+File Size (bytes)           131072                                                                
+
+
+                                   Variables in Creation Order
+ 
+             #    Variable         Type    Len    Format    Informat    Label
+
+             1    PHi_Plan_Code    Char      2    $2.       $2.         PHi_Plan_Code
+             2    GCQ              Num       8    BEST.                 GCQ          
+             3    GCQ_den          Num       8    BEST.                 GCQ_den      
+             4    GCQ_stderr       Num       8    BEST.                 GCQ_stderr   
+             5    GCQ_sig          Char      6    $6.       $6.         GCQ_sig      
+             6    HPRat            Num       8    BEST.                 HPRat        
+             7    HPRat_den        Num       8    BEST.                 HPRat_den    
+             8    HPRat_stderr     Num       8    BEST.                 HPRat_stderr 
+             9    HPRat_sig        Char      6    $6.       $6.         HPRat_sig    
+            10    HWDC             Num       8    BEST.                 HWDC         
+            11    HWDC_den         Num       8    BEST.                 HWDC_den     
+            12    HWDC_stderr      Num       8    BEST.                 HWDC_stderr  
+            13    HWDC_sig         Char      6    $6.       $6.         HWDC_sig     
+            14    PDRat            Num       8    BEST.                 PDRat        
+            15    PDRat_den        Num       8    BEST.                 PDRat_den    
+            16    PDRat_stderr     Num       8    BEST.                 PDRat_stderr 
+            17    PDRat_sig        Char      6    $6.       $6.         PDRat_sig    
+            18    Population       Num       8    BEST.                 Population   
+            19    GCQ_all          Num       8    BEST.                 GCQ_all      
+            20    GCQ_err          Num       8    BEST.                 GCQ_err      
+            21    GCQ_ov_err       Num       8    BEST.                 GCQ_ov_err   
+            22    GCQ_relb         Num       8    BEST.                 GCQ_relb     
+            23    HWDC_all         Num       8    BEST.                 HWDC_all     
+            24    HWDC_err         Num       8    BEST.                 HWDC_err     
+            25    HWDC_ov_err      Num       8    BEST.                 HWDC_ov_err  
+            26    HWDC_relb        Num       8    BEST.                 HWDC_relb    
+            27    PDRat_all        Num       8    BEST.                 PDRat_all    
+            28    PDRat_err        Num       8    BEST.                 PDRat_err    
+            29    PDRat_ov_err     Num       8    BEST.                 PDRat_ov_err 
+            30    PDRat_relb       Num       8    BEST.                 PDRat_relb   
+            31    HPRat_all        Num       8    BEST.                 HPRat_all    
+            32    HPRat_err        Num       8    BEST.                 HPRat_err    
+            33    HPRat_ov_err     Num       8    BEST.                 HPRat_ov_err 
+            34    HPRat_relb       Num       8    BEST.                 HPRat_relb   
+            35    GCQ_rat          Num       8    BEST.                 GCQ_rat      
+            36    HWDC_rat         Num       8    BEST.                 HWDC_rat     
+            37    PDRat_rat        Num       8    BEST.                 PDRat_rat    
+            38    HPRat_rat        Num       8    BEST.                 HPRat_rat    
+                                          The SAS System     13:44 Wednesday, November 2, 2022   7
+
+                                        The FREQ Procedure
+
+                                          PHi_Plan_Code
+ 
+                                                       Cumulative    Cumulative
+                  plancode    Frequency     Percent     Frequency      Percent
+                  -------------------------------------------------------------
+                  02                 1        3.13             1         3.13  
+                  03                 1        3.13             2         6.25  
+                  04                 1        3.13             3         9.38  
+                  05                 1        3.13             4        12.50  
+                  06                 1        3.13             5        15.63  
+                  09                 1        3.13             6        18.75  
+                  1B                 1        3.13             7        21.88  
+                  1F                 1        3.13             8        25.00  
+                  1Q                 1        3.13             9        28.13  
+                  2R                 1        3.13            10        31.25  
+                  39                 1        3.13            11        34.38  
+                  48                 1        3.13            12        37.50  
+                  49                 1        3.13            13        40.63  
+                  4C                 1        3.13            14        43.75  
+                  56                 1        3.13            15        46.88  
+                  57                 1        3.13            16        50.00  
+                  59                 1        3.13            17        53.13  
+                  6A                 1        3.13            18        56.25  
+                  6B                 1        3.13            19        59.38  
+                  7M                 1        3.13            20        62.50  
+                  7N                 1        3.13            21        65.63  
+                  7T                 1        3.13            22        68.75  
+                  7W                 1        3.13            23        71.88  
+                  7Y                 1        3.13            24        75.00  
+                  87                 1        3.13            25        78.13  
+                  8U                 1        3.13            26        81.25  
+                  8V                 1        3.13            27        84.38  
+                  8W                 1        3.13            28        87.50  
+                  8X                 1        3.13            29        90.63  
+                  8Y                 1        3.13            30        93.75  
+                  9A                 1        3.13            31        96.88  
+                  9C                 1        3.13            32       100.00  
+                                          The SAS System     13:44 Wednesday, November 2, 2022   8
+
+                                      The CONTENTS Procedure
+
+           Data Set Name        WORK.SC23                     Observations          44 
+           Member Type          DATA                          Variables             46 
+           Engine               V9                            Indexes               0  
+           Created              11/02/2022 13:44:12           Observation Length    352
+           Last Modified        11/02/2022 13:44:12           Deleted Observations  0  
+           Protection                                         Compressed            NO 
+           Data Set Type                                      Sorted                NO 
+           Label                                                                       
+           Data Representation  WINDOWS_64                                             
+           Encoding             wlatin1  Western (Windows)                             
+
+
+                                Engine/Host Dependent Information
+
+Data Set Page Size          65536                                                                 
+Number of Data Set Pages    1                                                                     
+First Data Page             1                                                                     
+Max Obs per Page            186                                                                   
+Obs in First Data Page      44                                                                    
+Number of Data Set Repairs  0                                                                     
+ExtendObsCounter            YES                                                                   
+Filename                    C:\Users\liqian\AppData\Local\Temp\SAS Temporary                      
+                            Files\_TD27568_FCTR-2253-M30_\sc23.sas7bdat                           
+Release Created             9.0401M6                                                              
+Host Created                X64_10PRO                                                             
+Owner Name                  UFAD\liqian                                                           
+File Size                   128KB                                                                 
+File Size (bytes)           131072                                                                
+
+
+                                   Variables in Creation Order
+ 
+             #    Variable         Type    Len    Format    Informat    Label
+
+             1    PHI_Plan_Code    Char      2    $2.       $2.         PHI_Plan_Code
+             2    GCQ              Num       8    BEST.                 GCQ          
+             3    GCQ_den          Num       8    BEST.                 GCQ_den      
+             4    GCQ_stderr       Num       8    BEST.                 GCQ_stderr   
+             5    GCQ_sig          Char      6    $6.       $6.         GCQ_sig      
+             6    HPRat            Num       8    BEST.                 HPRat        
+             7    HPRat_den        Num       8    BEST.                 HPRat_den    
+             8    HPRat_stderr     Num       8    BEST.                 HPRat_stderr 
+             9    HPRat_sig        Char      6    $6.       $6.         HPRat_sig    
+            10    HWDC             Num       8    BEST.                 HWDC         
+            11    HWDC_den         Num       8    BEST.                 HWDC_den     
+            12    HWDC_stderr      Num       8    BEST.                 HWDC_stderr  
+            13    HWDC_sig         Char      6    $6.       $6.         HWDC_sig     
+            14    PDRat            Num       8    BEST.                 PDRat        
+            15    PDRat_den        Num       8    BEST.                 PDRat_den    
+            16    PDRat_stderr     Num       8    BEST.                 PDRat_stderr 
+            17    PDRat_sig        Char      6    $6.       $6.         PDRat_sig    
+            18    RoutC            Num       8    BEST.                 RoutC        
+            19    RoutC_den        Num       8    BEST.                 RoutC_den    
+            20    RoutC_stderr     Num       8    BEST.                 RoutC_stderr 
+            21    RoutC_sig        Char      6    $6.       $6.         RoutC_sig    
+            22    UrgC             Num       8    BEST.                 UrgC         
+            23    UrgC_den         Num       8    BEST.                 UrgC_den     
+            24    UrgC_stderr      Num       8    BEST.                 UrgC_stderr  
+            25    UrgC_sig         Char      6    $6.       $6.         UrgC_sig     
+            26    Population       Num       8    BEST.                 Population   
+            27    GCQ_all          Num       8    BEST.                 GCQ_all      
+            28    GCQ_err          Num       8    BEST.                 GCQ_err      
+            29    GCQ_ov_err       Num       8    BEST.                 GCQ_ov_err   
+            30    GCQ_relb         Num       8    BEST.                 GCQ_relb     
+            31    HWDC_all         Num       8    BEST.                 HWDC_all     
+            32    HWDC_err         Num       8    BEST.                 HWDC_err     
+            33    HWDC_ov_err      Num       8    BEST.                 HWDC_ov_err  
+            34    HWDC_relb        Num       8    BEST.                 HWDC_relb    
+            35    PDRat_all        Num       8    BEST.                 PDRat_all    
+            36    PDRat_err        Num       8    BEST.                 PDRat_err    
+            37    PDRat_ov_err     Num       8    BEST.                 PDRat_ov_err 
+            38    PDRat_relb       Num       8    BEST.                 PDRat_relb   
+            39    HPRat_all        Num       8    BEST.                 HPRat_all    
+            40    HPRat_err        Num       8    BEST.                 HPRat_err    
+            41    HPRat_ov_err     Num       8    BEST.                 HPRat_ov_err 
+            42    HPRat_relb       Num       8    BEST.                 HPRat_relb   
+            43    GCQ_rat          Num       8    BEST.                 GCQ_rat      
+            44    HWDC_rat         Num       8    BEST.                 HWDC_rat     
+            45    PDRat_rat        Num       8    BEST.                 PDRat_rat    
+            46    HPRat_rat        Num       8    BEST.                 HPRat_rat    
+                                          The SAS System     13:44 Wednesday, November 2, 2022   9
+
+                         plancode        GCQ         mean_GCQ    dffm_GCQ
+
+                            43       0.7283275238     0.73252    -0.00419
+                            44       0.7048781741     0.73252    -0.02764
+                            42       0.7324147703     0.73252    -0.00011
+                            40       0.6772057747     0.73252    -0.05531
+                            90       0.7166215686     0.73252    -0.01590
+                            95       0.6826110179     0.73252    -0.04991
+                            93        0.722625551     0.73252    -0.00989
+                            37       0.6810437447     0.73252    -0.05148
+                            31       0.6362301991     0.73252    -0.09629
+                            36       0.6917837955     0.73252    -0.04074
+                            71       0.7713203037     0.73252     0.03880
+                            79       0.7431039603     0.73252     0.01058
+                            7G       0.6777374457     0.73252    -0.05478
+                            72       0.7206054356     0.73252    -0.01191
+                            7H       0.7371905629     0.73252     0.00467
+                            H4       0.7543519357     0.73252     0.02183
+                            H3       0.7185356971     0.73252    -0.01398
+                            H2       0.7873166159     0.73252     0.05480
+                            H1       0.6477289681     0.73252    -0.08479
+                            8G       0.6686851487     0.73252    -0.06384
+                            8H       0.7223758531     0.73252    -0.01014
+                            8J       0.8460208078     0.73252     0.11350
+                            8K        0.709407693     0.73252    -0.02311
+                            8L       0.6956945714     0.73252    -0.03683
+                            53       0.6912995154     0.73252    -0.04122
+                            50        0.708159109     0.73252    -0.02436
+                            52       0.7835056841     0.73252     0.05099
+                            C1       0.6944077812     0.73252    -0.03811
+                            C3       0.7387971268     0.73252     0.00628
+                            C2       0.7566849101     0.73252     0.02416
+                            N1       0.7643854375     0.73252     0.03187
+                            N2       0.7628991434     0.73252     0.03038
+                            W2       0.7406386017     0.73252     0.00812
+                            W4       0.7982136426     0.73252     0.06569
+                            W3       0.8129896813     0.73252     0.08047
+                            82       0.8158905503     0.73252     0.08337
+                            83       0.8054725926     0.73252     0.07295
+                            2Q       0.7659033825     0.73252     0.03338
+                            67       0.7335003677     0.73252     0.00098
+                            63       0.7949769214     0.73252     0.06246
+                            66       0.7456511438     0.73252     0.01313
+                            1P       0.7053615371     0.73252    -0.02716
+                            1A       0.6898312126     0.73252    -0.04269
+                            10       0.7485042613     0.73252     0.01598
+                                          The SAS System     13:44 Wednesday, November 2, 2022  10
+
+                                      The CONTENTS Procedure
+
+           Data Set Name        WORK.SA23                     Observations          44 
+           Member Type          DATA                          Variables             46 
+           Engine               V9                            Indexes               0  
+           Created              11/02/2022 13:44:13           Observation Length    352
+           Last Modified        11/02/2022 13:44:13           Deleted Observations  0  
+           Protection                                         Compressed            NO 
+           Data Set Type                                      Sorted                NO 
+           Label                                                                       
+           Data Representation  WINDOWS_64                                             
+           Encoding             wlatin1  Western (Windows)                             
+
+
+                                Engine/Host Dependent Information
+
+Data Set Page Size          65536                                                                 
+Number of Data Set Pages    1                                                                     
+First Data Page             1                                                                     
+Max Obs per Page            186                                                                   
+Obs in First Data Page      44                                                                    
+Number of Data Set Repairs  0                                                                     
+ExtendObsCounter            YES                                                                   
+Filename                    C:\Users\liqian\AppData\Local\Temp\SAS Temporary                      
+                            Files\_TD27568_FCTR-2253-M30_\sa23.sas7bdat                           
+Release Created             9.0401M6                                                              
+Host Created                X64_10PRO                                                             
+Owner Name                  UFAD\liqian                                                           
+File Size                   128KB                                                                 
+File Size (bytes)           131072                                                                
+
+
+                                   Variables in Creation Order
+ 
+             #    Variable         Type    Len    Format    Informat    Label
+
+             1    PHI_Plan_Code    Char      2    $2.       $2.         PHI_Plan_Code
+             2    AtC              Num       8    BEST.                 AtC          
+             3    AtC_den          Num       8    BEST.                 AtC_den      
+             4    AtC_stderr       Num       8    BEST.                 AtC_stderr   
+             5    AtC_sig          Char      6    $6.       $6.         AtC_sig      
+             6    GCQ              Num       8    BEST.                 GCQ          
+             7    GCQ_den          Num       8    BEST.                 GCQ_den      
+             8    GCQ_stderr       Num       8    BEST.                 GCQ_stderr   
+             9    GCQ_sig          Char      6    $6.       $6.         GCQ_sig      
+            10    GNC              Num       8    BEST.                 GNC          
+            11    GNC_den          Num       8    BEST.                 GNC_den      
+            12    GNC_stderr       Num       8    BEST.                 GNC_stderr   
+            13    GNC_sig          Char      6    $6.       $6.         GNC_sig      
+            14    HPRat            Num       8    BEST.                 HPRat        
+            15    HPRat_den        Num       8    BEST.                 HPRat_den    
+            16    HPRat_stderr     Num       8    BEST.                 HPRat_stderr 
+            17    HPRat_sig        Char      6    $6.       $6.         HPRat_sig    
+            18    HWDC             Num       8    BEST.                 HWDC         
+            19    HWDC_den         Num       8    BEST.                 HWDC_den     
+            20    HWDC_stderr      Num       8    BEST.                 HWDC_stderr  
+            21    HWDC_sig         Char      6    $6.       $6.         HWDC_sig     
+            22    PDRat            Num       8    BEST.                 PDRat        
+            23    PDRat_den        Num       8    BEST.                 PDRat_den    
+            24    PDRat_stderr     Num       8    BEST.                 PDRat_stderr 
+            25    PDRat_sig        Char      6    $6.       $6.         PDRat_sig    
+            26    Population       Num       8    BEST.                 Population   
+            27    AtC_all          Num       8    BEST.                 AtC_all      
+            28    AtC_err          Num       8    BEST.                 AtC_err      
+            29    AtC_ov_err       Num       8    BEST.                 AtC_ov_err   
+            30    AtC_relb         Num       8    BEST.                 AtC_relb     
+            31    HWDC_all         Num       8    BEST.                 HWDC_all     
+            32    HWDC_err         Num       8    BEST.                 HWDC_err     
+            33    HWDC_ov_err      Num       8    BEST.                 HWDC_ov_err  
+            34    HWDC_relb        Num       8    BEST.                 HWDC_relb    
+            35    PDRat_all        Num       8    BEST.                 PDRat_all    
+            36    PDRat_err        Num       8    BEST.                 PDRat_err    
+            37    PDRat_ov_err     Num       8    BEST.                 PDRat_ov_err 
+            38    PDRat_relb       Num       8    BEST.                 PDRat_relb   
+            39    HPRat_all        Num       8    BEST.                 HPRat_all    
+            40    HPRat_err        Num       8    BEST.                 HPRat_err    
+            41    HPRat_ov_err     Num       8    BEST.                 HPRat_ov_err 
+            42    HPRat_relb       Num       8    BEST.                 HPRat_relb   
+            43    AtC_rat          Num       8    BEST.                 AtC_rat      
+            44    HWDC_rat         Num       8    BEST.                 HWDC_rat     
+            45    PDRat_rat        Num       8    BEST.                 PDRat_rat    
+            46    HPRat_rat        Num       8    BEST.                 HPRat_rat    
+                                          The SAS System     13:44 Wednesday, November 2, 2022  11
+
+                                      The CONTENTS Procedure
+
+           Data Set Name        WORK.SP23                     Observations          27 
+           Member Type          DATA                          Variables             46 
+           Engine               V9                            Indexes               0  
+           Created              11/02/2022 13:44:13           Observation Length    352
+           Last Modified        11/02/2022 13:44:13           Deleted Observations  0  
+           Protection                                         Compressed            NO 
+           Data Set Type                                      Sorted                NO 
+           Label                                                                       
+           Data Representation  WINDOWS_64                                             
+           Encoding             wlatin1  Western (Windows)                             
+
+
+                                Engine/Host Dependent Information
+
+Data Set Page Size          65536                                                                 
+Number of Data Set Pages    1                                                                     
+First Data Page             1                                                                     
+Max Obs per Page            186                                                                   
+Obs in First Data Page      27                                                                    
+Number of Data Set Repairs  0                                                                     
+ExtendObsCounter            YES                                                                   
+Filename                    C:\Users\liqian\AppData\Local\Temp\SAS Temporary                      
+                            Files\_TD27568_FCTR-2253-M30_\sp23.sas7bdat                           
+Release Created             9.0401M6                                                              
+Host Created                X64_10PRO                                                             
+Owner Name                  UFAD\liqian                                                           
+File Size                   128KB                                                                 
+File Size (bytes)           131072                                                                
+
+
+                                   Variables in Creation Order
+ 
+             #    Variable         Type    Len    Format    Informat    Label
+
+             1    PHI_Plan_Code    Char      2    $2.       $2.         PHI_Plan_Code
+             2    ATC              Num       8    BEST.                 ATC          
+             3    ATC_den          Num       8    BEST.                 ATC_den      
+             4    ATC_stderr       Num       8    BEST.                 ATC_stderr   
+             5    ATC_sig          Char      6    $6.       $6.         ATC_sig      
+             6    GCQ              Num       8    BEST.                 GCQ          
+             7    GCQ_den          Num       8    BEST.                 GCQ_den      
+             8    GCQ_stderr       Num       8    BEST.                 GCQ_stderr   
+             9    GCQ_sig          Char      6    $6.       $6.         GCQ_sig      
+            10    GNC              Num       8    BEST.                 GNC          
+            11    GNC_den          Num       8    BEST.                 GNC_den      
+            12    GNC_stderr       Num       8    BEST.                 GNC_stderr   
+            13    GNC_sig          Char      5    $5.       $5.         GNC_sig      
+            14    HPRat            Num       8    BEST.                 HPRat        
+            15    HPRat_den        Num       8    BEST.                 HPRat_den    
+            16    HPRat_stderr     Num       8    BEST.                 HPRat_stderr 
+            17    HPRat_sig        Char      6    $6.       $6.         HPRat_sig    
+            18    HWDC             Num       8    BEST.                 HWDC         
+            19    HWDC_den         Num       8    BEST.                 HWDC_den     
+            20    HWDC_stderr      Num       8    BEST.                 HWDC_stderr  
+            21    HWDC_sig         Char      6    $6.       $6.         HWDC_sig     
+            22    PDRat            Num       8    BEST.                 PDRat        
+            23    PDRat_den        Num       8    BEST.                 PDRat_den    
+            24    PDRat_stderr     Num       8    BEST.                 PDRat_stderr 
+            25    PDRat_sig        Char      6    $6.       $6.         PDRat_sig    
+            26    Population       Num       8    BEST.                 Population   
+            27    ATC_all          Num       8    BEST.                 ATC_all      
+            28    ATC_err          Num       8    BEST.                 ATC_err      
+            29    ATC_ov_err       Num       8    BEST.                 ATC_ov_err   
+            30    ATC_relb         Num       8    BEST.                 ATC_relb     
+            31    HWDC_all         Num       8    BEST.                 HWDC_all     
+            32    HWDC_err         Num       8    BEST.                 HWDC_err     
+            33    HWDC_ov_err      Num       8    BEST.                 HWDC_ov_err  
+            34    HWDC_relb        Num       8    BEST.                 HWDC_relb    
+            35    PDRat_all        Num       8    BEST.                 PDRat_all    
+            36    PDRat_err        Num       8    BEST.                 PDRat_err    
+            37    PDRat_ov_err     Num       8    BEST.                 PDRat_ov_err 
+            38    PDRat_relb       Num       8    BEST.                 PDRat_relb   
+            39    HPRat_all        Num       8    BEST.                 HPRat_all    
+            40    HPRat_err        Num       8    BEST.                 HPRat_err    
+            41    HPRat_ov_err     Num       8    BEST.                 HPRat_ov_err 
+            42    HPRat_relb       Num       8    BEST.                 HPRat_relb   
+            43    ATC_rat          Num       8    BEST.                 ATC_rat      
+            44    HWDC_rat         Num       8    BEST.                 HWDC_rat     
+            45    PDRat_rat        Num       8    BEST.                 PDRat_rat    
+            46    HPRat_rat        Num       8    BEST.                 HPRat_rat    
+                                          The SAS System     13:44 Wednesday, November 2, 2022  12
+
+                                      The CONTENTS Procedure
+
+           Data Set Name        WORK.SK23                     Observations          28 
+           Member Type          DATA                          Variables             82 
+           Engine               V9                            Indexes               0  
+           Created              11/02/2022 13:44:13           Observation Length    632
+           Last Modified        11/02/2022 13:44:13           Deleted Observations  0  
+           Protection                                         Compressed            NO 
+           Data Set Type                                      Sorted                NO 
+           Label                                                                       
+           Data Representation  WINDOWS_64                                             
+           Encoding             wlatin1  Western (Windows)                             
+
+
+                                Engine/Host Dependent Information
+
+Data Set Page Size          65536                                                                 
+Number of Data Set Pages    1                                                                     
+First Data Page             1                                                                     
+Max Obs per Page            103                                                                   
+Obs in First Data Page      28                                                                    
+Number of Data Set Repairs  0                                                                     
+ExtendObsCounter            YES                                                                   
+Filename                    C:\Users\liqian\AppData\Local\Temp\SAS Temporary                      
+                            Files\_TD27568_FCTR-2253-M30_\sk23.sas7bdat                           
+Release Created             9.0401M6                                                              
+Host Created                X64_10PRO                                                             
+Owner Name                  UFAD\liqian                                                           
+File Size                   128KB                                                                 
+File Size (bytes)           131072                                                                
+
+
+                                   Variables in Creation Order
+ 
+           #    Variable           Type    Len    Format    Informat    Label
+
+           1    PHI_Plan_Code      Char      2    $2.       $2.         PHI_Plan_Code  
+           2    AtC                Num       8    BEST.                 AtC            
+           3    AtC_den            Num       8    BEST.                 AtC_den        
+           4    AtC_stderr         Num       8    BEST.                 AtC_stderr     
+           5    AtC_sig            Char      6    $6.       $6.         AtC_sig        
+           6    GCQ                Num       8    BEST.                 GCQ            
+           7    GCQ_den            Num       8    BEST.                 GCQ_den        
+           8    GCQ_stderr         Num       8    BEST.                 GCQ_stderr     
+           9    GCQ_sig            Char      6    $6.       $6.         GCQ_sig        
+          10    GNC                Num       8    BEST.                 GNC            
+          11    GNC_den            Num       8    BEST.                 GNC_den        
+          12    GNC_stderr         Num       8    BEST.                 GNC_stderr     
+          13    GNC_sig            Char      5    $5.       $5.         GNC_sig        
+          14    HPRat              Num       8    BEST.                 HPRat          
+          15    HPRat_den          Num       8    BEST.                 HPRat_den      
+          16    HPRat_stderr       Num       8    BEST.                 HPRat_stderr   
+          17    HPRat_sig          Char      6    $6.       $6.         HPRat_sig      
+          18    SpecTher           Num       8    BEST.                 SpecTher       
+          19    SpecTher_den       Num       8    BEST.                 SpecTher_den   
+          20    SpecTher_stderr    Num       8    BEST.                 SpecTher_stderr
+          21    SpecTher_sig       Char      6    $6.       $6.         SpecTher_sig   
+          22    coord              Num       8    BEST.                 coord          
+          23    coord_den          Num       8    BEST.                 coord_den      
+          24    coord_stderr       Num       8    BEST.                 coord_stderr   
+          25    coord_sig          Char      6    $6.       $6.         coord_sig      
+          26    BHCoun             Num       8    BEST.                 BHCoun         
+          27    BHCoun_den         Num       8    BEST.                 BHCoun_den     
+          28    BHCoun_stderr      Num       8    BEST.                 BHCoun_stderr  
+          29    BHCoun_sig         Char      6    $6.       $6.         BHCoun_sig     
+          30    GNI                Num       8    BEST.                 GNI            
+          31    GNI_den            Num       8    BEST.                 GNI_den        
+          32    GNI_stderr         Num       8    BEST.                 GNI_stderr     
+          33    GNI_sig            Char      6    $6.       $6.         GNI_sig        
+          34    APM                Num       8    BEST.                 APM            
+          35    APM_den            Num       8    BEST.                 APM_den        
+          36    APM_stderr         Num       8    BEST.                 APM_stderr     
+          37    APM_sig            Char      5    $5.       $5.         APM_sig        
+          38    transit            Num       8    BEST.                 transit        
+          39    transit_den        Num       8    BEST.                 transit_den    
+          40    transit_stderr     Num       8    BEST.                 transit_stderr 
+          41    transit_sig        Char      6    $6.       $6.         transit_sig    
+          42    Population         Num       8    BEST.                 Population     
+          43    HPRat_all          Num       8    BEST.                 HPRat_all      
+          44    HPRat_err          Num       8    BEST.                 HPRat_err      
+          45    HPRat_ov_err       Num       8    BEST.                 HPRat_ov_err   
+          46    HPRat_relb         Num       8    BEST.                 HPRat_relb     
+          47    AtC_all            Num       8    BEST.                 AtC_all        
+          48    AtC_err            Num       8    BEST.                 AtC_err        
+          49    AtC_ov_err         Num       8    BEST.                 AtC_ov_err     
+          50    AtC_relb           Num       8    BEST.                 AtC_relb       
+          51    SpecTher_all       Num       8    BEST.                 SpecTher_all   
+          52    SpecTher_err       Num       8    BEST.                 SpecTher_err   
+          53    SpecTher_ov_err    Num       8    BEST.                 SpecTher_ov_err
+          54    SpecTher_relb      Num       8    BEST.                 SpecTher_relb  
+          55    APM_all            Num       8    BEST.                 APM_all        
+          56    APM_err            Num       8    BEST.                 APM_err        
+          57    APM_ov_err         Num       8    BEST.                 APM_ov_err     
+          58    APM_relb           Num       8    BEST.                 APM_relb       
+          59    coord_all          Num       8    BEST.                 coord_all      
+          60    coord_err          Num       8    BEST.                 coord_err      
+          61    coord_ov_err       Num       8    BEST.                 coord_ov_err   
+          62    coord_relb         Num       8    BEST.                 coord_relb     
+          63    GNI_all            Num       8    BEST.                 GNI_all        
+          64    GNI_err            Num       8    BEST.                 GNI_err        
+          65    GNI_ov_err         Num       8    BEST.                 GNI_ov_err     
+          66    GNI_relb           Num       8    BEST.                 GNI_relb       
+          67    transit_all        Num       8    BEST.                 transit_all    
+          68    transit_err        Num       8    BEST.                 transit_err    
+          69    transit_ov_err     Num       8    BEST.                 transit_ov_err 
+          70    transit_relb       Num       8    BEST.                 transit_relb   
+          71    BHCoun_all         Num       8    BEST.                 BHCoun_all     
+          72    BHCoun_err         Num       8    BEST.                 BHCoun_err     
+          73    BHCoun_ov_err      Num       8    BEST.                 BHCoun_ov_err  
+          74    BHCoun_relb        Num       8    BEST.                 BHCoun_relb    
+          75    HPRat_rat          Num       8    BEST.                 HPRat_rat      
+          76    AtC_rat            Num       8    BEST.                 AtC_rat        
+          77    SpecTher_rat       Num       8    BEST.                 SpecTher_rat   
+          78    APM_rat            Num       8    BEST.                 APM_rat        
+          79    coord_rat          Num       8    BEST.                 coord_rat      
+          80    GNI_rat            Num       8    BEST.                 GNI_rat        
+          81    transit_rat        Num       8    BEST.                 transit_rat    
+          82    BHCoun_rat         Num       8    BEST.                 BHCoun_rat     
+                                          The SAS System     13:44 Wednesday, November 2, 2022  13
+
+                                        The FREQ Procedure
+
+                                    Number of Variable Levels
+ 
+                                                          Missing    Nonmissing
+                   Variable     Label          Levels      Levels        Levels
+                   ------------------------------------------------------------
+                   HPRat_rat    HPRat_rat           5           1             4
+                   GCQ_rat      GCQ_rat             6           1             5
+                   HWDC_rat     HWDC_rat            5           1             4
+                   PDRat_rat    PDRat_rat           5           1             4
+
+
+                                             HPRat_rat
+ 
+                                                        Cumulative    Cumulative
+                  HPRat_rat    Frequency     Percent     Frequency      Percent
+                  --------------------------------------------------------------
+                          2           2        9.09             2         9.09  
+                          3          11       50.00            13        59.09  
+                          4           4       18.18            17        77.27  
+                          5           5       22.73            22       100.00  
+
+                                      Frequency Missing = 10
+
+
+                                              GCQ_rat
+ 
+                                                       Cumulative    Cumulative
+                   GCQ_rat    Frequency     Percent     Frequency      Percent
+                   ------------------------------------------------------------
+                         1           1        5.26             1         5.26  
+                         2           2       10.53             3        15.79  
+                         3           7       36.84            10        52.63  
+                         4           5       26.32            15        78.95  
+                         5           4       21.05            19       100.00  
+
+                                      Frequency Missing = 13
+
+
+                                             HWDC_rat
+ 
+                                                       Cumulative    Cumulative
+                  HWDC_rat    Frequency     Percent     Frequency      Percent
+                  -------------------------------------------------------------
+                         2           5       23.81             5        23.81  
+                         3           7       33.33            12        57.14  
+                         4           7       33.33            19        90.48  
+                         5           2        9.52            21       100.00  
+
+                                      Frequency Missing = 11
+
+
+                                             PDRat_rat
+ 
+                                                        Cumulative    Cumulative
+                  PDRat_rat    Frequency     Percent     Frequency      Percent
+                  --------------------------------------------------------------
+                          2           5       23.81             5        23.81  
+                          3           9       42.86            14        66.67  
+                          4           5       23.81            19        90.48  
+                          5           2        9.52            21       100.00  
+
+                                      Frequency Missing = 11
+                                          The SAS System     13:44 Wednesday, November 2, 2022  14
+
+                                        The FREQ Procedure
+
+                                    Number of Variable Levels
+ 
+                                Variable     Label          Levels
+                                ----------------------------------
+                                HPRat_rat    HPRat_rat           5
+                                GCQ_rat      GCQ_rat             4
+                                HWDC_rat     HWDC_rat            5
+                                PDRat_rat    PDRat_rat           5
+
+
+                                             HPRat_rat
+ 
+                                                        Cumulative    Cumulative
+                  HPRat_rat    Frequency     Percent     Frequency      Percent
+                  --------------------------------------------------------------
+                          1           4        9.09             4         9.09  
+                          2           9       20.45            13        29.55  
+                          3          13       29.55            26        59.09  
+                          4          12       27.27            38        86.36  
+                          5           6       13.64            44       100.00  
+
+
+                                              GCQ_rat
+ 
+                                                       Cumulative    Cumulative
+                   GCQ_rat    Frequency     Percent     Frequency      Percent
+                   ------------------------------------------------------------
+                         2          13       29.55            13        29.55  
+                         3          14       31.82            27        61.36  
+                         4          13       29.55            40        90.91  
+                         5           4        9.09            44       100.00  
+
+
+                                             HWDC_rat
+ 
+                                                       Cumulative    Cumulative
+                  HWDC_rat    Frequency     Percent     Frequency      Percent
+                  -------------------------------------------------------------
+                         1           1        2.27             1         2.27  
+                         2          12       27.27            13        29.55  
+                         3          13       29.55            26        59.09  
+                         4          15       34.09            41        93.18  
+                         5           3        6.82            44       100.00  
+
+
+                                             PDRat_rat
+ 
+                                                        Cumulative    Cumulative
+                  PDRat_rat    Frequency     Percent     Frequency      Percent
+                  --------------------------------------------------------------
+                          1           5       11.36             5        11.36  
+                          2           7       15.91            12        27.27  
+                          3          14       31.82            26        59.09  
+                          4          13       29.55            39        88.64  
+                          5           5       11.36            44       100.00  
+                                          The SAS System     13:44 Wednesday, November 2, 2022  15
+
+                                        The FREQ Procedure
+
+                                    Number of Variable Levels
+ 
+                                                          Missing    Nonmissing
+                   Variable     Label          Levels      Levels        Levels
+                   ------------------------------------------------------------
+                   HPRat_rat    HPRat_rat           5           0             5
+                   AtC_rat      AtC_rat             5           0             5
+                   HWDC_rat     HWDC_rat            6           1             5
+                   PDRat_rat    PDRat_rat           5           0             5
+
+
+                                             HPRat_rat
+ 
+                                                        Cumulative    Cumulative
+                  HPRat_rat    Frequency     Percent     Frequency      Percent
+                  --------------------------------------------------------------
+                          1           5       11.36             5        11.36  
+                          2           8       18.18            13        29.55  
+                          3          13       29.55            26        59.09  
+                          4           9       20.45            35        79.55  
+                          5           9       20.45            44       100.00  
+
+
+                                              AtC_rat
+ 
+                                                       Cumulative    Cumulative
+                   AtC_rat    Frequency     Percent     Frequency      Percent
+                   ------------------------------------------------------------
+                         1           2        4.55             2         4.55  
+                         2          11       25.00            13        29.55  
+                         3          13       29.55            26        59.09  
+                         4          17       38.64            43        97.73  
+                         5           1        2.27            44       100.00  
+
+
+                                             HWDC_rat
+ 
+                                                       Cumulative    Cumulative
+                  HWDC_rat    Frequency     Percent     Frequency      Percent
+                  -------------------------------------------------------------
+                         1           1        2.33             1         2.33  
+                         2          10       23.26            11        25.58  
+                         3          15       34.88            26        60.47  
+                         4          15       34.88            41        95.35  
+                         5           2        4.65            43       100.00  
+
+                                      Frequency Missing = 1
+
+
+                                             PDRat_rat
+ 
+                                                        Cumulative    Cumulative
+                  PDRat_rat    Frequency     Percent     Frequency      Percent
+                  --------------------------------------------------------------
+                          1           3        6.82             3         6.82  
+                          2           8       18.18            11        25.00  
+                          3          15       34.09            26        59.09  
+                          4          15       34.09            41        93.18  
+                          5           3        6.82            44       100.00  
+                                          The SAS System     13:44 Wednesday, November 2, 2022  16
+
+                                        The FREQ Procedure
+
+                                    Number of Variable Levels
+ 
+                                Variable     Label          Levels
+                                ----------------------------------
+                                HPRat_rat    HPRat_rat           5
+                                ATC_rat      ATC_rat             4
+                                HWDC_rat     HWDC_rat            5
+                                PDRat_rat    PDRat_rat           4
+
+
+                                             HPRat_rat
+ 
+                                                        Cumulative    Cumulative
+                  HPRat_rat    Frequency     Percent     Frequency      Percent
+                  --------------------------------------------------------------
+                          1           3       11.11             3        11.11  
+                          2           5       18.52             8        29.63  
+                          3           8       29.63            16        59.26  
+                          4           9       33.33            25        92.59  
+                          5           2        7.41            27       100.00  
+
+
+                                              ATC_rat
+ 
+                                                       Cumulative    Cumulative
+                   ATC_rat    Frequency     Percent     Frequency      Percent
+                   ------------------------------------------------------------
+                         2           8       29.63             8        29.63  
+                         3           9       33.33            17        62.96  
+                         4           9       33.33            26        96.30  
+                         5           1        3.70            27       100.00  
+
+
+                                             HWDC_rat
+ 
+                                                       Cumulative    Cumulative
+                  HWDC_rat    Frequency     Percent     Frequency      Percent
+                  -------------------------------------------------------------
+                         1           1        3.70             1         3.70  
+                         2           7       25.93             8        29.63  
+                         3           8       29.63            16        59.26  
+                         4           9       33.33            25        92.59  
+                         5           2        7.41            27       100.00  
+
+
+                                             PDRat_rat
+ 
+                                                        Cumulative    Cumulative
+                  PDRat_rat    Frequency     Percent     Frequency      Percent
+                  --------------------------------------------------------------
+                          2           8       29.63             8        29.63  
+                          3           8       29.63            16        59.26  
+                          4           9       33.33            25        92.59  
+                          5           2        7.41            27       100.00  
+                                          The SAS System     13:44 Wednesday, November 2, 2022  17
+
+                                        The FREQ Procedure
+
+                                    Number of Variable Levels
+ 
+                                                             Missing    Nonmissing
+                Variable        Label             Levels      Levels        Levels
+                ------------------------------------------------------------------
+                HPRat_rat       HPRat_rat              5           0             5
+                AtC_rat         AtC_rat                5           0             5
+                SpecTher_rat    SpecTher_rat           6           1             5
+                APM_rat         APM_rat                4           0             4
+                coord_rat       coord_rat              6           1             5
+                GNI_rat         GNI_rat                5           0             5
+                transit_rat     transit_rat            4           1             3
+                BHCoun_rat      BHCoun_rat             6           1             5
+
+
+                                             HPRat_rat
+ 
+                                                        Cumulative    Cumulative
+                  HPRat_rat    Frequency     Percent     Frequency      Percent
+                  --------------------------------------------------------------
+                          1           4       14.29             4        14.29  
+                          2           3       10.71             7        25.00  
+                          3           9       32.14            16        57.14  
+                          4           7       25.00            23        82.14  
+                          5           5       17.86            28       100.00  
+
+
+                                              AtC_rat
+ 
+                                                       Cumulative    Cumulative
+                   AtC_rat    Frequency     Percent     Frequency      Percent
+                   ------------------------------------------------------------
+                         1           2        7.14             2         7.14  
+                         2           5       17.86             7        25.00  
+                         3           9       32.14            16        57.14  
+                         4          10       35.71            26        92.86  
+                         5           2        7.14            28       100.00  
+
+
+                                           SpecTher_rat
+ 
+                                                         Cumulative    Cumulative
+                SpecTher_rat    Frequency     Percent     Frequency      Percent
+                -----------------------------------------------------------------
+                           1           2        7.69             2         7.69  
+                           2           6       23.08             8        30.77  
+                           3           8       30.77            16        61.54  
+                           4           9       34.62            25        96.15  
+                           5           1        3.85            26       100.00  
+
+                                      Frequency Missing = 2
+
+
+                                              APM_rat
+ 
+                                                       Cumulative    Cumulative
+                   APM_rat    Frequency     Percent     Frequency      Percent
+                   ------------------------------------------------------------
+                         1           2        7.14             2         7.14  
+                         2           5       17.86             7        25.00  
+                         3           9       32.14            16        57.14  
+                         4          12       42.86            28       100.00  
+
+
+                                             coord_rat
+ 
+                                                        Cumulative    Cumulative
+                  coord_rat    Frequency     Percent     Frequency      Percent
+                  --------------------------------------------------------------
+                          1           2        7.69             2         7.69  
+                          2           6       23.08             8        30.77  
+                          3           7       26.92            15        57.69  
+                          4           8       30.77            23        88.46  
+                          5           3       11.54            26       100.00  
+
+                                       Frequency Missing = 2
+
+
+                                              GNI_rat
+ 
+                                                       Cumulative    Cumulative
+                   GNI_rat    Frequency     Percent     Frequency      Percent
+                   ------------------------------------------------------------
+                         1           1        3.57             1         3.57  
+                         2           7       25.00             8        28.57  
+                         3           8       28.57            16        57.14  
+                         4          11       39.29            27        96.43  
+                         5           1        3.57            28       100.00  
+
+
+                                            transit_rat
+ 
+                                                         Cumulative    Cumulative
+                 transit_rat    Frequency     Percent     Frequency      Percent
+                 ----------------------------------------------------------------
+                           2           6       24.00             6        24.00  
+                           3           9       36.00            15        60.00  
+                           4          10       40.00            25       100.00  
+
+                                       Frequency Missing = 3
+
+
+                                            BHCoun_rat
+ 
+                                                        Cumulative    Cumulative
+                 BHCoun_rat    Frequency     Percent     Frequency      Percent
+                 ---------------------------------------------------------------
+                          1           3       11.54             3        11.54  
+                          2           4       15.38             7        26.92  
+                          3           8       30.77            15        57.69  
+                          4          10       38.46            25        96.15  
+                          5           1        3.85            26       100.00  
+
+                                      Frequency Missing = 2
